@@ -1,0 +1,7 @@
+<!-- コントロールボタン -->
+<% content_for :control do %>
+    <%= submit_button_tag %>
+	<%= cancel_button_tag %>
+	<%= delete_image_button_tag @process_price, process_prices %>
+<% end %>
+<%= render :file => 'process_prices/form' %>

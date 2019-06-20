@@ -1,0 +1,104 @@
+<% content_for :tabmenu do %>
+	<%= tab_menu_for_process_price %>
+<% end %>
+
+<div id="main" style="width: 1080px;">
+	<%= raw main_title %>
+
+	<%= raw flash_tag %>
+
+	<div class="control">
+		<%= new_button_tag %>
+	</div><!--/ control-->
+
+	<div class="condition" style="width: 850px;">
+		<%= form_tag({:action => :index}, {:method => :get, :name => :form_search, :id => :form_search }) do -%>
+
+		<h4><%= t(:search_condition) %></h4>
+		<table class="commonCondition">
+			<tr>
+				<th>
+					<%=hlabel :commons, :item_code %>
+				</th>
+				<td>
+					<%= text_field_tag(:cond_customer_code, params[:cond_customer_code], :size => 5) %>
+					-
+					<%= text_field_tag(:cond_code, params[:cond_code], :size => 5) %>
+				</td>
+				<th><%=hlabel :process_price, :trader_id %></th>
+<%
+empty_processor = Processor.new(:name => t(:notice_select_all))
+processors = [empty_processor] + @heat_processor_options
+%>				
+				<td>
+					<%= select_tag(:cond_trader_id, options_from_collection_for_select(processors, :id, :name, params[:cond_trader_id].to_i)) %>
+				</td>
+				<th><%= hlabel :process_price, :process %></th>
+				<td><%= text_field_tag(:cond_process, params[:cond_process]) %></td>
+				<td class="button">
+					<%= submit_tag t(:search, :scope => :actions) %>
+				</td>
+			</tr>
+		</table>
+
+		<% end %>
+	</div><!--/ condition-->
+
+	<div class="list">
+		<div class="paginationCnt"><%= t(:all_count, :scope => :paginate, :cnt => @heat_process_prices.count) %></div>
+		<table class="commonList">
+			<thead>
+				<tr>
+					<th><%= hlabel :process_price, :id %></th>
+					<th><%= hlabel :commons, :item_code %></th>
+					<th><%= hlabel :process_price, :trader_id %></th>
+					<th><%= hlabel :process_price, :material_id %></th>
+					<th><%= hlabel :process_price, :process %></th>
+					<th><%= hlabel :process_price, :condition %></th>
+					<th><%= hlabel :process_price, :price %></th>
+					<th><%= hlabel :process_price, :unit %></th>
+					<th><%= hlabel :process_price, :set %></th>
+					<th><%= hlabel :process_price, :addition_price %></th>
+					<th><%= hlabel :process_price, :addition_unit %></th>
+					<th><%= hlabel :process_price, :condition_weight %></th>
+					<th><%= hlabel :process_price, :condition_following %></th>
+				</tr>
+			</thead>
+			<tbody>
+				<% @heat_process_prices.each do |heat_process_price| %>
+<%
+item = heat_process_price.item unless heat_process_price.nil?
+item ||= Item.new
+trader = heat_process_price.trader unless heat_process_price.nil?
+trader ||= Trader.new
+material = heat_process_price.material unless heat_process_price.nil?
+material ||= Material.new
+%>
+				<tr>
+					<td><%= link_to heat_process_price.id, edit_heat_process_price_url(heat_process_price) %></td>
+					<td><%= item.disp_text %></td>
+					<td><%= trader.name %></td>
+					<td><%= material.disp_text %></td>
+					<td><%= heat_process_price.process %></td>
+					<td><%= heat_process_price.condition %></td>
+					<td><%=hnumber heat_process_price.price %></td>
+					<td><%= heat_process_price.unit %></td>
+					<td><%= heat_process_price.set %></td>
+					<td><%=hnumber heat_process_price.addition_price %></td>
+					<td><%= heat_process_price.addition_unit %></td>
+					<td><%=hnumber heat_process_price.condition_weight %></td>
+					<td><%= heat_process_price.condition_following %></td>
+				</tr>
+				<% end %>
+			</tbody>
+		</table>
+		
+		<%= will_paginate @heat_process_prices %>
+		
+	</div><!--/ list-->
+	
+	<div class="control">
+		<%= new_button_tag %>
+	</div><!--/ control-->
+	
+</div><!--/ #main-->

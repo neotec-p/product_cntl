@@ -1,0 +1,29 @@
+<div id="main">
+	<%= raw main_title_core t(:t_system) + t(:notice_welcome) %>
+
+	<%= raw flash_tag %>
+	
+	<div class="list">
+		<h4><%= t("activerecord.models.notice") %></h4>
+		<table class="commonList">
+			<thead>
+				<tr>
+					<th style="width: 100px;"><%= hlabel :notice, :id %></th>
+					<th style="width: 100px;"><%= hlabel :notice, :t_created_ymd %>
+					<th style="width: 100px;"><%= hlabel :notice, :user_id %></th>
+					<th style="width: 500px;"><%= hlabel :notice, :contents %></th>
+				</tr>
+			</thead>
+			<tbody>
+				<% @notices.each do |notice| %>
+				<tr>
+					<td><%= notice.id %></td>
+					<td><%= hdate notice.created_ymd %></td>
+					<td><%= notice.user.disp_text %></td>
+					<td><%= notice.contents %></td>
+				</tr>
+				<% end %>
+			</tbody>
+		</table>
+	</div><!--/ list-->
+</div><!--/ #main-->

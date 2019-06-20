@@ -1,0 +1,14 @@
+<% content_for :tabmenu do %>
+	<%= tab_menu_for_washer_stock %>
+<% end %>
+
+<% content_for :control do %>
+<% if @washer_stock.collect_flag == FLAG_ON %>
+    <%= submit_button_tag(:conf => confirm_force_submit(:act => t(:button_stock_finish)))%>
+<% else %>
+    <%= submit_button_tag %>
+<% end %>
+	<%= delete_image_button_tag @washer_stock %>
+<% end %>
+
+<%= render :partial => 'form' %>

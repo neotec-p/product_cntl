@@ -1,0 +1,70 @@
+<% content_for :tabmenu do %>
+	<%= tab_menu_for_production %>
+<% end %>
+
+<% content_for :control do %>
+    <%= submit_button_tag %>
+	<%= cancel_button_tag({:controller => :items}) %>
+<% end %>
+
+<div id="main">
+	<%= raw main_title %>
+	<%= raw flash_tag %>
+
+	<%= form_for(@production, :url => multi_process_update_production_details_path) do |f| %>
+	
+    <%= @production.errors.full_messages.join("<br>") %>
+	
+    <div class="control">
+        <%= yield :control %>
+    </div><!--/ control-->
+	
+	<div class="list">
+		<table class="commonList">
+			<thead>
+				<tr>
+					<th><%= hlabel :commons, :id %></th>
+					<th><%= hlabel :commons, :id %></th>
+					<th><%= hlabel :production_detail, :result_amount_production %></th>
+					<th><%= hlabel :production_detail, :result_amount_history %></th>
+<% if false %>
+					<th><%= hlabel :process_type, :name %></th>
+					<th><%= hlabel :process_detail, :name %></th>
+					<th><%= hlabel :process_detail, :condition %></th>
+					<th><%= hlabel :process_detail, :model %></th>
+<% end %>
+				</tr>
+			</thead>
+			<tbody>
+
+<% cnt = 0 %>
+                <%= f.fields_for :production_details do |f_production_detail| %>
+<% if false %>
+				<tr>
+					<td>
+						<%= process_detail.process_type_id %>
+					</td>
+					<td>
+						<%= process_detail.process_type.name %>
+						<%= field.hidden_field :lock_version %>
+					</td>
+<% end %>
+					<td><%= cnt %></td>
+					<td><%= f_production_detail.text_field :id %></td>
+					<td><%= f_production_detail.text_field :result_amount_production, :class => "amount fmt-formatted-number" %></td>
+					<td><%= f_production_detail.text_field :result_amount_history, :class => "amount fmt-formatted-number" %></td>
+				</tr>
+<% cnt += 1 %>
+				<% end %>
+			</tbody>
+		</table>
+	</div><!--/ sheet-->
+	
+	<%= hidden_field_tag :production_id, @production.id %>
+
+    <div class="control">
+        <%= yield :control %>
+    </div><!--/ control-->
+	
+	<% end %>
+</div><!--/ #main-->

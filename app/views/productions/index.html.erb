@@ -1,0 +1,138 @@
+<% content_for :tabmenu do %>
+	<%= raw tab_menu_for_production %>
+<% end %>
+
+<% content_for :control do %>
+	<%= submit_button_button_tag(t(:button_report_all), :print_all, :confirm => t(:confirm_report)) %>
+<% end %>
+
+<!-- default 800px; -->
+<div id="main" style="width: 900px;">
+
+	<%= raw main_title :action => :production_status_process_type %>
+
+	<%= raw flash_tag %>
+
+    <div class="subTabmenu">
+        <%= raw tab_submenu_for_production_status %>
+    </div>
+
+	<div class="condition" style="width: 500px;">
+		<%= form_tag({:action => :index}, {:method => :get, :name => :form_search, :id => :form_search }) do -%>
+
+<%= hidden_field_tag(:sort) %>
+<%= hidden_field_tag(:order) %>
+
+		<h4><%= t(:search_condition) %></h4>
+		<table class="commonCondition" style="width: 800px;">
+			<tr>
+				<th><%= hlabel :commons, :process_name %></th>
+				<td><%= select_tag(:cond_process_type_id, options_from_collection_for_select(@process_types, :id, :name, params[:cond_process_type_id].to_i)) %></td>
+				<th><%= hlabel :production, :status_id %></th>
+				<td><%= select_tag(:cond_status_id, options_from_collection_for_select(@statuses, :id, :name, params[:cond_status_id].to_i)) %></td>
+                                <th>
+                                        <%=hlabel :commons, :item_code %>
+                                </th>
+                                <td>
+                                        <%= text_field_tag(:cond_item_customer_code, params[:cond_item_customer_code], :size => 5) %>
+                                        -
+                                        <%= text_field_tag(:cond_item_code, params[:cond_item_code], :size => 5) %>
+                                </td>
+                                <td><%= check_box_tag :cond_unprinted, true, params[:cond_unprinted] -%>未発行のみ</td>
+
+				<td class="button"> <%= submit_tag t(:search, :scope => :actions) %> </td>
+			</tr>
+		</table>
+		<% end %>
+	</div><!--/ condition-->
+
+	<%= form_tag(print_all_productions_path, {:method => :put}) do %>
+
+
+	<%= error_messages_for 'production_detail', :object => @production_details %>
+	<%= error_messages_for 'print_all' %>
+
+	<div class="spacer"></div>
+
+	<div class="list">
+		<div class="table-layout" style="width: 900px;">
+			<div class="right" style="width: 300px; padding-left: 0px;">
+				<h4><%= hlabel :production_detail, :production_status %> : <%= I18n.l Date.today, :format => :long %></h4>
+			</div>
+			<div class="left" style="width: 600px;; padding-right: 0px; text-align: right;">
+				<div class="paginationCnt">
+<% if action_name == 'index'%>
+					<div class="paginationCnt"><%= t(:all_count, :scope => :paginate, :cnt => @production_details.count) %></div>
+<% end %>
+				</div>
+			</div>
+		</div>
+		<table class="commonList doublerow">
+			<thead>
+				<tr>
+					<th rowspan="2" style="width: 80px;"><%= hlabel :commons, :process_name %><%=sort_tag('name')%></th>
+					<th rowspan="2" style="width: 80px;"><%= hlabel :model, :name %><%=sort_tag('model_name')%></th>
+					<th rowspan="2" style="width: 80px;"><%= hlabel :production_detail, :plan_start_ymd %><%=sort_tag('plan_start_ymd')%></th>
+					<th rowspan="2" style="width: 90px;"><%= hlabel :order, :delivery_ymd %></th>
+					<th><%= hlabel :commons, :vote_no %></th>
+					<th style="width: 80px;"><%= hlabel :commons, :item_code %></th>
+					<th rowspan="2" >実績数量（本）<!--<%= hlabel :production_detail, :result_amount_production %>--></th>
+                                        <th rowspan="2" >倉入金額（円）</th>
+					<th rowspan="2" ><%= raw simple_format(t(:title_print, :scope => [:activerecord, :attributes, :production])) %></th>
+				</tr>
+				<tr>
+					<th colspan="2" style="border-top: 1px solid">（上段）<%= hlabel :item, :drawing_no %>（下段）<%= hlabel :item, :name %></th>
+				</tr>
+			</thead>
+			<tbody>
+				<% @production_details.each do |production_detail| %>
+   			        <%= fields_for :production_detail, production_detail, :index => production_detail.no_in_list do |field| %>
+					<tr>
+<%
+production = production_detail.production
+production ||= Production.new
+item = production.item
+item ||= Item.new
+order = production.order
+order ||= Order.new
+report = production.reports.last
+report ||= Report.new
+attr = prepare_print_all_attr(report)
+%>
+						<td rowspan="2"><%= production_detail.current_status_or_process_name %></td>
+						<td rowspan="2"><%= production_detail.model.disp_text unless production_detail.model.blank? %></td>
+						<td rowspan="2"><%= hdate production_detail.plan_start_ymd %></td>
+						<td rowspan="2">
+							<%= hdate order.delivery_ymd %>
+							<%= field.hidden_field :id %>
+						</td>
+						<td><%= link_to production.disp_text, edit_production_path(production) %></td>
+						<td><%= item.disp_text %></td>
+						<td rowspan="2" class="number"><%= hnumber production_detail.result_amount_production %></td>
+                                                <td rowspan="2"><%= hnumber item.price * production_detail.result_amount_production  %></td>
+						<td rowspan="2"><%= field.check_box :select_print, :disabled => attr[:disabled] %><%= print_flag_on(attr[:label]) %></td>
+					</tr>
+					<tr>
+						<td colspan="2"><%= item.drawing_no %><br><%= item.name %></td>
+					</tr>
+					<% end %>
+				<% end %>
+			</tbody>
+		</table>
+		
+<% if action_name == 'index'%>
+		<%= will_paginate @production_details %>
+<% else %>
+                <p><font color="red" style="margin-left:5px;">*</font><%= t(:notice_required) %></p>
+                <p style="text-align: center;"><%= t(:notice_paginate_edit) %></p>
+<% end %>
+<%= hidden_field_tag(:page, params[:page]) %>
+
+	</div><!--/ list-->
+
+	<div class="control">
+		<%= yield :control %>
+	</div><!--/ control-->
+
+	<% end %>
+</div><!--/ #main-->

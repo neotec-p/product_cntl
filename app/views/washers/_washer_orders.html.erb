@@ -1,0 +1,58 @@
+<% content_for :new_button do %>
+<% unless @washer.provide_flag == FLAG_ON %>
+	<%= link_button_tag t(:button_new_order), :controller => :washer_orders, :action => :new, :params => {:washer_id => @washer.id} %>
+<% end %>
+<% end %>
+
+<div class="list" style="width: 940px;">
+	<h4><%= hlabel(:washer_order, :t_order_list) %></h4>
+
+<% if (@washer_orders.empty?) %>
+	<%= t(:notice_empty) %>
+	<span style="margin-left: 10px;"><%= yield :new_button %></span>
+
+<% else %>
+	<%= yield :new_button %>
+	<table class="commonList">
+		<thead>
+			<tr>
+				<th style="width: 60px;"><%= simple_format(t(:t_id, :scope => [:activerecord, :attributes, :washer_order])) %></th>
+				<th style="width: 80px;"><%= hlabel :washer_order, :order_ymd %></th>
+				<th style="width: 180px;"><%= hlabel :washer_order, :trader_id %></th>
+				<th style="width: 100px;"><%= hlabel :washer_order, :order_quantity %></th>
+				<th style="width: 80px;"><%= hlabel :washer_order, :delivery_ymd %></th>
+				<th style="width: 80px;"><%= hlabel :washer_order, :reply_delivery_ymd %></th>
+				<th style="width: 100px;"><%= hlabel :washer_stock, :accept_quantity %></th>
+				<th style="width: 80px;"><%= simple_format(t(:t_delivery_flag, :scope => [:activerecord, :attributes, :washer_order])) %></th>
+				<th style="width: 80px;"><%= hlabel :washer_order, :full_delivery_ymd %></th>
+			</tr>
+		</thead>
+		<tbody>
+			<% @washer_orders.each do |washer_order| %>
+<%
+washer_supplier = MaterialSupplier.new
+washer_supplier = washer_order.trader unless washer_order.trader.nil?
+%>
+			<tr>
+				<td>
+					<%= link_to(washer_order.id, edit_washer_order_url(washer_order)) %>
+      			</td>
+				<td><%= hdate washer_order.order_ymd %></td>
+				<td><%= washer_supplier.name %></td>
+				<td class="number"><%= hnumber washer_order.order_quantity %></td>
+				<td><%= hdate washer_order.delivery_ymd %></td>
+				<td><%= hdate washer_order.reply_delivery_ymd %></td>
+				<td class="number"><%= hnumber_with_precision(washer_order.accept_quantities, :precision => 0) %></td>
+				<td>
+					<%= washer_order.disp_delivery_flag %>
+				</td>
+				<td><%= hdate washer_order.full_delivery_ymd %></td>
+			</tr>
+			<% end %>
+		</tbody>
+	</table>
+
+	<%= will_paginate @washer_orders, :param_name => :washer_orders_page %>
+<% end %>
+
+</div><!--/ list-->

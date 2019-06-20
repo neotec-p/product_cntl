@@ -1,0 +1,8 @@
+<ul class="tabmenu">
+    <li class="<%= 'act' if controller_name == 'material_suppliers' %>">
+        <%= link_to t("activerecord.models.material_supplier"), material_suppliers_path %>
+    </li>
+    <li class="<%= 'act' if controller_name == 'washer_suppliers' %>">
+        <%= link_to t("activerecord.models.washer_supplier"), washer_suppliers_path %>
+    </li>
+</ul>

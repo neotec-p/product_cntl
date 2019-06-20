@@ -1,0 +1,47 @@
+<% content_for :tabmenu do %>
+	<%= render partial: "layouts/suppliers_tab" %>
+<% end %>
+
+<div id="main">
+	<%= raw main_title %>
+
+	<%= raw flash_tag %>
+
+	<div class="control">
+		<%= new_button_tag %>
+	</div><!--/ control-->
+
+	<%= render :partial => 'layouts/traders/search_cond' %>
+
+	<div class="list">
+		<div class="paginationCnt">
+			<div class='paginationCnt'><%= t(:all_count, :scope => :paginate, :cnt => @material_suppliers.count) %></div>
+		</div>
+		<table class="commonList">
+			<thead>
+				<tr>
+					<th><%= hlabel :commons, :id %></th>
+					<th><%= hlabel :trader, :name %></th>
+					<th><%= hlabel :trader, :address %></th>
+				</tr>
+			</thead>
+			<tbody>
+				<% @material_suppliers.each do |material_supplier| %>
+				<tr>
+					<td><%= link_to material_supplier.id, edit_material_supplier_url(material_supplier) %></td>
+					<td><%= material_supplier.name %></td>
+					<td><%= material_supplier.address %></td>
+				</tr>
+				<% end %>
+			</tbody>
+		</table>
+		
+		<%= will_paginate @material_suppliers %>
+		
+	</div><!--/ list-->
+	
+	<div class="control">
+		<%= new_button_tag %>
+	</div><!--/ control-->
+	
+</div><!--/ #main-->

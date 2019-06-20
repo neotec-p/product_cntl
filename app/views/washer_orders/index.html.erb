@@ -1,0 +1,124 @@
+<% content_for :tabmenu do %>
+	<%= tab_menu_for_washer_stock %>
+<% end %> 
+
+<% content_for :control do %>
+	<%= submit_button_button_tag(t(:button_report_all), :print_all, :confirm => t(:confirm_report)) %>
+<% end %>
+
+<div id="main" style="width: 1080px;">
+	<%= raw main_title(:action => :index) %>
+
+	<%= raw flash_tag %>
+
+	<div class="condition" style="width: 900px;">
+		<%= form_tag({:action => :index}, {:method => :get, :name => :form_search, :id => :form_search }) do -%>
+		<h4><%= t(:search_condition) %></h4>
+		<table class="commonCondition">
+			<tr>
+				<th><%= hlabel :trader, :name %></th>
+<%
+empty_supplier = WasherSupplier.new
+empty_supplier.name = t(:notice_select_all)
+washer_supplier_options = [empty_supplier] + @washer_suppliers_options
+%>
+				<td><%= select_tag(:cond_trader_id, options_from_collection_for_select(washer_supplier_options, :id, :name, params[:cond_trader_id].to_i)) %></td>
+
+				<%= render :partial => "layouts/search_cond_date_from_to", :locals => {:title => hlabel(:washer_order, :delivery_ymd)} %>
+<%
+cond_delivery_flag_options = []
+cond_delivery_flag_options << [t(:notice_select_all), FLAG_NON]
+@delivery_flag_options.each{ |opt|
+	cond_delivery_flag_options << opt
+}
+%>
+				<th><%= hlabel :washer_order, :delivery_flag %></th>
+				<td>
+					<%= select_tag(:cond_delivery_flag, options_for_select(cond_delivery_flag_options, params[:cond_delivery_flag].to_i)) %>
+				</td>
+                                <td><%= check_box_tag :cond_unprinted, true, params[:cond_unprinted] -%>未発行のみ</td>
+				<td class="button"> <%= submit_tag t(:search, :scope => :actions) %> </td>
+
+
+			</tr>
+			<tr>
+
+			</tr>
+		</table>
+		<% end %>
+	</div><!--/ condition-->
+
+	<%= form_tag(print_all_washer_orders_path, {:method => :put}) do %>
+
+	<%= error_messages_for 'washer_order', :object => @washer_orders %>
+	<%= error_messages_for 'print_all' %>
+
+	<div class="list">
+<% if action_name == 'index'%>
+		<div class="paginationCnt"><%= t(:all_count, :scope => :paginate, :cnt => @washer_orders.count) %></div>
+<% end %>
+		<table class="commonList">
+			<thead>
+				<tr>
+					<th><%= raw simple_format(t(:t_washer_order_id, :scope => [:activerecord, :attributes, :washer_order])) %></th>
+					<th><%= raw hlabel :washer_order, :order_ymd %></th>
+					<th><%= raw hlabel :commons, :washer_name %></th>
+					<th><%= raw hlabel :trader, :name %></th>
+					<th><%= raw simple_format(t(:t_order_quantity, :scope => [:activerecord, :attributes, :washer_order])) %></th>
+					<th><%= raw hlabel :washer_order, :delivery_ymd %></th>
+					<th><%= raw hlabel :washer_order, :reply_delivery_ymd %></th>
+					<th><%= raw simple_format(t(:t_accedpted_amount, :scope => [:activerecord, :attributes, :washer_order])) %></th>
+					<th><%= raw simple_format(t(:t_delivery_flag, :scope => [:activerecord, :attributes, :washer_order])) %></th>
+					<th><%= raw hlabel :washer_order, :full_delivery_ymd %></th>
+					<th><%= raw simple_format(t(:t_print, :scope => [:activerecord, :attributes, :washer_order])) %></th>
+				</tr>
+			</thead>
+			<tbody>
+				<% @washer_orders.each do |washer_order| %>
+   			        <%= fields_for :washer_order, washer_order, :index => washer_order.no_in_list do |field| %>
+<%
+washer = washer_order.washer
+washer ||= Washer.new
+washer_supplier = washer_order.trader
+washer_supplier ||= WasherSupplier.new
+report = washer_order.reports.last
+report ||= Report.new
+attr = prepare_print_all_attr(report)
+%>
+					<tr>
+						<td>
+							<%= link_to(washer_order.id, edit_washer_order_url(washer_order)) %>
+							<%= field.hidden_field :id %>
+	          			</td>
+						<td><%= hdate washer_order.order_ymd %></td>
+						<td><%= washer.disp_text %></td>
+						<td><%= washer_supplier.name %></td>
+						<td class="number"><%= hnumber washer_order.order_quantity %></td>
+						<td><%= hdate washer_order.delivery_ymd %></td>
+						<td><%= hdate washer_order.reply_delivery_ymd %></td>
+						<td class="number"><%= hnumber_with_precision(washer_order.accept_quantities, :precision => 0) %></td>
+						<td><%= washer_order.disp_delivery_flag %></td>
+						<td><%= hdate washer_order.full_delivery_ymd %></td>
+						<td><%= field.check_box :select_print, :disabled => attr[:disabled] %><%= attr[:label] %></td>
+					</tr>
+					<% end %>
+				<% end %>
+			</tbody>
+		</table>
+
+<% if action_name == 'index'%>
+		<%= will_paginate @washer_orders %>
+<% else %>
+                <p><font color="red" style="margin-left:5px;">*</font><%= t(:notice_required) %></p>
+                <p style="text-align: center;"><%= t(:notice_paginate_edit) %></p>
+<% end %>
+<%= hidden_field_tag(:page, params[:page]) %>
+
+	</div><!--/ list-->
+
+	<div class="control">
+		<%= yield :control %>
+	</div><!--/ control-->
+	
+	<% end %>
+</div><!--/ #main-->

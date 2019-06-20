@@ -1,0 +1,54 @@
+<div id="main">
+	<%= raw main_title(:action => :index) %>
+
+	<%= raw flash_tag %>
+
+	<div class="control">
+		<%= new_button_tag(:action => :multi_import) %>
+	</div><!--/ control-->
+
+	<div class="condition" style="width: 500px;">
+		<%= form_tag({:action => :index}, {:method => :get, :name => :form_search, :id => :form_search }) do -%>
+			<h4><%= t(:search_condition) %></h4>
+			<table class="commonCondition">
+				<tr>
+					<%= render :partial => "layouts/search_cond_date_from_to", :locals => {} %>
+					<td class="button">
+					<%= submit_tag t(:search, :scope => :actions) %>
+					</td>
+				</tr>
+			</table>
+		<% end %>
+	</div><!--/ condition-->
+
+	<div class="list">
+		<div class="paginationCnt"><%= t(:all_count, :scope => :paginate, :cnt => @calendars.count) %></div>
+		<table class="commonList" style="width: 450px;">
+			<thead>
+				<tr>
+					<th style="width: 100px;"><%= hlabel :calendar, :year %>
+					<th style="width: 100px;"><%= hlabel :calendar, :month %></th>
+					<th style="width: 100px;"><%= hlabel :calendar, :day %></th>
+					<th style="width: 100px;"><%= hlabel :calendar, :holiday %></th>
+				</tr>
+			</thead>
+			<tbody>
+				<% @calendars.each do |calendar| %>
+				<tr>
+					<td><%= calendar.year %></td>
+					<td><%= calendar.month %></td>
+					<td><%= calendar.day %></td>
+					<td><%= calendar.holiday %></td>
+				</tr>
+				<% end %>
+			</tbody>
+		</table>
+
+		<%= will_paginate @calendars %>
+	</div><!--/ list-->
+
+	<div class="control">
+		<%= new_button_tag(:action => :multi_import) %>
+	</div><!--/ control-->
+
+</div><!--/ #main-->

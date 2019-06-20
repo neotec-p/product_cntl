@@ -1,0 +1,74 @@
+<div id="main" style="width:900px;">
+	<%= raw main_title %>
+
+	<%= raw flash_tag %>
+
+    <%= render :partial => "washers/disp_washer", :locals => { :washer => @washer } %>
+
+    <div class="subTabmenu">
+        <%= tab_submenu_for_washer_stock %>
+    </div>
+	
+	<%= form_for(@washer_stock) do |f| %>
+
+	<%= @washer_stock.errors.full_messages.join("<br>") %>
+
+	<p><font color="red" style="margin-left:5px;">*</font><%= t(:notice_required) %></p>
+
+	<div class="sheet">
+		<h4><%= hlabel(:washer_stock,:t_accept_washer_info) %></h4>
+			<table class="commonSheet">
+				<tr>
+					<th style="width: 117px;"><%= f.label :accept_quantity %><font class="mark-required" style="margin-left:5px;">*</font></th>
+					<td style="width: 180px;"><%= f.text_field :accept_quantity, :class => "amount fmt-formatted-number" %></td>
+					<th style="width: 117px;"><%= f.label :accept_ymd %><font class="mark-required" style="margin-left:5px;">*</font></th>
+					<td style="width: 180px;"><%= f.date_select :accept_ymd %><%= clear_cal_button_tag %></td>
+					<th style="width: 117px;"><%= simple_format(t(:t_inspection_no, :scope => [:activerecord, :attributes, :washer_stock])) %></th>
+					<td style="width: 180px;"><%= f.text_field :inspection_no, :size => 15 %></td>
+				</tr>
+			</table>
+	</div><!--/ sheet-->
+
+	<div class="sheet">
+		<h4><%= hlabel(:washer_stock, :t_stock_info) %></h4>
+			<table class="commonSheet">
+				<tr>
+					<th style="width: 117px;"><%= f.label :id %></th>
+					<td style="width: 180px;"><%= @washer_stock.id %></td>
+					<td colspan="4"></td>
+				</tr>
+				<tr>
+					<th style="width: 117px;"><%= f.label :t_excess_amount %></th>
+					<td class="number"style="width: 180px;"><%= hnumber_with_precision(@washer_stock.excess_amount, :precision => 0) %></td>
+					<th style="width: 117px;"><%= f.label :t_stock_amount %></th>
+					<td class="number"style="width: 180px;"><%= hnumber_with_precision(@washer_stock.stock_amount, :precision => 0) %></td>
+					<th style="width: 117px;"><%= f.label :adjust_quantity %></th>
+					<td style="width: 180px;"><%= f.text_field :adjust_quantity, :class => "amount fmt-formatted-number" %></td>
+				</tr>
+				<tr>
+					<th style="width: 117px;"><%= f.label :t_stock_price %></th>
+					<td class="number"style="width: 180px;"><%= hnumber_with_precision(@washer_stock.stock_price, :precision => 0) %></td>
+					<td colspan="4"></td>
+				</tr>
+			</table>
+	</div><!--/ sheet-->
+
+	<div class="sheet" style="width: 300px;">
+		<h4><%= hlabel(:washer_stock, :t_stock_info) %></h4>
+			<table class="commonSheet">
+				<tr>
+					<th style="width: 117px;"><%= f.label :t_stock_status %></th>
+					<td style="width: 180px;"><%= @washer_stock.disp_print_flag %></td>
+				</tr>
+			</table>
+	</div><!--/ sheet-->
+	
+	<%= f.hidden_field :lock_version %>
+	<%= f.hidden_field :washer_order_id %>
+
+	<div class="control">
+		<%= yield :control %>
+	</div><!--/ control-->
+	<% end %>
+
+</div><!--/ #main-->

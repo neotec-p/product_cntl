@@ -1,0 +1,33 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  production_id: 1
+  type: 1
+  trader_id: 1
+  material: MyString
+  thickness: MyString
+  process: MyString
+  delivery_ymd: 2012-01-31
+  summary1: MyString
+  summary2: MyString
+  price: 9.99
+  order_ymd: 2012-01-31
+  arrival_ymd: 2012-01-31
+  print_flag: 1
+  lock_version: 1
+
+two:
+  production_id: 1
+  type: 1
+  trader_id: 1
+  material: MyString
+  thickness: MyString
+  process: MyString
+  delivery_ymd: 2012-01-31
+  summary1: MyString
+  summary2: MyString
+  price: 9.99
+  order_ymd: 2012-01-31
+  arrival_ymd: 2012-01-31
+  print_flag: 1
+  lock_version: 1

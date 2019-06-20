@@ -1,0 +1,45 @@
+<% content_for :tabmenu do %>
+	<%= tab_menu_for_processor %>
+<% end %> 
+
+<div id="main">
+	<%= raw main_title %>
+
+	<%= raw flash_tag %>
+
+	<div class="control">
+		<%= new_button_tag %>
+	</div><!--/ control-->
+
+	<%= render :partial => 'layouts/traders/search_cond' %>
+
+	<div class="list">
+		<div class="paginationCnt"><%= t(:all_count, :scope => :paginate, :cnt => @addition_processors.count) %></div>
+		<table class="commonList">
+			<thead>
+				<tr>
+					<th><%= hlabel :commons, :id %></th>
+					<th><%= hlabel :trader, :name %></th>
+					<th><%= hlabel :trader, :address %></th>
+				</tr>
+			</thead>
+			<tbody>
+				<% @addition_processors.each do |addition_processor| %>
+				<tr>
+					<td><%= link_to addition_processor.id, edit_addition_processor_url(addition_processor) %></td>
+					<td><%= addition_processor.name %></td>
+					<td><%= addition_processor.address %></td>
+				</tr>
+				<% end %>
+			</tbody>
+		</table>
+
+		<%= will_paginate @addition_processors %>
+
+	</div><!--/ list-->
+
+	<div class="control">
+		<%= new_button_tag %>
+	</div><!--/ control-->
+	
+</div><!--/ #main-->

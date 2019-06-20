@@ -1,0 +1,86 @@
+<% content_for :tabmenu do %>
+	<%= raw tab_menu_for_order %>
+<% end %>
+
+<% content_for :control do %>
+    <%= submit_button_tag %>
+    <%= cancel_button_tag %>
+<% end %>
+
+<div id="main">
+	<%= raw main_title_direct(hlabel_model(get_model_by_controller(:controller => controller_name)), t("actions.hand")) %>
+	<%= raw flash_tag %>
+
+    <div class="subTabmenu">
+        <%== tab_submenu_for_order %>
+    </div>
+
+	<%= form_tag(multi_create_orders_path, {:method => :post}) do %>
+
+	<%= error_messages_for 'order', :object => @orders %>
+	
+	<p><font color="red" style="margin-left:5px;">*</font><%= t(:notice_required) %></p>
+
+	<div class="sheet">
+		<h4><%= hlabel :order, :order_info %></h4>
+		<table class="commonSheet">
+			<%= fields_for :order_info, @order_info do |field| %>
+			<tr>
+				<th style="width:15%;">
+					<%= hlabel :order, :order_no %><font class="mark-required" style="margin-left:5px;">*</font>
+				</th>
+				<td style="width:35%;">
+					<%= field.text_field :order_no, {:size => 10} %>
+				</td>
+				<th style="width:15%;">
+					<%= hlabel :order, :order_ymd %><font class="mark-required" style="margin-left:5px;">*</font>
+				</th>
+				<td style="width:35%;">
+					<%= field.date_select :order_ymd %><%= clear_cal_button_tag %>
+				</td>
+			<% end %>
+			</tr>
+		</table>
+	</div><!--/ sheet-->
+
+	<div class="list">
+		<h4><%= hlabel :order, :item_info %></h4>
+		<table class="commonList">
+			<thead>
+				<tr>
+					<th><%= hlabel :commons, :id %></th>
+					<th><%= hlabel :order, :delivery_ymd %><font class="mark-required" style="margin-left:5px;">*</font></th>
+					<th><%= hlabel :order, :order_amount %><font class="mark-required" style="margin-left:5px;">*</font></th>
+					<th><%= hlabel :commons, :item_code %><font class="mark-required" style="margin-left:5px;">*</font></th>
+				</tr>
+			</thead>
+			<tbody>
+
+				<% cnt = 1 %>
+				<% @orders.each do |order| %>
+				<%= fields_for 'order[]', order, :index => order.id do |field| %>
+				<tr>
+					<td>
+						<%= cnt %>
+					</td>
+					<td><%= field.date_select :delivery_ymd %><%= clear_cal_button_tag %></td>
+					<td><%= field.text_field :order_amount, :class => "amount fmt-formatted-number" %></td>
+					<td>
+						<%= field.text_field :item_customer_code, :size => 5 %>
+						-
+						<%= field.text_field :item_code, :size => 5 %></td>
+				</tr>
+				<% cnt += 1 %>
+				<% end %>
+				<% end %>
+			</tbody>
+
+		</table>
+	</div><!--/ sheet-->
+	
+    <div class="control">
+        <%= yield :control %>
+    </div><!--/ control-->
+	
+	<% end %>
+</div><!--/ #main-->

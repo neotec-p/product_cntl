@@ -1,0 +1,60 @@
+<% content_for :new_button do %>
+<% unless @material.provide_flag == FLAG_ON %>
+	<%= link_button_tag t(:button_new_order), :controller => :material_orders, :action => :new, :params => {:material_id => @material.id} %>
+<% end %>
+<% end %>
+
+<div class="list" style="width: 940px;">
+	<h4><%= hlabel(:material_order, :t_order_list) %></h4>
+
+<% if (@material_orders.empty?) %>
+	<%= t(:notice_empty) %>
+	<span style="margin-left: 10px;"><%= yield :new_button %></span>
+
+<% else %>
+	<%= yield :new_button %>
+	<table class="commonList">
+		<thead>
+			<tr>
+				<th style="width: 60px;"><%= simple_format(t(:t_id, :scope => [:activerecord, :attributes, :material_order])) %></th>
+				<th style="width: 80px;"><%= hlabel :material_order, :order_ymd %></th>
+				<th style="width: 180px;"><%= hlabel :material_order, :trader_id %></th>
+				<th style="width: 100px;"><%= hlabel :material_order, :order_weight %></th>
+				<th style="width: 80px;"><%= hlabel :material_order, :delivery_ymd %></th>
+				<th style="width: 80px;"><%= hlabel :material_order, :reply_delivery_ymd %></th>
+				<th style="width: 100px;"><%= hlabel :material_order, :purchase_price %></th>
+				<th style="width: 100px;"><%= hlabel :material_stock, :accept_weight %></th>
+				<th style="width: 80px;"><%= simple_format(t(:t_delivery_flag, :scope => [:activerecord, :attributes, :material_order])) %></th>
+				<th style="width: 80px;"><%= hlabel :material_order, :full_delivery_ymd %></th>
+			</tr>
+		</thead>
+		<tbody>
+			<% @material_orders.each do |material_order| %>
+<%
+material_supplier = MaterialSupplier.new
+material_supplier = material_order.trader unless material_order.trader.nil?
+%>
+			<tr>
+				<td>
+					<%= link_to(material_order.id, edit_material_order_url(material_order)) %>
+      			</td>
+				<td><%= hdate material_order.order_ymd %></td>
+				<td><%= material_supplier.name %></td>
+				<td class="number"><%= hnumber material_order.order_weight %></td>
+				<td><%= hdate material_order.delivery_ymd %></td>
+				<td><%= hdate material_order.reply_delivery_ymd %></td>
+				<td class="number"><%= hnumber_with_precision(material_order.purchase_price, :precision => 4) %></td>
+				<td class="number"><%= hnumber_with_precision(material_order.accept_weights, :precision => 1) %></td>
+				<td>
+					<%= material_order.disp_delivery_flag %>
+				</td>
+				<td><%= hdate material_order.full_delivery_ymd %></td>
+			</tr>
+			<% end %>
+		</tbody>
+	</table>
+
+	<%= will_paginate @material_orders, :param_name => :material_orders_page %>
+<% end %>
+
+</div><!--/ list-->

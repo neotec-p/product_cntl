@@ -1,0 +1,107 @@
+<div id="main" style="width:900px;">
+	<%= raw main_title %>
+
+	<%= raw flash_tag %>
+
+	<%= form_for(@item) do |f| %>
+
+	<div class="control">
+		<%= yield :control %>
+	</div><!--/ control-->
+
+	<%= @item.errors.full_messages.join("<br>") %>
+
+	<p><font color="red" style="margin-left:5px;">*</font><%= t(:notice_required) %></p>
+	<div class="sheet">
+		<h4><%= t("activerecord.models.item") %></h4>
+		<table class="commonSheet">
+			<tr>
+				<th><%= f.label :item_code %><font class="mark-required" style="margin-left:5px;">*</font></th>
+				<td>
+					<%= f.text_field :customer_code, :size => 5 %> - <%= f.text_field :code, :size => 5 %>
+				</td>
+				<th><%= f.label :logical_weight_flag %></th>
+				<td>
+					<%= f.check_box :logical_weight_flag, :value => FLAG_OFF %><%= t(:logical_weight) %>
+				</td>
+			</tr>
+			<tr>
+				<th><%= f.label :drawing_no %><font class="mark-required" style="margin-left:5px;">*</font></th>
+				<td><%= f.text_field :drawing_no, :size => 25 %></td>
+				<th><%= f.label :name %><font class="mark-required" style="margin-left:5px;">*</font></th>
+				<td> <%= f.text_field :name, :size => 25 %> </td>
+			</tr>
+			<tr>
+				<th><%= f.label :price %><font class="mark-required" style="margin-left:5px;">*</font></th>
+				<td><%= f.text_field :price, :class => "price fmt-formatted-number" %></td>
+				<th><%= f.label :weight %><font class="mark-required" style="margin-left:5px;">*</font></th>
+				<td><%= f.text_field :weight, :class => "amount fmt-formatted-number" %></td>
+			</tr>
+			<tr>
+				<th><%= f.label :t_expense %></th>
+				<td><%= hnumber @item.expense %></td>
+				<th><%= f.label :punch %></th>
+				<td> <%= f.text_field :punch, :size => 25 %> </td>
+			</tr>
+			<tr>
+				<th><%= f.label :environment %></th>
+				<td><%= @item.environment %></td>
+				<th><%= f.label :tanaka %></th>
+				<td><%= @item.tanaka %></td>
+			</tr>
+			<tr>
+				<th><%= f.label :surface_note %></th>
+				<td><%= f.text_field :surface_note, :size => 25 %></td>
+				<th><%= f.label :vote_note %></th>
+				<td><%= f.text_area :vote_note, :cols => 27, :rows => 2 %></td>
+			</tr>
+		</table>
+	</div><!--/ sheet-->
+
+	<div class="sheet">
+		<h4><%= hlabel :item, :t_model_info %></h4>
+		<table class="commonSheet">
+			<tr>
+				<th><%= f.label :hd_model_name1 %></th>
+				<td><%= f.collection_select(:hd_model_name1, @hd_model_options, :name, :name, {:include_blank => t(:notice_select)}) %></td>
+				<th><%= f.label :ro1_model_name1 %></th>
+				<td><%= f.collection_select(:ro1_model_name1, @ro1_model_options, :name, :name, {:include_blank => t(:notice_select)}) %></td>
+				<th><%= f.label :ro2_model_name1 %></th>
+				<td><%= f.collection_select(:ro2_model_name1, @ro2_model_options, :name, :name, {:include_blank => t(:notice_select)}) %></td>
+			</tr>
+			<tr>
+				<th><%= f.label :hd_model_name2 %></th>
+				<td><%= f.collection_select(:hd_model_name2, @hd_model_options, :name, :name, {:include_blank => t(:notice_select)}) %></td>
+				<th><%= f.label :ro1_model_name2 %></th>
+				<td><%= f.collection_select(:ro1_model_name2, @ro1_model_options, :name, :name, {:include_blank => t(:notice_select)}) %></td>
+				<th><%= f.label :ro2_model_name2 %></th>
+				<td><%= f.collection_select(:ro2_model_name2, @ro2_model_options, :name, :name, {:include_blank => t(:notice_select)}) %></td>
+			</tr>
+			<tr>
+				<th><%= f.label :hd_model_name3 %></th>
+				<td><%= f.collection_select(:hd_model_name3, @hd_model_options, :name, :name, {:include_blank => t(:notice_select)}) %></td>
+				<th><%= f.label :ro1_model_name3 %></th>
+				<td><%= f.collection_select(:ro1_model_name3, @ro1_model_options, :name, :name, {:include_blank => t(:notice_select)}) %></td>
+				<th><%= f.label :ro2_model_name3 %></th>
+				<td><%= f.collection_select(:ro2_model_name3, @ro2_model_options, :name, :name, {:include_blank => t(:notice_select)}) %></td>
+			</tr>
+			<tr>
+				<th><%= f.label :hd_addition_model_name %></th>
+				<td><%= f.collection_select(:hd_addition_model_name, @hd_addition_model_options, :name, :name, {:include_blank => t(:notice_select)}) %></td>
+				<th><%= f.label :ro1_addition_model_name %></th>
+				<td><%= f.collection_select(:ro1_addition_model_name, @ro1_addition_model_options, :name, :name, {:include_blank => t(:notice_select)}) %></td>
+				<th><%= f.label :ro2_addition_model_name %></th>
+				<td><%= f.collection_select(:ro2_addition_model_name, @ro2_addition_model_options, :name, :name, {:include_blank => t(:notice_select)}) %></td>
+			</tr>
+		</table>
+	</div><!--/ sheet-->
+
+	<%= f.hidden_field :lock_version %>
+
+	<div class="control">
+		<%= yield :control %>
+	</div><!--/ control-->
+
+	<% end %>
+
+</div><!--/ #main-->

@@ -1,0 +1,24 @@
+<% content_for :add_js do %>
+function set_parent(id, name, url, excess_amount){
+	if(!confirm('<%= t(:confirm_set_material) %>')){
+		return;
+	}
+
+	window.opener.$("<%= "#parts_#{params[:col_index]}_material_id" %>").val(id);
+	window.opener.$("<%= "#link_material_#{params[:col_index]}" %>").html(name);
+	window.opener.$("<%= "#link_material_#{params[:col_index]}" %>").attr('href', url);
+	
+	color = "red";
+	val = excess_amount;
+	if(Number(excess_amount) > 0){
+		color = "green";
+		val = "+" + val;
+	}
+	window.opener.$("<%= "#material_excess_amount_#{params[:col_index]}" %>").text(val);
+	window.opener.$("<%= "#material_excess_amount_#{params[:col_index]}" %>").css('color',color);
+	
+	window.close();
+}
+<% end %>
+
+<%= render :partial => 'pop_stock_index', :locals => {:target_action => :pop_material_for_link} %>

@@ -1,0 +1,44 @@
+<% target_action = :pop_washer_for_text if target_action.nil? %>
+<% pop_flag = false if pop_flag.nil? %>
+
+<div class="condition" style="width: 450px;">
+	<%= form_tag({:action => target_action}, {:method => :get, :name => :form_search, :id => :form_search }) do -%>
+	<h4><%= t(:search_condition) %></h4>
+	<table class="commonCondition">
+		<tr>
+			<th><%= hlabel :washer, :steel_class %></th>
+<%
+steel_class_options = @steel_class_options.to_a.insert(0, [t(:notice_select_all), nil])
+%>
+			<td><%= select_tag(:cond_steel_class, options_for_select(steel_class_options, params[:cond_steel_class])) %></td>
+			<th><%= hlabel :washer, :diameter %></th>
+			<td><%= render :partial => 'layouts/search_cond_washer_diameter_list' %></td>
+			<td class="button"> <%= submit_tag t(:search, :scope => :actions) %> </td>
+		</tr>
+	</table>
+
+<% if pop_flag %>
+	<%= hidden_field_tag :col_index, params[:col_index] %>
+	<%= hidden_field_tag :id_washer_id, params[:id_washer_id] %>
+	<%= hidden_field_tag :id_washer_name, params[:id_washer_name] %>
+	<%= hidden_field_tag :washer_no, params[:washer_no] %>
+<% end %>
+
+	<% end %>
+
+<script type="text/javascript">
+var steel_class_material_json = <%= raw @standard_material_json %>
+
+$("#cond_steel_class").change(function(x) {
+    var steel_class = $(this).val();
+    $("#cond_diameter option").remove();
+    $("#cond_diameter").append("<option value=\"\" selected>全て</option>");
+    if (steel_class_material_json[steel_class] !== undefined) {
+        steel_class_material_json[steel_class].forEach(function(x) {
+            $("#cond_diameter").append("<option value=\"" + x[1] + "\">" + x[0] + "</option>");
+        });
+    }
+});
+</script>
+
+</div><!--/ condition-->

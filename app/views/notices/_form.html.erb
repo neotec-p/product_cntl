@@ -1,0 +1,29 @@
+<div id="main" style="width:800px;">
+	<%= raw main_title %>
+	<%= raw flash_tag %>
+
+	<%= form_for(@notice) do |f| %>
+
+	<%= @notice.errors.full_messages.join("<br>") %>
+
+	<p><font color="red" style="margin-left:5px;">*</font><%= t(:notice_required) %></p>
+	<div class="sheet">
+		<h4><%= hlabel_model(get_model_by_controller({})) %></h4>
+		<table class="commonSheet">
+			<tr>
+				<th style="width: 200px;"><%= f.label :user_id %><font class="mark-required" style="margin-left:5px;">*</font></th>
+				<td style="width: 200px;"><%= @notice.user.disp_text %></td>
+				<th style="width: 200px;"><%= f.label :contents %><font class="mark-required" style="margin-left:5px;">*</font></th>
+				<td style="width: 200px;"><%= f.text_field :contents %></td>
+			</tr>
+		</table>
+	</div><!--/ sheet-->
+
+	<%= f.hidden_field :lock_version %>
+
+	<div class="control">
+		<%= yield :control %>
+	</div><!--/ control-->
+
+	<% end %>
+</div><!--/ #main-->

@@ -1,0 +1,76 @@
+<% content_for :tabmenu do %>
+	<%= tab_menu_for_production %>
+<% end %> 
+
+<div id="main">
+	<%= raw main_title %>
+
+	<%= raw flash_tag %>
+
+	<div class="condition" style="width:650px;">
+	<%= form_tag({:action => :index}, {:method => :get, :name => :form_search, :id => :form_search }) do -%>
+		<h4><%= t(:search_condition) %></h4>
+		<table class="commonCondition">
+			<tr>
+				<th><%=hlabel :lot, :lot_no %></th>
+				<td><%= text_field_tag(:cond_lot_no, params[:cond_lot_no], :size => 10) %></td>
+
+                                <th><%= hlabel :commons, :vote_no %></th>
+                                <td><%= text_field_tag(:cond_vote_no, params[:cond_vote_no], :size => 15) %></td>
+
+                                <th><%=hlabel :commons, :item_code %></th>
+                                <td><%= text_field_tag(:cond_item_customer_code, params[:cond_item_customer_code], :size => 5) %> - <%= text_field_tag(:cond_item_code, params[:cond_item_code], :size => 5) %></td>
+
+				<td class="button">
+				<%= submit_tag t(:search, :scope => :actions) %>
+				</td>
+			</tr>
+		</table>
+	<% end %>
+	</div><!--/ condition-->
+
+	<div class="list">
+		<div class="paginationCnt"><%= t(:all_count, :scope => :paginate, :cnt => @lots.count) %></div>
+		<table class="commonList">
+			<thead>
+				<tr>
+					<th><%= hlabel :commons, :lot_no %></th>
+					<th><%= hlabel :commons, :process_name %></th>
+					<th><%= hlabel :lot, :insert_ymd %></th>
+					<th><%= hlabel :commons, :vote_no %></th>
+					<th><%= hlabel :commons, :item_code %></th>
+					<th><%= hlabel :lot, :amount %></th>
+					<th><%= hlabel :lot, :weight %></th>
+				</tr>
+			</thead>
+			<tbody>
+				<% @lots.each do |lot| %>
+<%
+production = lot.production unless lot.production.nil?
+production ||= Production.new
+order = production.order unless production.nil?
+order ||= Order.new
+item = production.item unless production.nil?
+item ||= Item.new
+%>
+				<tr>
+<% if lot.production %>
+					<td><%= link_to(lot.lot_no.to_s, edit_production_url(production)) %></td>
+					<td><%= production.current_status_or_process_name %></td>
+<% else %>
+					<td><%= link_to(lot.lot_no.to_s, new_production_url) %></td>
+					<td><%= 'production.current_status_or_process_name' %></td>
+<% end %>
+					<td><%= hdate lot.insert_ymd %></td>
+					<td><%= production.disp_text %></td>
+					<td><%= item.disp_text %></td>
+					<td><%= hnumber production.result_amount %></td>
+					<td><%= hnumber lot.weight %></td>
+				</tr>
+				<% end %>
+			</tbody>
+		</table>
+		<%= will_paginate @lots %>
+	</div><!--/ list-->
+
+</div><!--/ #main-->

@@ -1,0 +1,170 @@
+<% content_for :tabmenu do %>
+	<%= tab_menu_for_production %>
+<% end %>
+
+<% content_for :control do %>
+    <%= submit_button_tag %>
+<% end %>
+
+<div id="main" style="width: 1050px;">
+	<%= raw main_title %>
+	<%= raw flash_tag %>
+
+    <%= render :partial => "productions/disp_production" %>
+	
+    <div class="subTabmenu">
+        <%= tab_submenu_for_production(@production) %>
+    </div>
+
+	<%= form_tag(div_lot_update_production_path, {:method => :put}) do %>
+	<%= error_messages_for 'lot_div' %>
+
+	<div class="table-layout">
+		<div class="left" style="width: 800px;">
+			<div class="list" style="width: 790px;">
+				<h4><%= hlabel(:production_div, :title_new_branch) %></h4>
+				<table class="commonList">
+					<thead>
+						<tr>
+							<th style="width: 80px;">
+								<%= hlabel(:production_div, :title_title) %>
+							</th>
+							<th style="width: 110px;">
+								<%= hlabel(:production_div, :title_branch_no) %>
+							</th>
+							<th style="width: 110px;">
+								<%= hlabel(:lot_div, :title_result_amount) %>
+							</th>
+							<th style="width: 80px;">
+								<%= hlabel(:lot_div, :title_status) %>
+							</th>
+							<th style="width: 80px;">
+								<%= hlabel(:lot, :lot_no) %>
+							</th>
+							<th style="width: 110px;">
+								<%= hlabel(:lot_div, :cur_weight) %>
+							</th>
+							<th style="width: 110px;">
+								<%= hlabel(:lot_div, :cur_case) %>
+							</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+	<%= fields_for :lot_div, @lot_div do |l_d| %>
+<%
+status = Status.new
+status = @production.status unless @production.status.nil?
+lot = Lot.new
+lot = @production.lot unless @production.lot.nil?
+%>
+							<td>
+								<%= hlabel(:lot_div, :title_div_lot_before) %>
+							</td>
+							<td>
+								<%= @production.disp_branch_no %>
+							</td>
+							<td class="number">
+								<%= hnumber(@production.result_amount) %>
+							</td>
+							<td>
+								<%= status.name %>
+							</td>
+							<td>
+								<%= (@lot_div.lot_exist_flag == FLAG_ON) ? lot.lot_no : disp_none %>
+							</td>
+							<td class="number">
+								<%= hnumber(lot.weight) %>
+							</td>
+							<td class="number">
+								<%= hnumber(lot.case) %>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<%= hlabel(:lot_div, :title_div_lot1) %>
+							</td>
+							<td>
+								<%= @production.disp_branch_no %>
+							</td>
+							<td>
+								<%= l_d.text_field :cur_result_amount, :class => "amount fmt-formatted-number" %>
+							</td>
+							<td>
+								<%= l_d.collection_select(:cur_status_id, Status.all.order(:id), :id, :name) %>
+							</td>
+							<td>
+								<%= (@lot_div.lot_exist_flag == FLAG_ON) ? lot.lot_no : disp_none %>
+							</td>
+							<td>
+								<%= l_d.text_field :cur_weight, :class => "amount fmt-formatted-number" if @lot_div.lot_exist_flag == FLAG_ON %>
+							</td>
+							<td>
+								<%= l_d.text_field :cur_case, :class => "amount fmt-formatted-number" if @lot_div.lot_exist_flag == FLAG_ON %>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<%= hlabel(:lot_div, :title_div_lot2) %>
+							</td>
+							<td>
+								<%= l_d.text_field :new_branch1_no, :size => 2 %>
+								-
+								<%= l_d.text_field :new_branch2_no, :size => 2 %>
+							</td>
+							<td>
+								<%= l_d.text_field :new_result_amount, :class => "amount fmt-formatted-number" %>
+							</td>
+							<td>
+								<%= l_d.collection_select(:new_status_id, Status.all.order(:id), :id, :name) %>
+							</td>
+							<td>
+								<%= disp_none %>
+							</td>
+							<td>
+								<%= l_d.text_field :new_weight, :class => "amount fmt-formatted-number" if @lot_div.lot_exist_flag == FLAG_ON %>
+							</td>
+							<td>
+								<%= l_d.text_field :new_case, :class => "amount fmt-formatted-number" if @lot_div.lot_exist_flag == FLAG_ON %>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div><!--/ list-->
+		</div><!-- / left -->
+
+		<div class="right" style="width: 200px;">
+			<div class="sheet" style="width: 190px;">
+				<h4><%= hlabel(:production_div, :title_reference) %></h4>
+				<table class="commonSheet">
+					<tr>
+						<th style="width: 100px;">
+							<%= hlabel(:production_div, :title_other_branches) %>
+						</th>
+						<td style="width: 90px;">
+							<% @all_branches.each do |branch| %>
+<% if branch.parts_fix_flag == FLAG_ON %>
+							<%= link_to branch.disp_branch_no, edit_production_path(branch) %>
+<% else %>
+							<%= link_to branch.disp_branch_no, fix_parts_orders_path %>
+<% end %>
+							<br/>
+							<% end %>
+						</td>
+					</tr>
+				</table>
+			</div><!--/ sheet-->
+		</div><!--/ rigth -->
+	</div><!--/ table-layout -->
+
+	<%= l_d.hidden_field :vote_no %>
+	<%= l_d.hidden_field :production_lock_version %>
+	<%= l_d.hidden_field :lot_exist_flag %>
+
+    <div class="control">
+        <%= yield :control %>
+    </div><!--/ control-->
+
+	<% end %>
+	<% end %>
+</div><!--/ #main-->

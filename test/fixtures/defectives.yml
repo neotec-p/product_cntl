@@ -1,0 +1,29 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  item_id: 1
+  model_id: 1
+  material_stock_id: 1
+  washer_stock_id: 1
+  outbreak_ymd: 2012-02-13
+  outbreak_process: MyString
+  contents: MyString
+  amount: 9.99
+  weight: 9.99
+  material_weight: 9.99
+  washer_quantity: 9.99
+  lock_version: 1
+
+two:
+  item_id: 1
+  model_id: 1
+  material_stock_id: 1
+  washer_stock_id: 1
+  outbreak_ymd: 2012-02-13
+  outbreak_process: MyString
+  contents: MyString
+  amount: 9.99
+  weight: 9.99
+  material_weight: 9.99
+  washer_quantity: 9.99
+  lock_version: 1

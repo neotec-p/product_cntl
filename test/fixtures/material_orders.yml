@@ -1,0 +1,27 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  materials_id: 1
+  supplier_id: 1
+  materials_manage_no: 1
+  order_ymd: 2012-02-09
+  order_amount: 9.99
+  size: 9.99
+  price: 9.99
+  hope_delivery_ymd: 2012-02-09
+  delivery_ymd: 2012-02-09
+  delivery_flag: 1
+  lock_version: 1
+
+two:
+  materials_id: 1
+  supplier_id: 1
+  materials_manage_no: 1
+  order_ymd: 2012-02-09
+  order_amount: 9.99
+  size: 9.99
+  price: 9.99
+  hope_delivery_ymd: 2012-02-09
+  delivery_ymd: 2012-02-09
+  delivery_flag: 1
+  lock_version: 1

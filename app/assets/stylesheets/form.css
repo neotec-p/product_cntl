@@ -1,0 +1,127 @@
+@charset "utf-8";
+
+/* ------------------------------------------- CSS Information
+ File Name:      form.css
+ Author:
+ Style Info:
+----------------------------------------------------------- */
+
+/* --------------------------------- Form Area Style --*/
+
+/*----------------------- Form Style-- */
+input,
+textarea {
+    padding: 1px 2px;
+}
+input#keyword{
+	height: 20px;
+	width: 200px;
+	font-size: large;
+}
+input[type="checkbox"]{
+    vertical-align: middle;
+    margin-right: 1px;
+}
+input[type="radio"]{
+    margin-right: 2px;
+}
+input[type="button"],
+input[type="submit"],
+input[type="file"]{
+    padding: 2px 0 1px 0;
+}
+input[type="file"]{
+	width: 300px;
+}
+input.ymd  {
+	width:85px;
+	background: #ffffff;
+	border: 1px solid #aaa;
+	margin-right: 5px;
+}
+input.ymd_short  {
+	width:68px;
+	background: #ffffff;
+	border: 1px solid #aaa;
+	margin-right: 5px;
+	text-align: right;
+	font-size: 95%;
+}
+input.price,
+input.priceDetail,
+input.ratio {
+	width:100px;
+	text-align: right;
+}
+input.amount  {
+	width:100px;
+	text-align: right;
+}
+input.amount_short {
+	width:80px;
+	text-align: right;
+	font-size: 95%;
+}
+input.readonly {
+	background-color: #ccc;
+	border: 1px solid #aaa;
+}
+
+#loginArea dt{
+	float: left;
+	width: 9em;
+}
+
+#loginArea dd {
+	margin-left: 9em;
+}
+
+#loginArea input[type="text"],
+#loginArea input[type="password"] {
+	width: 200px;
+}
+
+#loginArea p{
+	text-align:center;
+}
+
+.formInBtn {
+  font-size: 90%;
+}
+.formInBtnRight {
+  margin-left: 10px;
+  font-size: 90%;
+}
+.clearCalBtn {
+  font-size: 70%;
+  margin-left: 10px;
+}
+.clearCalBtnShort {
+  font-size: 70%;
+}
+
+/* ----------------------- NOSTYLE Initialization */
+.nostyle input,
+.nostyle textarea {
+	margin: 0;
+	padding: 0;
+}
+
+.nostyle input[type="checkbox"]{
+    vertical-align: inherit;
+    margin: 0;
+}
+
+.nostyle input[type="radio"]{
+    margin: 0;
+}
+
+.nostyle input[type="button"],
+.nostyle input[type="submit"],
+.nostyle input[type="file"]{
+    padding: 0;
+}
+
+.nostyle input[type="file"]{
+	width: inherit;
+}

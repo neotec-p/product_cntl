@@ -1,0 +1,104 @@
+<div id="main" style="width:1050px;">
+	<%= raw main_title %>
+
+	<%= raw flash_tag %>
+
+    <%= render :partial => "washers/disp_washer", :locals => { :washer => @washer, :title => hlabel(:washer, :t_washer_info) } %>
+
+    <div class="subTabmenu">
+        <%= tab_submenu_for_washer_stock %>
+    </div>
+	
+	<%= form_for(@washer_order) do |f| %>
+	
+	<%= @washer_order.errors.full_messages.join("<br>") %>
+
+	<p><font color="red" style="margin-left:5px;">*</font><%= t(:notice_required) %></p>
+
+	<div class="table-layout">
+		<div class="left" style="width: 700px;">
+			<div class="sheet">
+				<h4><%= hlabel(:washer_order,:t_order_info) %></h4>
+					<table class="commonSheet">
+						<tr>
+							<th style="width: 20%;"><%= f.label :id %></th>
+							<td colspan="3"><%= @washer_order.id %></td>
+						</tr>
+						<tr>
+							<th style="width: 20%;"><%= f.label :order_ymd %><font class="mark-required" style="margin-left:5px;">*</font></th>
+							<td style="width: 30%;"><%= f.date_select :order_ymd %><%= clear_cal_button_tag %></td>
+							<th style="width: 20%;"><%= hlabel :washer_order, :trader_id %><font class="mark-required" style="margin-left:5px;">*</font></th>
+							<td style="width: 30%;"><%= f.collection_select :trader_id, @washer_suppliers_options, :id, :name, {:include_blank => t(:notice_select)} %></td>
+						</tr>
+						<tr>
+							<th><%= f.label :delivery_ymd %><font class="mark-required" style="margin-left:5px;">*</font></th>
+							<td><%= f.date_select :delivery_ymd %><%= clear_cal_button_tag %></td>
+							<th><%= f.label :order_quantity %><font class="mark-required" style="margin-left:5px;">*</font></th>
+							<td><%= f.text_field :order_quantity, :class => "amount fmt-formatted-number" %></td>
+						</tr>
+					</table>
+			</div><!--/ sheet-->
+		</div><!--/ left -->
+
+		<div class="right" style="width: 350px; vertical-align: bottom;">
+			<div>
+				<%= delete_button_tag(:caption => t(:button_order_cancel)) if (!@washer_order.new_record? && @washer_order.delivery_flag != FLAG_ON) %>
+			</div>
+		</div><!--/ rigth -->
+	</div><!--/ table-layout -->
+
+	<div class="table-layout">
+		<div class="left" style="width: 345px;">
+			<div class="sheet">
+				<h4><%= hlabel(:washer_order,:t_reply_info) %></h4>
+				<table class="commonSheet">
+					<tr>
+						<th style="width: 20%;"><%= f.label :reply_delivery_ymd %></th>
+						<td style="width: 30%;"><%= f.date_select :reply_delivery_ymd %><%= clear_cal_button_tag %></td>
+					</tr>
+				</table>
+			</div><!--/ sheet-->
+		</div><!--/ left -->
+
+		<div class="right" style="width: 350px;">
+		</div><!--/ rigth -->
+	</div><!--/ table-layout -->
+
+	<div class="table-layout">
+		<div class="left" style="width: 700px;">
+			<div class="sheet">
+				<h4><%= hlabel(:washer_order,:t_accept_info) %></h4>
+				<table class="commonSheet">
+					<tr>
+						<th style="width: 20%;"><%= f.label :t_accedpted_amount %></th>
+						<td class="number"><%= hnumber_with_precision(@washer_order.accept_quantities, :precision => 0) %></td>
+						<td colspan="2"></td>
+					</tr>
+					<tr>
+						<th style="width: 20%;"><%= f.label :delivery_flag %><font class="mark-required" style="margin-left:5px;">*</font></th>
+						<td style="width: 30%;"><%= f.select :delivery_flag, @delivery_flag_options %></td>
+						<th style="width: 20%;"><%= f.label :full_delivery_ymd %></th>
+						<td style="width: 30%;"><%= f.date_select :full_delivery_ymd %><%= clear_cal_button_tag %></td>
+					</tr>
+				</table>
+			</div><!--/ sheet-->
+		</div><!--/ left -->
+
+		<div class="right" style="width: 350px; vertical-align: bottom;">
+			<div>
+				<%= submit_button_button_tag(t(:button_accept), :accept, :confirm => t(:confirm_accept)) if (!@washer_order.new_record? && @washer_order.delivery_flag != FLAG_ON) %>
+			</div>
+		</div><!--/ rigth -->
+	</div><!--/ table-layout -->
+
+	<%= f.hidden_field :lock_version %>
+	<%= f.hidden_field :washer_id %>
+
+	<div class="control">
+		<%= yield :control %>
+	</div><!--/ control-->
+	<% end %>
+	
+    <%= render :partial => "washer_stocks" %>
+
+</div><!--/ #main-->

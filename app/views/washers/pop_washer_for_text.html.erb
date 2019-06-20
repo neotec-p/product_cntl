@@ -1,0 +1,21 @@
+<%
+id_washer_id = "washer_edit_washer_id"
+id_washer_id = params[:id_washer_id] unless params[:id_washer_id].blank?
+id_washer_name = "washer_name"
+id_washer_name = params[:id_washer_name] unless params[:id_washer_name].blank?
+%>
+
+<% content_for :add_js do %>
+function set_parent(id, name){
+	if(!confirm('<%= t(:confirm_set_washer) %>')){
+		return;
+	}
+	
+	window.opener.$("<%= "##{id_washer_id}#{params[:washer_no]}" %>").val(id);
+	window.opener.$("<%= "##{id_washer_name}#{params[:washer_no]}" %>").text(name);
+	
+	window.close();
+}
+<% end %>
+
+<%= render :partial => 'pop_stock_index', :locals => {:target_action => :pop_washer_for_text} %>

@@ -1,0 +1,41 @@
+<% washer = @washer if washer.nil? %>
+<% title = t("activerecord.models.washer") if title.nil? %>
+
+<div class="sheet">
+    <h4><%= title %></h4>
+    <table class="commonSheet">
+        <tr>
+            <th style="width: 75px;">
+                <%= hlabel :washer, :steel_class %>
+            </th>
+            <td style="width: 150px;">
+                <%= washer.steel_class %>
+            </td>
+            <th style="width: 75px;">
+                <%=hlabel :washer, :diameter %>
+            </th>
+            <td style="width: 150px;">
+                <%= washer.diameter %>
+            </td>
+            <th style="width: 75px;">
+                <%=hlabel :washer, :surface %>
+            </th>
+            <td style="width: 150px;">
+                <%= washer.surface %>
+            </td>
+            <th style="width: 75px;">
+                <%= hlabel :washer, :unit_price %>
+            </th>
+            <td class="number" style="width: 150px;">
+                <%= hnumber_with_precision(washer.unit_price, :precision => 4) %>
+            </td>
+            <th style="width: 75px;">
+                <%= hlabel :washer, :unit %>
+            </th>
+            <td class="number" style="width: 150px;">
+                <%= hnumber washer.unit %>
+            </td>
+        </tr>
+    </table>
+    <!--/ sheet-->
+</div>

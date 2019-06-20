@@ -1,0 +1,64 @@
+<div id="main">
+
+<%= raw main_title %>
+
+<%= raw flash_tag %>
+
+<div class="control">
+	<%= new_button_tag %>
+</div><!--/ control-->
+
+<div class="condition" style="width: 750px;">
+<%= form_tag({:action => :index}, {:method => :get, :name => :form_search, :id => :form_search }) do -%>
+	<h4><%= t(:search_condition) %></h4>
+	<table class="commonCondition">
+		<tr>
+			<th><%=hlabel :commons, :id %></th>
+			<td><%= text_field_tag(:cond_id, params[:cond_id], :size => 5) %></td>
+			<th><%=hlabel :washer, :steel_class %></th>
+			<td><%= text_field_tag(:cond_steel_class, params[:cond_steel_class], :size => 15) %></td>
+			<th><%=hlabel :washer, :diameter %></th>
+			<td><%= text_field_tag(:cond_diameter, params[:cond_diameter], :size => 15) %></td>
+			<th><%=hlabel :washer, :surface %></th>
+			<td><%= text_field_tag(:cond_surface, params[:cond_surface], :size => 15) %></td>
+			<td class="button">
+				<%= submit_tag t(:search, :scope => :actions) %>
+			</td>
+		</tr>
+	</table>
+<% end %>
+</div><!--/ condition-->
+
+<div class="list">
+	<div class="paginationCnt"><%= t(:all_count, :scope => :paginate, :cnt => @washers.count) %></div>
+	<table class="commonList">
+	<thead>
+	  <tr>
+	    <th><%=hlabel :commons, :id %></th>
+	    <th><%=hlabel :washer, :steel_class %></th>
+	    <th><%=hlabel :washer, :diameter %></th>
+	    <th><%=hlabel :washer, :surface %></th>
+	    <th><%=hlabel :washer, :unit_price %></th>
+	  </tr>
+	</thead>
+	<tbody>
+	<% @washers.each do |washer| %>
+	  <tr>
+	    <td><%= link_to washer.id, edit_washer_path(washer) %></td>
+	    <td><%= washer.steel_class %></td>
+	    <td><%= washer.diameter %></td>
+	    <td><%= washer.surface %></td>
+	    <td class="number"><%= washer.unit_price %></td>
+	  </tr>
+	<% end %>
+	</tbody>
+	</table>
+
+	<%= will_paginate @washers %>
+</div><!--/ list-->
+
+<div class="control">
+	<%= new_button_tag %>
+</div><!--/ control-->
+
+</div><!--/ #main-->

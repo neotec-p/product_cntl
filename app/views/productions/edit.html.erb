@@ -1,0 +1,238 @@
+<% content_for :tabmenu do %>
+	<%= tab_menu_for_production %>
+<% end %>
+
+<% content_for :control do %>
+<% unless @production.summation_id.nil? %>
+    <%= submit_button_tag(:conf => confirm_force_submit)%>
+<% else %>
+    <%= submit_button_tag %>
+<% end %>
+
+	<%= session_back_button_tag(:action => :vote_no_index) %>
+<% end %>
+
+<% content_for :add_js do %>
+function confirm_process_order(id){
+	if (!confirm('<%= t(:confirm_process_order) %>')) {
+		return false;
+	};
+
+	$("#process_order_production_detail_id").val(id);
+	
+	return true;
+}
+<% end %>
+
+<div id="main" style="width: 1080px;">
+	<%= raw main_title %>
+	<%= raw flash_tag %>
+
+    <%= render :partial => "productions/disp_production" %>
+	
+    <div class="subTabmenu">
+        <%= tab_submenu_for_production(@production) %>
+    </div>
+
+	<%= form_for(@production) do |f| %>
+	
+    <%= @production.errors.full_messages.join("<br>") %>
+
+	<div class="table-layout">
+		<div class="left" style="width: 850px;">
+
+			<div class="list" style="width: 850px;">
+				<h4><%= t("activerecord.models.production_detail") %></h4>
+				<table class="commonList">
+					<thead>
+						<tr>
+							<th style="width: 20px;"><%= hlabel :commons, :id %></th>
+							<th style="width: 110px;"><%= hlabel :commons, :process_name %></th>
+							<th style="width: 150px;"><%= hlabel :production, :title_model_process_order %></th>
+							<th style="width: 130px;">
+								<%= hlabel :production_detail, :plan_start_ymd %><br/>
+								<%= hlabel :production_detail, :plan_end_ymd %>
+							</th>
+							<th style="width: 130px;">
+								<%= hlabel :production_detail, :result_start_ymd %><br/>
+								<%= hlabel :production_detail, :result_end_ymd %>
+							</th>
+							<th style="width: 90px;"><%= simple_format hlabel(:production, :result_amount_production) %></th>
+							<th style="width: 90px;"><%= simple_format hlabel(:production, :result_amount_history) %></th>
+							<th style="width: 90px;"><%= simple_format hlabel(:production, :defectiveness_amount) %></th>
+						</tr>
+					</thead>
+					<tbody>
+		
+<% cnt = 1 %>
+						<% @production.production_details.each do |production_detail| %>
+		                <%= f.fields_for :production_details, production_detail do |f_p_d| %>
+						<tr>
+							<td><%= sprintf('%02d', cnt) %></td>
+							<td>
+								<%= production_detail.process_detail.name %>
+								<%= f_p_d.hidden_field :lock_version %>
+							</td>
+<%
+process_type = production_detail.process_type
+
+contents = ""
+
+if production_detail.out_addition_process?
+	disabled = @production.lot.nil?
+	
+	status_order = t(:status_order_until)
+	controller = production_detail.process_order_type
+	
+	process_order = production_detail.process_order unless production_detail.process_order.nil?
+	process_order ||= ProcessOrder.new
+p "process_order ", process_order.new_record?
+	
+	action = :new
+	id = ""
+	unless process_order.new_record?
+		action = :edit
+		id = production_detail.process_order.id unless production_detail.process_order.nil?
+		status_order = t(:status_order_ordered)
+		status_order = t(:status_order_recieved) unless process_order.arrival_ymd.blank?
+	end
+	
+	contents = submit_button_button_tag(hlabel_model(get_model_by_controller(:controller => controller)), controller, :disabled => disabled, :onClick => "return confirm_process_order(#{production_detail.id});")
+
+elsif ProcessType.plan_process_flags.include?(process_type.plan_process_flag)
+	options = production_detail.create_model_options
+	contents = f_p_d.select(:model_id, options, {:include_blank => t(:notice_select)}) unless options.empty?
+end
+%>
+							<td><%= contents %></td>
+							<td>
+								<%= f_p_d.date_select :plan_start_ymd, :class => "ymd_short" %><%= clear_cal_button_short_tag %><br/>
+								<%= f_p_d.date_select :plan_end_ymd, :class => "ymd_short" %><%= clear_cal_button_short_tag %>
+							</td>
+							<td>
+								<%= f_p_d.date_select :result_start_ymd, :class => "ymd_short" %><%= clear_cal_button_short_tag %><br/>
+								<%= f_p_d.date_select :result_end_ymd, :class => "ymd_short" %><%= clear_cal_button_short_tag %>
+							</td>
+							<td><%= f_p_d.text_field :result_amount_production, :class => 'amount_short currency' %></td>
+							<td class="number"><%= hnumber production_detail.result_amount_history %></td>
+							<td><%= f_p_d.text_field :defectiveness_amount, :class => 'amount_short currency' %></td>
+						</tr>
+		<% cnt += 1 %>
+						<% end %>
+						<% end %>
+					</tbody>
+				</table>
+			</div><!--/ list-->
+		</div><!-- / left -->
+
+		<div class="right" style="width: 230px;">
+			<div class="box">
+				<h4><%= hlabel(:production, :report_info) %></h4>
+				<div class="commonBox">
+<%
+report = @production.reports.order("id desc").first
+if report.nil?
+	asynchro_status = AsynchroStatus.find(ASYNCHRO_STATUS_YET)
+	status_name = asynchro_status.name
+%>
+					<%= status_name %>
+					<br/>
+					<%= submit_button_button_tag(t(:button_report), :report, :confirm => t(:confirm_report), :class => :formInBtn) %>
+<%
+else
+	asynchro_status = report.asynchro_status
+	status_name = asynchro_status.name
+	if asynchro_status.id == ASYNCHRO_STATUS_DONE
+%>
+					<%= status_name %>
+					<%= link_to(t(:notice_down_load), {:controller => :reports, :action => :download, :id => report.id}) %>
+					<br/>
+					<%= submit_button_button_tag(t(:button_re_report), :report, :confirm => t(:confirm_re_report), :class => :formInBtn) %>
+<%
+	else
+%>
+					<%= status_name %>
+<%
+	end
+end
+%>
+				</div><!--/ commonBox-->
+			</div><!--/ box-->
+
+			<div class="sheet">
+				<h4><%= t("activerecord.models.lot") %></h4>
+				<table class="commonSheet">
+<%
+lot = Lot.new
+lot = @production.lot unless @production.lot.nil?
+%>
+			    <%= f.fields_for :lot, lot do |f_lot| %>
+				<tr>
+					<th style="width: 70px;"><%= hlabel :lot, :lot_no %></th>
+					<td style="width: 150px;">
+					  <%= lot.lot_no %>
+					  <%= submit_button_button_tag(t(:button_new_no), :new_lot, :confirm => t(:confirm_new_lot), :class => :formInBtn) if lot.new_record? %>
+					  <%= f_lot.hidden_field :lock_version unless lot.new_record? %>
+					</td>
+				</tr>
+				<tr>
+					<th>
+						<%= simple_format hlabel(:lot, :title_weight) %>
+					</th>
+					<td>
+					  <%= f_lot.text_field(:weight, :class => [:amount_short, :currency]) unless lot.new_record? %>
+					</td>
+				</tr>
+				<tr>
+					<th><%= hlabel :lot, :case %></th>
+					<td>
+					  <%= f_lot.text_field(:case, :class => [:amount_short, :currency]) unless lot.new_record? %>
+					</td>
+				</tr>
+				<% end %>
+				</table>
+			</div><!--/ sheet-->
+
+			<div class="sheet">
+				<h4><%= hlabel :production, :title_status %></h4>
+				<table class="commonSheet">
+				<tr>
+					<th style="width: 70px;">
+						<%= hlabel :production, :status_id %>
+					</th>
+					<td style="width: 150px;">
+						<%= f.collection_select(:status_id, @statuses, :id, :name) %>
+					</td>
+				</tr>
+				<tr>
+					<th>
+						<%= hlabel :commons, :memo %>
+					</th>
+					<td>
+<%= momo_button(@production) %>
+					</td>
+				</tr>
+				<tr>
+					<th>
+						<%= hlabel :production, :title_branch %>
+					</th>
+					<td>
+						<%= submit_button_button_tag(t(:button_div_branch), :div_branch, :confirm => t(:confirm_div_branch)) %><br/>
+						<%= submit_button_button_tag(t(:button_div_lot), :div_lot, :confirm => t(:confirm_div_lot)) %>
+					</td>
+				</tr>
+				</table>
+			</div><!--/ sheet-->
+
+		</div><!--/ rigth -->
+	</div><!--/ table-layout -->
+
+	<%= hidden_field_tag :production_id, @production.id %>
+	<%= hidden_field_tag :process_order_production_detail_id %>
+
+    <div class="control">
+        <%= yield :control %>
+    </div><!--/ control-->
+	
+	<% end %>
+</div><!--/ #main-->

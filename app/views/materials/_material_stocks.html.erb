@@ -1,0 +1,58 @@
+<% content_for :add_js do %>
+function confirm_collect_print(){
+	return confirm('<%= t(:confirm_report_collect) %>');
+}
+<% end %>
+
+<% if (@material_stocks.empty?) %>
+	<div class="box">
+		<h4><%= hlabel(:material_stock, :t_stock_list) %></h4>
+		<%= t(:notice_empty) %>
+	</div><!--/ box-->
+
+<% else %>
+	<div class="list" style="width: 840px;">
+		<h4><%= hlabel(:material_stock, :t_stock_list) %></h4>
+		<table class="commonList">
+			<thead>
+				<tr>
+					<th style="width: 60px;"><%= simple_format(t(:t_id, :scope => [:activerecord, :attributes, :material_stock])) %></th>
+					<th style="width: 170px;"><%= simple_format(t(:t_inspection_no, :scope => [:activerecord, :attributes, :material_stock])) %></th>
+					<th style="width: 120px;"><%= hlabel :material_stock, :accept_ymd %></th>
+					<th style="width: 120px;"><%= hlabel :material_stock, :accept_weight %></th>
+					<th style="width: 120px;"><%= hlabel :material_stock, :t_excess_amount %></th>
+					<th style="width: 120px;"><%= hlabel :material_stock, :t_stock_price %></th>
+					<th colspan="2"><%= hlabel :material_stock, :t_print_info %></th>
+				</tr>
+			</thead>
+			<tbody>
+				<% @material_stocks.each do |material_stock| %>
+				<tr>
+					<td>
+						<%= link_to(material_stock.id, edit_material_stock_url(material_stock)) %>
+	      			</td>
+					<td><%= material_stock.inspection_no %></td>
+					<td><%= hdate material_stock.accept_ymd %></td>
+					<td class="number"><%= hnumber_with_precision(material_stock.accept_weight, :precision => 1) %></td>
+					<td class="number"><%= hnumber_with_precision(material_stock.excess_amount, :precision => 1) %></td>
+					<td class="number"><%= hnumber_with_precision(material_stock.stock_price, :precision => 0) %></td>
+					<td style="width: 80px;">
+						<%= material_stock.disp_print_flag %>
+					</td>
+					<td style="width: 50px;">
+<% if material_stock.print_flag == FLAG_ON && material_stock.collect_flag == FLAG_OFF %>
+	<%= button_to(t(:button_collect),
+	 {:action => :collect_print, :id => material_stock.material.id, :material_stock_id => material_stock.id, 
+	 	:material_stock_lock_version => material_stock.lock_version, :material_stocks_page => params[:material_stocks_page]}, 
+	 :method => :put, :class => "formInBtn", :onClick => "return confirm_collect_print();") %>
+<% end %>
+					</td>
+				</tr>
+				<% end %>
+			</tbody>
+		</table>
+	
+		<%= will_paginate @material_stocks, :param_name => :material_stocks_page %>
+	
+	</div><!--/ list-->
+<% end %>

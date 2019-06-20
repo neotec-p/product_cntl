@@ -1,0 +1,15 @@
+<ul class="tabmenu">
+<% class_name = case action_name
+                when *['cond_print', 'print']
+                  ['', 'act']
+                else
+                  ['act', '']
+                end
+ %>
+  <li class="<%= class_name[0] %>">
+    <%= link_to(t("actions.defective_index"), defectives_path) %>
+  </li>
+  <li class="<%= class_name[1] %>">
+    <%= link_to(t("actions.report"), cond_print_defectives_path) %>
+  </li>
+</ul>

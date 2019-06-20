@@ -1,0 +1,33 @@
+<%# erbにて定義するJavascirpt %>
+
+var isEdit = false;
+function check_edit_core(){
+	isEdit = true;
+}
+function check_edit(){
+	$("[id^='<%= get_model_by_controller %>']").focus(function(){
+		check_edit_core();
+	});
+	$("[class^='formInBtn']").click(function(){
+		check_edit_core();
+	});
+}
+function confirm_change_tab_core(){
+	if ((isEdit == true) || ($("#errorExplanation").size() > 0)) {
+		if(!confirm('<%= t(:confirm_change_tab_js) %>')){
+			return false;
+		}
+	}
+
+	return true;
+}
+function confirm_change_tab(){
+	$(".tabmenu a").click(function(){
+		return confirm_change_tab_core();
+	});
+}
+
+$(function() {
+    check_edit();
+    confirm_change_tab();
+});

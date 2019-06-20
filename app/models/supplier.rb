@@ -1,0 +1,3 @@
+class Supplier < Trader
+  
+end

@@ -1,0 +1,10 @@
+<% content_for :tabmenu do %>
+	<%= tab_menu_for_production %>
+<% end %> 
+
+<% content_for :control do %>
+    <%= submit_button_tag %>
+    <%= cancel_button_tag(:controller => :process_orders) %>
+<% end %>
+
+<%= render :partial => 'form' %>

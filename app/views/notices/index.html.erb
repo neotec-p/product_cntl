@@ -1,0 +1,39 @@
+<div id="main">
+	<%= raw main_title %>
+
+	<%= raw flash_tag %>
+
+	<div class="control">
+		<%= new_button_tag %>
+	</div><!--/ control-->
+
+	<div class="list">
+		<div class="paginationCnt"><%= t(:all_count, :scope => :paginate, :cnt => @notices.count) %></div>
+		<table class="commonList">
+			<thead>
+				<tr>
+					<th style="width: 100px;"><%= hlabel :notice, :id %></th>
+					<th style="width: 100px;"><%= hlabel :notice, :t_created_ymd %>
+					<th style="width: 100px;"><%= hlabel :notice, :user_id %></th>
+					<th style="width: 500px;"><%= hlabel :notice, :contents %></th>
+				</tr>
+			</thead>
+			<tbody>
+				<% @notices.each do |notice| %>
+				<tr>
+					<td><%= link_to notice.id, edit_notice_path(notice) %></td>
+					<td><%= hdate notice.created_ymd %></td>
+					<td><%= notice.user.disp_text %></td>
+					<td><%= notice.contents %></td>
+				</tr>
+				<% end %>
+			</tbody>
+		</table>
+		<%= will_paginate @notices %>
+	</div><!--/ list-->
+
+	<div class="control">
+		<%= new_button_tag %>
+	</div><!--/ control-->
+
+</div><!--/ #main-->

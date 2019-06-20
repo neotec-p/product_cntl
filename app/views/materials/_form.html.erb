@@ -1,0 +1,73 @@
+<div id="main" style="width:800px;">
+
+<%= raw main_title %>
+
+<%= raw flash_tag %>
+
+<%= form_for(@material) do |f| %>
+
+<%= @material.errors.full_messages.join("<br>") %>
+
+<p><font color="red" style="margin-left:5px;">*</font><%= t(:notice_required) %></p>
+
+<div class="sheet">
+	<table class="commonSheet">
+		<tr>
+			<th><%= f.label :id %></th>
+			<td>
+				<%= @material.id %>
+			</td>
+			<td colspan="2"></td>
+		</tr>
+		<tr>
+			<th><%= f.label :standard %><font class="mark-required" style="margin-left:5px;">*</font></th>
+			<td>
+			  <%= f.text_field :standard, :size => 20 %><font class="mark-required" style="margin-left:5px;">*</font>
+			</td>
+			<th><%= f.label :diameter %><font class="mark-required" style="margin-left:5px;">*</font></th>
+			<td>
+			  <%= f.text_field :diameter, :size => 20 %><font class="mark-required" style="margin-left:5px;">*</font>
+			</td>
+		</tr>
+		<tr>
+			<th><%= f.label :surface %></th>
+			<td>
+			  <%= f.text_field :surface, :size => 20 %>
+			</td>
+			<th><%= f.label :provide_flag %></th>
+			<td>
+				<%= f.check_box :provide_flag, :value => FLAG_ON %><%= t(:provide_material) %>
+			</td>
+		</tr>
+		<tr>
+			<th><%= f.label :process %></th>
+			<td>
+			  <%= f.text_field :process, :size => 20 %>
+			</td>
+			<th><%= f.label :dimensions %></th>
+			<td>
+			  <%= f.text_field :dimensions, :size => 20 %>
+			</td>
+		</tr>
+		<tr>
+			<th><%= f.label :unit_price %><font class="mark-required" style="margin-left:5px;">*</font></th>
+			<td>
+			  <%= f.text_field :unit_price, :class => "price fmt-formatted-number" %>
+			</td>
+			<th><%= f.label :unit_price_update_flag %></th>
+			<td>
+				<%= f.check_box :unit_price_update_flag, :value => FLAG_ON %><%= t(:auto_update) %>
+			</td>
+		</tr>
+	</table>
+</div><!--/ sheet-->
+
+	<%= f.hidden_field :lock_version %>
+	
+<div class="control">
+	<%= yield :control %>
+</div><!--/ control-->
+
+<% end %>
+	
+</div><!--/ #main-->

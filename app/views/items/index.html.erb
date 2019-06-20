@@ -1,0 +1,96 @@
+<% content_for :tabmenu do %>
+	<%= tab_menu_for_item %>
+<% end %>
+
+<div id="main" style="width: 1080px;">
+	<%= raw main_title %>
+
+	<%= raw flash_tag %>
+	<div class="control">
+		<%= new_button_tag %>
+	</div><!--/ control-->
+	
+	<div class="condition" style="width: 800px;">
+		<%= form_tag({:action => :index}, {:method => :get, :name => :form_search, :id => :form_search }) do -%>
+		<h4><%= t(:search_condition) %></h4>
+		<table class="commonCondition">
+			<tr>
+				<th><%= hlabel :commons, :item_code %></th>
+				<td>
+					<%= text_field_tag(:cond_customer_code, params[:cond_customer_code], :size => 5) %>
+					 - 
+					<%= text_field_tag(:cond_code, params[:cond_code], :size => 5) %>
+				</td>
+				<th><%= hlabel :item, :drawing_no %></th>
+				<td><%= text_field_tag(:cond_drawing_no, params[:cond_drawing_no]) %></td>
+				<th><%= hlabel :item, :name %></th>
+				<td><%= text_field_tag(:cond_name, params[:cond_name]) %></td>
+				<td class="button"> <%= submit_tag t(:search, :scope => :actions) %> </td>
+			</tr>
+		</table>
+		<% end %>
+	</div><!--/ condition-->
+
+	<div class="list">
+		<div class="paginationCnt">
+			<div class='paginationCnt'><%= t(:all_count, :scope => :paginate, :cnt => @items.count) %></div>
+		</div>
+		<table class="commonList">
+			<thead>
+				<tr>
+					<th style="width: 80px;"><%= hlabel :commons, :item_code %></th>
+					<th><%= hlabel :item, :drawing_no %></th>
+					<th><%= hlabel :item, :name %></th>
+					<th><%= hlabel :item, :price %></th>
+					<th><%= hlabel :item, :weight %></th>
+					<th><%= simple_format(t(:t_check_sheet, :scope => [:activerecord, :attributes, :item])) %></th>
+					<th><%= t("activerecord.models.process_detail") %></th>
+					<th><%= t("actions.set_parts") %></th>
+					<th><%= simple_format(t(:t_process_expense, :scope => [:activerecord, :attributes, :item])) %></th>
+				</tr>
+			</thead>
+			<tbody>
+				<% @items.each do |item| %>
+				<tr>
+					<td><%= link_to (item.disp_text), edit_item_path(item) %></td>
+					<td><%= item.drawing_no %></td>
+					<td><%= item.name %></td>
+					<td><%= item.price %></td>
+					<td><%= item.weight %></td>
+<%
+not_registered = t(:not_registered)
+registered = t(:registered)
+
+is_not_registered = item.header_left_check_sheet.nil? || item.header_right_check_sheet.nil? || item.rolling_left_check_sheet.nil? || item.rolling_right_check_sheet.nil?
+check_sheet = link_to(not_registered, :controller => :header_left_check_sheets, :action => :new, :item_id => item) if (is_not_registered && item.header_left_check_sheet.nil?)
+check_sheet = link_to(not_registered, edit_header_left_check_sheet_path(item.header_left_check_sheet)) if (is_not_registered && !item.header_left_check_sheet.nil?)
+check_sheet ||= registered
+%>
+					<td><%= check_sheet %></td>
+<%
+process_detail = link_to(not_registered, {:controller => :process_details, :action => :multi_new, :item_id => item}) if item.process_details.empty?
+process_detail ||= registered
+%>
+					<td><%= process_detail %></td>
+<%
+parts = link_to(t(:not_registered), set_parts_item_path(item)) if (item.materials.empty? && item.washers.empty?)
+parts ||= registered
+%>
+					<td><%= parts %></td>
+<%
+process_expense = link_to not_registered, {:controller => :process_expenses, :action => :new, :item_id => item} if item.process_expense.nil?
+process_expense ||= registered
+%>
+					<td><%= process_expense %></td>
+				</tr>
+				<% end %>
+			</tbody>
+		</table>
+		<%= will_paginate @items %> <!--/ list-->
+	</div><!--/ list -->
+	
+	<div class="control">
+		<%= new_button_tag %>
+	</div><!--/ control-->
+	
+</div><!--/ #main-->

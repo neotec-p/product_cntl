@@ -1,0 +1,59 @@
+<!-- default 800px;` -->
+<div id="main">
+
+<%= raw main_title %>
+
+<%= raw flash_tag %>
+
+<div class="control">
+	<%= new_button_tag %>
+<!--/ control--></div>
+
+<div class="condition" style="width: 500px;">
+
+<%= form_tag({:action => :index}, {:method => :get, :name => :form_search, :id => :form_search }) do -%>
+	<h4><%= t(:search_condition) %></h4>
+	<table class="commonCondition">
+		<tr>
+			<th><%=hlabel :commons, :code %></th>
+			<td><%= text_field_tag(:cond_code, params[:cond_code], :size => 5) %></td>
+			
+			<th><%=hlabel :commons, :name %></th>
+			<td><%= text_field_tag(:cond_name, params[:cond_name]) %></td>
+			<td class="button">
+			<%= submit_tag t(:search, :scope => :actions) %>
+			</td>
+		</tr>
+	</table>
+<% end %>
+<!--/ condition--></div>
+
+<div class="list">
+	<div class="paginationCnt"><%= t(:all_count, :scope => :paginate, :cnt => @models.count) %></div>
+	<table class="commonList">
+	<thead>
+	  <tr>
+	    <th><%=hlabel :model, :code %></th>
+	    <th><%=hlabel :model, :name %></th>
+	    <th><%=hlabel :model, :note %></th>
+	  </tr>
+	</thead>
+	<tbody>
+	<% @models.each do |model| %>
+	  <tr>
+	    <td><%= link_to model.code, edit_model_path(model) %></td>
+	    <td><%= model.name %></td>
+	    <td><%= model.note %></td>
+	  </tr>
+	<% end %>
+	</tbody>
+	</table>
+
+	<%= will_paginate @models, :previous_label => t('paginate.previous_label'), :next_label => t('paginate.next_label') %>
+<!--/ list--></div>
+
+<div class="control">
+	<%= new_button_tag %>
+<!--/ control--></div>
+
+<!--/ #main--></div>

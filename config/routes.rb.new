@@ -1,0 +1,140 @@
+Neotec::Application.routes.draw do
+  # The priority is based upon order of creation:
+  # first created -> highest priority.
+
+  # Sample of regular route:
+  #   match 'products/:id' => 'catalog#view'
+  # Keep in mind you can assign values other than :controller and :action
+
+  # Sample of named route:
+  #   match 'products/:id/purchase' => 'catalog#purchase', :as => :purchase
+  # This route can be invoked with purchase_url(:id => product.id)
+
+  # Sample resource route (maps HTTP verbs to controller actions automatically):
+  #   resources :products
+
+  # Sample resource route with options:
+  #   resources :products do
+  #     member do
+  #       get 'short'
+  #       post 'toggle'
+  #     end
+  #
+  #     collection do
+  #       get 'sold'
+  #     end
+  #   end
+
+  # Sample resource route with sub-resources:
+  #   resources :products do
+  #     resources :comments, :sales
+  #     resource :seller
+  #   end
+
+  # Sample resource route with more complex sub-resources
+  #   resources :products do
+  #     resources :comments
+  #     resources :sales do
+  #       get 'recent', :on => :collection
+  #     end
+  #   end
+
+  # Sample resource route within a namespace:
+  #   namespace :admin do
+  #     # Directs /admin/products/* to Admin::ProductsController
+  #     # (app/controllers/admin/products_controller.rb)
+  #     resources :products
+  #   end
+
+  # You can have the root of your site routed with "root"
+  # just remember to delete public/index.html.
+  # root :to => "welcome#index"
+
+  # See how all your routes lay out with "rake routes"
+
+  # This is a legacy wild controller route that's not recommended for RESTful applications.
+  # Note: This route will make all actions in every controller accessible via GET requests.
+  # match ':controller(/:action(/:id(.:format)))'
+
+  resources :customers, :except => [:show, :destroy]
+
+  resources :models, :except => [:show, :destroy]
+  
+  resources :materials, :except => [:show, :destroy], :collection => {:stock_index => :get, :pop_material_for_text => :get, :pop_material_for_link => :get}, :member => {:stock => :get, :collect_print => :put}
+  
+  resources :washers, :except => [:show, :destroy], :collection => {:stock_index => :get, :pop_washer_for_text => :get, :pop_washer_for_link => :get}, :member => {:stock => :get, :collect_print => :put}
+
+  resources :items, :except => [:show, :destroy], :member => {:set_parts => :get, :set_parts_update => :put}
+
+  resources :process_expenses, :except => [:index, :show, :destroy]
+
+  resources :header_right_check_sheets, :except => [:index, :show, :destroy]
+
+  resources :header_left_check_sheets, :except => [:index, :show, :destroy]
+
+  resources :rolling_right_check_sheets, :except => [:index, :show, :destroy]
+
+  resources :rolling_left_check_sheets, :except => [:index, :show, :destroy]
+
+  resources :process_details, :collection => { :multi_new => :get, :multi_edit => :get, :multi_create => :post, :multi_update => :put }, :only => [:multi_new, :multi_edit, :multi_create, :multi_update]
+
+  resources :heat_processors, :except => [:show, :destroy]
+
+  resources :surface_processors, :except => [:show, :destroy]
+
+  resources :addition_processors, :except => [:show, :destroy]
+
+  resources :internal_processors, :except => [:show, :destroy]
+
+  resources :material_suppliers, :except => [:show, :destroy]
+
+  resources :washer_suppliers, :except => [:show, :destroy]
+
+  resources :users, :except => [:show, :destroy], :member => {:passwd => :get, :passwd_update => :put}
+
+  resources :orders, :except => [:show, :destroy, :new, :create], :collection => {:multi_new => :get, :multi_create => :post, :multi_import => :get, :import => :post, :multi_import_create => :post, :fix_parts => :get, :fix_parts_update => :put}, :member => { :fix_production => :get, :fix_production_update => :put}
+
+  resources :productions, :except => [:show, :destroy], :member => {:report => :post, :div_branch => :get, :div_branch_update => :put, :div_lot => :get, :div_lot_update => :put, :edit_material => :get, :edit_material_update => :put, :edit_washer => :get, :edit_washer_update => :put}, :collection => {:print_all => :put, :vote_no_index => :get, :item_code_index => :get, :material_index => :get, :multi_plan => :get, :multi_plan_update => :put, :print_t040 => :post, :multi_model => :get, :multi_model_update => :put, :yeild_index => :get, :pop_model_production_plan => :get }
+
+  resources :memos, :only => [:index, :new, :create]
+
+  resources :material_orders, :except => [:show, :destroy], :collection => {:print_all => :put, :cond_print_t140 => :get, :print_t140 => :put}, :member => {:print_t150 => :put}
+
+  resources :material_stocks, :except => [:show, :destroy]
+
+  resources :washer_orders, :except => [:show, :destroy], :collection => {:print_all => :put, :cond_print_t141 => :get, :print_t141 => :put}, :member => {:collect_print => :put}
+
+  resources :washer_stocks, :except => [:show, :destroy]
+
+  resources :lots, :only => [:index]
+  
+  resources :process_orders, :collection => {:treated_index => :get, :print_all => :put}, :only => [:index, :treated_index, :print_all]
+  
+  resources :heat_process_orders, :except => [:show, :destroy, :index]
+
+  resources :surface_process_orders, :except => [:show, :destroy, :index]
+
+  resources :addition_process_orders, :except => [:show, :destroy, :index]
+
+  resources :defectives, :except => [:show, :destroy], :collection => {:cond_print => :get, :print => :put}
+
+  resources :reports, :member => { :download => :get }, :only => [:download]
+
+  resources :summations, :except => [:show, :destroy], :collection => {:summate_month => :post, :summate_month_report => :post}
+
+  resources :heat_process_prices, :except => [:show, :destroy]
+
+  resources :surface_process_prices, :except => [:show, :destroy]
+
+  resources :notices, :except => [:show, :destroy]
+
+  resources :calendars, :only => [:index], :collection => {:multi_import => :get, :multi_import_update => :put}
+
+  #map.top       'top', :controller => :top, :action => :index
+  map.error     'error', :controller => :top, :action => :error
+
+  root :to => 'auth#login'
+
+  #map.connect ':controller/:action/:id'
+  #map.connect ':controller/:action/:id.:format'
+end

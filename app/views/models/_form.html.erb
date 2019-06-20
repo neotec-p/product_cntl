@@ -1,0 +1,49 @@
+<div id="main">
+	<%= raw main_title %>
+
+	<%= raw flash_tag %>
+
+	<%= form_for(@model) do |f| %>
+	<div class="control">
+		<%= yield :control %>
+	</div><!--/ control-->
+
+	<%= @model.errors.full_messages.join("<br>") %>
+
+	<p><font color="red" style="margin-left:5px;">*</font><%= t(:notice_required) %></p>
+	<div class="sheet">
+		<table class="commonSheet">
+			<tr>
+				<th style="width: 100px;"><%= f.label :code %><font class="mark-required" style="margin-left:5px;">*</font></th>
+				<td style="width: 300px;"> <%= f.text_field :code, :size => 5 %> </td>
+				<th style="width: 100px;"><%= f.label :name %><font class="mark-required" style="margin-left:5px;">*</font></th>
+				<td style="width: 300px;">
+					<%= f.text_field :name, :size => 25 %></td>
+				</td>
+			</tr>
+			<tr>
+				<th><%= hlabel :model, :process %></th>
+				<td>
+					<ul>
+					<% @plan_processes.each do |process_type| %>
+						<li>
+						<%= check_box_tag 'process_types[]', process_type.id, @model.process_types.exists?(process_type.id) -%>
+						<%= process_type.name -%>
+						</li>
+					<% end %>				
+					</ul>
+				</td>
+				<th><%= f.label :note %></th>
+				<td><%= f.text_field :note, :size => 25 %></td>
+			</tr>
+		</table>
+	</div><!--/ sheet-->
+
+	<%= f.hidden_field :lock_version %>
+
+	<div class="control">
+		<%= yield :control %>
+	</div><!--/ control-->
+
+	<% end %>
+</div><!--/ #main-->

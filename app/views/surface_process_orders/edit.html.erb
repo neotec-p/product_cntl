@@ -1,0 +1,14 @@
+<% content_for :tabmenu do %>
+	<%= tab_menu_for_production %>
+<% end %> 
+
+<% content_for :control do %>
+<% unless @surface_process_order.arrival_ymd.nil? %>
+    <%= submit_button_tag(:conf => confirm_force_submit(:act => t(:status_arrival)))%>
+<% else %>
+    <%= submit_button_tag %>
+<% end %>
+    <%= cancel_button_tag(:controller => :process_orders) %>
+<% end %>
+
+<%= render :partial => 'form' %>

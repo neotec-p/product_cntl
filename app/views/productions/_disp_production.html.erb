@@ -1,0 +1,112 @@
+<% production = @production if production.nil? %>
+<% title = hlabel(:production, :production_info) if title.nil? %>
+
+<%
+order = production.order unless production.order.nil?
+order ||= Order.new
+item = production.item
+item ||= Item.new
+material = production.material
+washer1 = production.washer1
+washer2 = production.washer2
+%>
+
+<div class="sheet">
+	<h4><%= title %></h4>
+	<table class="commonSheet">
+		<tr>
+			<th style="width:10%;">
+				<%= hlabel :commons, :vote_no %><br/>
+				<%= hlabel :commons, :item_code %>
+			</th>
+			<td style="width:15%;">
+				<%= production.disp_text %><br />
+				<%= production.item.disp_text %>
+			</td>
+			<th style="width:10%;">
+				<%= hlabel :item, :name %><br/>
+				<%= hlabel :item, :drawing_no %>
+			</th>
+			<td style="width:40%;" colspan="3">
+				<%= item.name %><br/>
+				<%= item.drawing_no %>
+			</td>
+			<th style="width:10%;">
+				<%= hlabel :order, :delivery_ymd %>
+			</th>
+			<td style="width:15%;">
+				<%= hdate order.delivery_ymd %>
+			</td>
+		</tr>
+		<tr>
+			<th style="width:10%;">
+				<%= hlabel :order, :necessary_amount %>
+			</th>
+			<td class="number" style="width:15%;">
+				<%= hnumber order.necessary_amount %><br/>
+			</td>
+			<th style="width:10%;">
+				<%= hlabel :production, :title_plan_weight_long %>
+			</th>
+			<td class="number" style="width:15%;">
+				<%= hnumber production.plan_weight %>
+			</td>
+			<th style="width:10%;">
+				<%= raw simple_format(t(:result_amount_vote_no, :scope => [:activerecord, :attributes, :production])) %><br/>
+			</th>
+			<td class="number" style="width:15%;">
+				<%= hnumber(Production.where(["vote_no = ?", production.vote_no]).sum(:result_amount)) %>
+			</td>
+			<th style="width:10%;">
+				<%= raw simple_format(t(:result_amount_current, :scope => [:activerecord, :attributes, :production])) %><br/>
+			</th>
+			<td class="number" style="width:15%;">
+				<%= hnumber production.result_amount %>
+			</td>
+		</tr>
+		<tr>
+			<th>
+				<%= hlabel :parts, :material_id %>
+			</th>
+			<td>
+				<%= material.disp_text unless material.nil? %>
+				<%= disp_none if material.nil? %>
+			</td>
+			<th>
+				<%= hlabel :parts, :washer_id1 %>
+			</th>
+			<td>
+				<%= washer1.disp_text unless washer1.nil? %>
+				<%= disp_none if washer1.nil? %>
+			</td>
+			<th>
+				<%= hlabel :parts, :washer_id2 %>
+			</th>
+			<td>
+				<%= washer2.disp_text unless washer2.nil? %>
+				<%= disp_none if washer2.nil? %>
+			</td>
+			<th>
+				<%= hlabel(:commons, :heat) %><br/>
+				<%= hlabel(:commons, :surface) %>
+			</th>
+<%
+heat_process = disp_none
+heat_production_detail = production.find_by_plan_processor_flag(PROCESSOR_FLAG_HEAT)
+unless heat_production_detail.nil?
+	heat_process = heat_production_detail.process_detail.condition
+end
+surface_process = disp_none
+surface_production_detail = production.find_by_plan_processor_flag(PROCESSOR_FLAG_SURFACE)
+unless surface_production_detail.nil?
+	surface_process = surface_production_detail.process_detail.condition
+end
+%>
+			<td>
+				<%= heat_process %>
+				<br/>
+				<%= surface_process %>
+			</td>
+		</tr>
+	</table>
+</div><!--/ sheet-->

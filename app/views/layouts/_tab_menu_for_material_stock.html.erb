@@ -1,0 +1,25 @@
+<ul class="tabmenu">
+<%
+    links = []
+    t140_actions = ["cond_print_t140", "print_t140"]
+
+    list = link_to(t("actions.stock_index"), stock_index_materials_path)
+
+    class_name = ""
+    class_name = "act" if controller_name == "materials"
+    links << raw(content_tag(:li, list, { :class => class_name }, false))
+
+    order = link_to(t("actions.order_index"), material_orders_path)
+
+    class_name = ""
+    class_name = "act" if (controller_name == "material_stocks") || ((controller_name == "material_orders") && !t140_actions.include?(action_name))
+    links << raw(content_tag(:li, order, { :class => class_name }, false))
+
+    t140 = link_to(t("actions.print_t140"), cond_print_t140_material_orders_path)
+
+    class_name = ""
+    class_name = "act" if (controller_name == "material_orders") && t140_actions.include?(action_name)
+    links << raw(content_tag(:li, t140, { :class => class_name }, false))
+%>
+  <%= raw links.join %>
+</ul>

@@ -1,0 +1,182 @@
+<% content_for :add_js do %>
+function pop_model_production_plan(model_id){
+	pop("<%= pop_model_production_plan_model_path(':model_id') %>".replace(':model_id', model_id), 450, "model_production_plan");
+}
+<% end %>
+
+<% content_for :tabmenu do %>
+	<%= tab_menu_for_production %>
+<% end %>
+
+<% content_for :control do %>
+    <%= submit_button_tag %>
+<% end %>
+
+<div id="main" style="width: 1000px;">
+	<%= raw main_title %>
+	
+	<%= raw flash_tag %>
+
+	<%= form_tag(multi_model_update_productions_path, {:method => :put}) do %>
+
+	<%= error_messages_for 'production_plan', :object => @production_plans %>
+
+	<div class="list">
+<% if action_name == 'multi_model'%>
+		<div class='paginationCnt'><%= t(:all_count, :scope => :paginate, :cnt => @productions.count) %></div>
+<% end %>
+		<table class="commonList">
+			<thead>
+				<tr>
+					<th>
+						<%= hlabel :commons, :process_name %>
+					</th>
+					<th style="width:100px;">
+						<%= hlabel :order, :delivery_ymd %><br/>
+						<%= hlabel :order, :order_amount %>
+					</th>
+					<th style="width:190px;">
+						<%= hlabel :commons, :vote_no %><br/>
+						<%= hlabel :commons, :item_code %><br/>
+						<%= hlabel :item, :name %>
+					</th>
+					<th style="width:190px;">
+						<%= hlabel :production_plan, :hd_model_id %><br/>
+						<%= hlabel :production_plan, :hd_addition_model_id %>
+					</th>
+					<th style="width:190px;">
+						<%= hlabel :production_plan, :ro1_model_id %><br/>
+						<%= hlabel :production_plan, :ro1_addition_model_id %>
+					</th>
+					<th style="width:190px;">
+						<%= hlabel :production_plan, :ro2_model_id %><br/>
+						<%= hlabel :production_plan, :ro2_addition_model_id %>
+					</th>
+				</tr>
+			</thead>
+			<tbody>
+				<% @production_plans.each do |production_plan| %>
+   			        <%= fields_for 'production_plan[]', production_plan, :index => production_plan.no_in_list do |field| %>
+<%
+production = Production.new
+production = production_plan.production unless production_plan.production.nil?
+item = Item.new
+item = production.item unless production.item.nil?
+order = Order.new
+order = production.order unless production.order.nil?
+%>
+   			        <tr>
+					<td>
+						<%= production.current_process_type.name %>
+						<%= field.hidden_field :production_id, :value => production.id %>
+						<%= field.hidden_field :production_lock_version, :value => production.lock_version %>
+					</td>
+					<td>
+						<%= hdate order.delivery_ymd  %><br/>
+						<div style="text-align: right;"><%= hnumber order.order_amount %></div>
+					</td>
+					<td>
+						<%= link_to production.disp_text, edit_production_url(production) %><br/>
+						<span title="<%= production.item.name %>">
+						<%= production.item.disp_text %></span><br/>
+						<%= item.name %>
+					</td>
+                	<td>
+<% if production_plan.hd_model_id_options.nil? %>
+						<%= t(:notice_no_process) %>
+<% else %>
+                		<%= field.select :hd_model_id, production_plan.hd_model_id_options, {:include_blank => t(:notice_select)} %>
+<%=
+button_tag(t(:button_plan), 
+:onclick => "javascript:pop_model_production_plan($('#production_plan_#{production_plan.no_in_list}_hd_model_id').val())",
+:type => "button",
+:class => :formInBtn)
+%>
+<% end %>
+						<br/>
+<% if production_plan.hd_addition_model_id_options.nil? %>
+						<%= t(:notice_no_process) %>
+<% else %>
+                		<%= field.select :hd_addition_model_id, production_plan.hd_addition_model_id_options, {:include_blank => t(:notice_select)} %>
+<%=
+button_tag(t(:button_plan), 
+:onclick => "javascript:pop_model_production_plan($('#production_plan_#{production_plan.no_in_list}_hd_addition_model_id').val())",
+:type => "button",
+:class => :formInBtn)
+%>
+<% end %>
+                	</td>
+                	<td>
+<% if production_plan.ro1_model_id_options.nil? %>
+						<%= t(:notice_no_process) %>
+<% else %>
+                		<%= field.select :ro1_model_id, production_plan.ro1_model_id_options, {:include_blank => t(:notice_select)}  %>
+<%=
+button_tag(t(:button_plan), 
+:onclick => "javascript:pop_model_production_plan($('#production_plan_#{production_plan.no_in_list}_ro1_model_id').val())",
+:type => "button",
+:class => :formInBtn)
+%>
+<% end %>
+						<br/>
+<% if production_plan.ro1_addition_model_id_options.nil? %>
+						<%= t(:notice_no_process) %>
+<% else %>
+                		<%= field.select :ro1_addition_model_id, production_plan.ro1_addition_model_id_options, {:include_blank => t(:notice_select)} %>
+<%=
+button_tag(t(:button_plan), 
+:onclick => "javascript:pop_model_production_plan($('#production_plan_#{production_plan.no_in_list}_ro1_addition_model_id').val())",
+:type => "button",
+:class => :formInBtn)
+%>
+<% end %>
+                	</td>
+                	<td>
+<% if production_plan.ro2_model_id_options.nil? %>
+						<%= t(:notice_no_process) %>
+<% else %>
+                		<%= field.select :ro2_model_id, production_plan.ro2_model_id_options, {:include_blank => t(:notice_select)} %>
+<%=
+button_tag(t(:button_plan), 
+:onclick => "javascript:pop_model_production_plan($('#production_plan_#{production_plan.no_in_list}_ro2_model_id').val())",
+:type => "button",
+:class => :formInBtn)
+%>
+<% end %>
+						<br/>
+<% if production_plan.ro2_addition_model_id_options.nil? %>
+						<%= t(:notice_no_process) %>
+<% else %>
+                		<%= field.select :ro2_addition_model_id, production_plan.ro2_addition_model_id_options, {:include_blank => t(:notice_select)} %>
+<%=
+button_tag(t(:button_plan), 
+:onclick => "javascript:pop_model_production_plan($('#production_plan_#{production_plan.no_in_list}_ro2_addition_model_id').val())",
+:type => "button",
+:class => :formInBtn)
+%>
+<% end %>
+                	</td>
+				</tr>
+     				<% end %>
+				<% end %>
+			</tbody>
+		</table>
+
+<% if action_name == 'multi_model'%>
+		<%= will_paginate @productions %>
+<% else %>
+                <p><font color="red" style="margin-left:5px;">*</font><%= t(:notice_required) %></p>
+                <p style="text-align: center;"><%= t(:notice_paginate_edit) %></p>
+<% end %>
+<%= hidden_field_tag(:page, params[:page]) %>
+		
+	</div><!--/ list-->
+
+	<div class="control">
+<% unless @production_plans.empty? %>
+		<%= yield :control %>
+<% end %>
+	</div><!--/ control-->
+
+	<% end %>
+</div><!--/ #main-->

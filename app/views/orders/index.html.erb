@@ -1,0 +1,66 @@
+<% content_for :tabmenu do %>
+	<%= raw tab_menu_for_order %>
+<% end %> 
+
+<% content_for :control do %>
+	<%= new_button_tag({:action => :multi_new}) %>
+<% end %>
+
+<div id="main" style="width: 1080px;">
+	<%= raw main_title(:action => :un_treated_index) %>
+
+	<%= raw flash_tag %>
+    <div class="control">
+        <%= yield :control %>
+    </div><!--/ control-->
+
+	<div class="list">
+		<div class="paginationCnt"><%= t(:all_count, :scope => :paginate, :cnt => @orders.count) %></div>
+		<table class="commonList">
+			<thead>
+				<tr>
+					<th><%= hlabel :commons, :amount_plan %></th>
+					<th><%= hlabel :order, :delivery_ymd %></th>
+					<th><%= hlabel :order, :order_amount %></th>
+					<th><%= hlabel :commons, :item_code %></th>
+					<th><%= hlabel :item, :drawing_no %></th>
+					<th><%= hlabel :item, :name %></th>
+					<th><%= hlabel :commons, :vote_no %></th>
+					<th><%= hlabel :order, :order_no %></th>
+					<th><%= hlabel :order, :order_ymd %></th>
+				</tr>
+			</thead>
+			<tbody>
+				<% @orders.each do |order| %>
+<%
+production = order.productions.first unless order.productions.first.nil?
+production ||= Production.new
+item = production.item unless production.nil?
+item ||= Item.new
+%>
+				<tr>
+					<td>
+						<%= button_to(t(:button_fix_production), {:action => :fix_production, :id => order.id}, :method => :get, :class => "formInBtn") %>
+          			</td>
+					<td><%= hdate order.delivery_ymd %></td>
+					<td class="number"><%= hnumber order.order_amount %></td>
+					<td><%= item.disp_text %></td>
+					<td><%= item.drawing_no %></td>
+					<td><%= item.name %></td>
+					<td><%= link_to(production.vote_no, edit_order_url(order)) %></td>
+					<td><%= order.order_no %></td>
+					<td><%= hdate order.order_ymd %></td>
+				</tr>
+				<% end %>
+			</tbody>
+		</table>
+
+		<%= will_paginate @orders %>
+		
+	</div><!--/ list-->
+
+    <div class="control">
+        <%= yield :control %>
+    </div><!--/ control-->
+
+</div><!--/ #main-->

@@ -1,0 +1,25 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  washer_id: 1
+  trader_id: 1
+  order_ymd: 2012-02-21
+  order_quantity: 1
+  purchase_price: 9.99
+  delivery_ymd: 2012-02-21
+  reply_delivery_ymd: 2012-02-21
+  full_delivery_ymd: 2012-02-21
+  delivery_flag: 1
+  lock_version: 1
+
+two:
+  washer_id: 1
+  trader_id: 1
+  order_ymd: 2012-02-21
+  order_quantity: 1
+  purchase_price: 9.99
+  delivery_ymd: 2012-02-21
+  reply_delivery_ymd: 2012-02-21
+  full_delivery_ymd: 2012-02-21
+  delivery_flag: 1
+  lock_version: 1

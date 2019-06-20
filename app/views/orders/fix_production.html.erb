@@ -1,0 +1,132 @@
+<% content_for :tabmenu do %>
+	<%= raw tab_menu_for_order %>
+<% end %>
+
+<% content_for :control do %>
+    <%= submit_button_tag %>
+    <%= cancel_button_tag %>
+<% end %>
+
+<div id="main" style="width: 1080px;">
+	<%= raw main_title %>
+	<%= raw flash_tag %>
+
+	<%= form_for(@order, :url => fix_production_update_order_path, :method => :put) do |f| %>
+
+	<%= @order.errors.full_messages.join("<br>") %>
+
+    <%= render :partial => "items/disp_item", :locals => {:item => @order.productions.first.item, :title => hlabel(:order, :item_info)} %>
+
+	<div class="list">
+	<h4><%= hlabel :production_detail, :production_status %> : <%= I18n.l Date.today, :format => :long %></h4>
+	
+	<% if @other_orders.empty? %>
+		<%= t(:notice_empty) %>
+	<% else %>
+		<table class="commonList">
+			<thead>
+				<tr>
+					<th colspan="2"><%= hlabel :commons, :purchase_department %></th>
+					<th colspan="9"><%= hlabel :commons, :production_department %></th>
+				</tr>
+				<tr class="top_separate">
+					<th rowspan="2" style="width:70px;"><%= hlabel :order, :delivery_ymd %></th>
+					<th rowspan="2" style="width:110px;"><%= hlabel :order, :order_amount %></th>
+					<th rowspan="2" style="width:60px;"><%= hlabel :commons, :vote_no %></th>
+					<th rowspan="2" style="width:110px;"><%= hlabel :order, :necessary_amount %></th>
+					<th rowspan="2" style="width:110px;"><%= hlabel :commons, :result_amount %></th>
+					<th rowspan="2" style="width:110px;"><%= hlabel :commons, :excess_amount %></th>
+					<th rowspan="2" style="width:40px;"><%= hlabel :commons, :memo %></th>
+					<th colspan="4"><%= hlabel :production_detail, :t_breakdown %></th>
+				</tr>
+				<tr class="top_separate">
+					<th class="left_separate"><%= hlabel :commons, :branch_no %></th>
+					<th style="width:110px;"><%= hlabel :commons, :result_amount %></th>
+					<th><%= hlabel :commons, :process_name %></th>
+					<th style="width:70px;"><%= hlabel :production_detail, :t_finish_status %></th>
+				</tr>
+			</thead>
+			<tbody class="color_row_skip">
+				<% @other_orders.each do |other_order| %>
+<%
+production = other_order.productions.first unless other_order.productions.first.nil?
+production ||= Production.new
+item = production.item unless production.nil?
+item ||= Item.new
+%>					<tr>
+						<td><%= hdate other_order.delivery_ymd %></td>
+						<td class="number"><%= hnumber other_order.order_amount %></td>
+						<td><%= production.vote_no %></td>
+						<td class="number"><%= hnumber other_order.necessary_amount %></td>
+						<td class="number"><%= hnumber other_order.sum_result_amount %></td>
+						<td class="number"><%= hnumber_with_sign((other_order.sum_result_amount.to_i - other_order.necessary_amount.to_i), :zero_green => true) %></td>
+						<td style="text-align: center;">
+<%= momo_button(production) %>
+						</td>
+						<td>---</td>
+						<td>---</td>
+						<td>---</td>
+						<td>---</td>
+					</tr>
+					<% other_order.productions.each do |other_production| %>
+						<% other_production.production_details.each do |other_production_detail| %>
+							<tr>
+								<td class="weak"></td>
+								<td class="weak"></td>
+								<td class="weak"></td>
+								<td class="weak"></td>
+								<td class="weak"></td>
+								<td class="weak"></td>
+								<td class="weak"></td>
+								<td><%= other_production.disp_branch_no %></td>
+								<td class="number"><%= hnumber other_production_detail.result_amount_production %></td>
+								<td><%= other_production_detail.process_detail.process_type.name %></td>
+								<td><%= other_production_detail.curretn_status_or_end_date %></td>
+							</tr>
+						<% end %>
+					<% end %>
+				<% end %>
+			</tbody>
+
+		</table>
+	<% end %>
+	</div><!--/ list-->
+
+	<div class="list">
+		<h4><%= hlabel :order, :new_production %></h4>
+		<table class="commonList" style="width:460px;">
+			<thead>
+				<tr>
+					<th colspan="2"><%= hlabel :commons, :purchase_department %></th>
+					<th colspan="9"><%= hlabel :commons, :production_department %></th>
+				</tr>
+				<tr class="top_separate">
+					<th style="width:70px;"><%= hlabel :order, :delivery_ymd %></th>
+					<th style="width:110px;"><%= hlabel :order, :order_amount %></th>
+					<th style="width:60px;"><%= f.label :vote_no %></th>
+					<th style="width:110px;"><%= f.label :necessary_amount %></th>
+					<th style="width:40px;"><%= hlabel :commons, :memo %></th>
+				</tr>
+			</thead>
+			<tbody class="color_row_skip">
+				<tr>
+					<td><%= hdate @order.delivery_ymd %></td>
+					<td class="number"><%= hnumber @order.order_amount %></td>
+					<td><%= @order.vote_no %></td>
+					<td><%= f.text_field :necessary_amount, :class => "amount fmt-formatted-number" %></td>
+					<td style="text-align: center;">
+<%= momo_button(@order.productions.first) %>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div><!--/ list-->
+
+	<%= f.hidden_field :lock_version %>
+
+	<div class="control">
+		<%= yield :control %>
+	</div><!--/ control-->
+	<% end %>
+	
+</div><!--/ #main-->

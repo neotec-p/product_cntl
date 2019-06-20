@@ -1,0 +1,58 @@
+<div id="main">
+
+<%= raw main_title %>
+
+<%= raw flash_tag %>
+
+<div class="control">
+	<%= new_button_tag %>
+<!--/ control--></div>
+
+<div class="condition" style="width: 500px;">
+
+<%= form_tag({:action => 'index'}, {:method => 'GET', :name => :form_search, :id => :form_search }) do -%>
+	<h4><%= t(:search_condition) %></h4>
+	<table class="commonCondition">
+		<tr>
+			<th><%=hlabel :commons, :code %></th>
+			<td><%= text_field_tag(:cond_code, params[:cond_code], :size => 5) %></td>
+			
+			<th><%=hlabel :commons, :name %></th>
+			<td><%= text_field_tag(:cond_name, params[:cond_name]) %></td>
+			<td class="button">
+			<%= submit_tag t(:search, :scope => :actions) %>
+			</td>
+		</tr>
+	</table>
+<% end %>
+<!--/ condition--></div>
+
+<div class="list">
+	<div class="paginationCnt"><%= t(:all_count, :scope => :paginate, :cnt => @customers.count) %></div>
+	<table class="commonList">
+	<thead>
+	  <tr>
+	    <th style="width: 100px;"><%=hlabel :commons, :code %></th>
+	    <th style="width: 300px;"><%=hlabel :commons, :name %></th>
+	    <th style="width: 400px;"><%=hlabel :customer, :note %></th>
+	  </tr>
+	</thead>
+	<tbody>
+	<% @customers.each do |customer| %>
+	  <tr>
+	    <td><%= link_to customer.code, edit_customer_path(customer) %></td>
+	    <td><%= customer.name %></td>
+	    <td><%= customer.note %></td>
+	  </tr>
+	<% end %>
+	</tbody>
+	</table>
+
+	<%= will_paginate @customers %>
+<!--/ list--></div>
+
+<div class="control">
+	<%= new_button_tag %>
+<!--/ control--></div>
+
+<!--/ #main--></div>

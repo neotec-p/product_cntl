@@ -1,0 +1,9 @@
+<% title = t(:search_condition_date_from_to) if title.nil? %>
+<% target = @search_cond_date_from_to if target.nil? %>
+
+<th><%= title %></th>
+<td>
+	<%= date_select(:search_cond_date_from_to, :cond_date_from, :object => target) %><%= clear_cal_button_tag %>
+	<%= t(:search_condition_term) %>
+	<%= date_select(:search_cond_date_from_to, :cond_date_to, :object => target) %><%= clear_cal_button_tag %>
+</td>

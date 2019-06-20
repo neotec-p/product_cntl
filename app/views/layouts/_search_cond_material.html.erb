@@ -1,0 +1,44 @@
+<% target_action = :pop_material_for_text if target_action.nil? %>
+<% pop_flag = false if pop_flag.nil? %>
+
+<div class="condition" style="width: 450px;">
+	<%= form_tag({:action => target_action}, {:method => :get, :name => :form_search, :id => :form_search }) do -%>
+	<h4><%= t(:search_condition) %></h4>
+	<table class="commonCondition">
+		<tr>
+			<th><%= hlabel :material, :standard %></th>
+<%
+standard_options = @standard_options.to_a.insert(0, [t(:notice_select_all), nil])
+%>
+			<td><%= select_tag(:cond_standard, options_for_select(standard_options, params[:cond_standard])) %></td>
+			<th><%= hlabel :material, :diameter %></th>
+			<td><%= render :partial => 'layouts/search_cond_material_diameter_list' %></td>
+			<td class="button"> <%= submit_tag t(:search, :scope => :actions) %> </td>
+		</tr>
+	</table>
+
+<% if pop_flag %>
+	<%= hidden_field_tag :col_index, params[:col_index] %>
+	<%= hidden_field_tag :id_material_id, params[:id_material_id] %>
+	<%= hidden_field_tag :id_material_name, params[:id_material_name] %>
+<% end %>
+
+	<% end %>
+
+<script type="text/javascript">
+var standard_material_json = <%= raw @standard_material_json %>
+
+$("#cond_standard").change(function(x) {
+    var standard = $(this).val();
+    $("#cond_diameter option").remove();
+    $("#cond_diameter").append("<option value=\"\" selected>全て</option>");
+    if (standard_material_json[standard] !== undefined) {
+        standard_material_json[standard].forEach(function(x) {
+            $("#cond_diameter").append("<option value=\"" + x[1] + "\">" + x[0] + "</option>");
+        });
+    }
+});
+//$("#cond_standard").trigger('change');
+</script>
+
+</div><!--/ condition-->

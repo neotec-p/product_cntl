@@ -1,0 +1,2 @@
+class AsynchroBase
+end

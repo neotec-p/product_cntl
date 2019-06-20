@@ -1,0 +1,36 @@
+<div id="main" style="width:800px;">
+	<%= raw main_title %>
+
+	<%= raw flash_tag %>
+
+	<%= form_for(@customer) do |f| %>
+	<div class="control">
+		<%= yield :control %>
+	</div><!--/ control-->
+	<%= @customer.errors.full_messages.join("<br>") %>
+
+	<p><font color="red" style="margin-left:5px;">*</font><%= t(:notice_required) %></p>
+	<div class="sheet">
+		<table class="commonSheet">
+			<tr>
+				<th style="width: 100px;"><%= f.label :code %></th>
+				<td style="width: 300px;">
+					<%= f.text_field :code, :size => 5 %><font class="mark-required" style="margin-left:5px;">*</font>
+				</td>
+				<th style="width: 100px;"><%= f.label :name %><font class="mark-required" style="margin-left:5px;">*</font></th>
+				<td style="width: 300px;">
+					<%= f.text_field :name, :size => 25 %>
+				</td>
+			</tr>
+			<tr>
+				<th><%= f.label :note %></th>
+				<td colspan="3"><%= f.text_field :note, :size => 25 %></td>
+			</tr>
+		</table>
+	</div><!--/ sheet-->
+	<%= f.hidden_field :lock_version %>
+	<div class="control">
+		<%= yield :control %>
+	</div><!--/ control-->
+	<% end %>
+</div><!--/ #main-->

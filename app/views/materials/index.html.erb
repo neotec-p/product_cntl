@@ -1,0 +1,68 @@
+<div id="main">
+
+<%= raw main_title %>
+
+<%= raw flash_tag %>
+
+<div class="control">
+	<%= new_button_tag %>
+</div><!--/ control-->
+
+<div class="condition" style="width: 700px;">
+<%= form_tag({:action => :index}, {:method => :get, :name => :form_search, :id => :form_search }) do -%>
+	<h4><%= t(:search_condition) %></h4>
+	<table class="commonCondition">
+		<tr>
+			<th><%=hlabel :commons, :id %></th>
+			<td><%= text_field_tag(:cond_id, params[:cond_id], :size => 5) %></td>
+			<th><%=hlabel :material, :standard %></th>
+			<td><%= text_field_tag(:cond_standard, params[:cond_standard], :size => 15) %></td>
+			<th><%=hlabel :material, :diameter %></th>
+			<td><%= text_field_tag(:cond_diameter, params[:cond_diameter], :size => 5) %></td>
+			<th><%=hlabel :material, :surface %></th>
+			<td><%= text_field_tag(:cond_surface, params[:cond_surface], :size => 15) %></td>
+			<td class="button">
+				<%= submit_tag t(:search, :scope => :actions) %>
+			</td>
+		</tr>
+	</table>
+<% end %>
+</div><!--/ condition-->
+
+<div class="list">
+	<div class="paginationCnt"><%= t(:all_count, :scope => :paginate, :cnt => @materials.count) %></div>
+	<table class="commonList">
+	<thead>
+	  <tr>
+	    <th><%=hlabel :commons, :id %></th>
+	    <th><%=hlabel :material, :standard %></th>
+	    <th><%=hlabel :material, :diameter %></th>
+	    <th><%=hlabel :material, :surface %></th>
+	    <th><%=hlabel :material, :process %></th>
+	    <th><%=hlabel :material, :dimensions %></th>
+	    <th><%=hlabel :material, :unit_price %></th>
+	  </tr>
+	</thead>
+	<tbody>
+	<% @materials.each do |material| %>
+	  <tr>
+	    <td><%= link_to material.id, edit_material_path(material) %></td>
+	    <td><%= material.standard %></td>
+	    <td><%= material.diameter %></td>
+	    <td><%= material.surface %></td>
+	    <td><%= material.process %></td>
+	    <td><%= material.dimensions %></td>
+	    <td class="number"><%= material.unit_price %></td>
+	  </tr>
+	<% end %>
+	</tbody>
+	</table>
+
+	<%= will_paginate @materials %>
+</div><!--/ list-->
+
+<div class="control">
+	<%= new_button_tag %>
+</div><!--/ control-->
+
+</div><!--/ #main-->

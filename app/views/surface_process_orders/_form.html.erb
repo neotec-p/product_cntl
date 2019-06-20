@@ -1,0 +1,89 @@
+<div id="main" style="width:1050px;">
+	<%= raw main_title %>
+	<%= raw flash_tag %>
+
+    <%= render :partial => "productions/disp_production", :locals => { :production => @surface_process_order.production_detail.production } %>
+
+    <div class="subTabmenu">
+        <%= tab_submenu_for_production(@surface_process_order.production_detail.production) %>
+    </div>
+	
+	<%= form_for(@surface_process_order) do |f| %>
+
+	<%= @surface_process_order.errors.full_messages.join("<br>") %>
+	<p><font color="red" style="margin-left:5px;">*</font><%= t(:notice_required) %></p>
+	
+	<div class="table-layout">
+		<div class="left" style="width: 415px;">
+			<div class="sheet">
+				<h4><%= hlabel :process_order, :order_info %></h4>
+				<table class="commonSheet">
+					<tr>
+						<th><%= hlabel :process_order, :id %></th>
+						<td><%= @surface_process_order.id %></td>
+					</tr>
+					<tr>
+						<th><%= hlabel :process_order, :trader_id %><font class="mark-required" style="margin-left:5px;">*</font></th>
+						<td><%= f.collection_select :trader_id, @surface_processor_options, :id, :name, {:include_blank => t(:notice_select)} %></td>
+					</tr>
+					<tr>
+						<th><%= hlabel :process_order, :order_ymd %><font class="mark-required" style="margin-left:5px;">*</font></th>
+						<td><%= f.date_select :order_ymd %><%= clear_cal_button_tag %></td>
+					</tr>
+					<tr>
+						<th><%= hlabel :process_order, :delivery_ymd %><font class="mark-required"  style="margin-left:5px;">*</font></th>
+						<td><%= f.date_select :delivery_ymd %><%= clear_cal_button_tag %></td>
+					</tr>
+					<tr>
+						<th><%= hlabel :process_order, :delivery_ymd_add %></th>
+						<td><%= f.text_field :delivery_ymd_add, :size => 35 %></td>
+					</tr>
+					<tr>
+						<th><%= hlabel :process_order, :material %></th>
+						<td><%= f.text_field :material, :size => 35 %></td>
+					</tr>
+					<tr>
+						<th><%= hlabel :process_order, :process %></th>
+						<td><%= f.text_field :process, :size => 35 %></td>
+					</tr>
+					<tr>
+						<th><%= hlabel :process_order, :price %></th>
+						<td><%= f.text_field :price, :size => 35 %></td>
+					</tr>
+					<tr>
+						<th><%= hlabel :process_order, :summary1 %></th>
+						<td><%= f.text_field :summary1, :size => 35 %></td>
+					</tr>
+					<tr>
+						<th><%= hlabel :process_order, :summary2 %></th>
+						<td><%= f.text_field :summary2, :size => 35 %></td>
+					</tr>
+				</table>
+			</div><!--/ sheet-->
+		</div>
+
+		<div class="right" style="width: 415px;">
+			<div class="sheet">
+				<h4><%= hlabel :process_order, :arrival_info %></h4>
+				<table class="commonSheet">
+					<tr>
+						<th><%= hlabel :process_order, :arrival_ymd %></th>
+						<td><%= f.date_select :arrival_ymd %><%= clear_cal_button_tag %></td>
+					</tr>
+				</table>
+			</div><!--/ sheet-->
+			<div style="margin-top: 50px;">
+				<%= delete_button_tag(:caption => t(:button_order_cancel)) if (!@surface_process_order.new_record? && @surface_process_order.arrival_ymd.blank?) %>
+			</div>
+		</div><!--/ rigth -->
+	</div><!--/ table-layout -->
+
+	<%= f.hidden_field :lock_version %>
+	<%= hidden_field_tag :production_detail_id, @surface_process_order.production_detail.id %>
+
+	<div class="control">
+		<%= yield :control %>
+	</div><!--/ control-->
+
+	<% end %>
+</div><!--/ #main-->

@@ -1,0 +1,33 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  type: MyString
+  item_id: 1
+  traders_id: 1
+  materials_id: 1
+  name: MyString
+  condition: MyString
+  price: 9.99
+  unit: MyString
+  set: MyString
+  addition_price: 9.99
+  addition_unit: MyString
+  condition_weight: 9.99
+  condition_following: MyString
+  lock_version: 1
+
+two:
+  type: MyString
+  item_id: 1
+  traders_id: 1
+  materials_id: 1
+  name: MyString
+  condition: MyString
+  price: 9.99
+  unit: MyString
+  set: MyString
+  addition_price: 9.99
+  addition_unit: MyString
+  condition_weight: 9.99
+  condition_following: MyString
+  lock_version: 1
