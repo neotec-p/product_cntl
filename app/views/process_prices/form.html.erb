@@ -1,0 +1,115 @@
+<div id="main" style="width:800px;">
+
+<%= raw main_title %>
+
+<%= raw flash_tag %>
+
+<%= form_for(@process_prices) do |f| %>
+
+<div class="control">
+	<%= yield :control %>
+<!--/ control--></div>
+
+<%= @process_prices.errors.full_messages.join("<br>") %>
+
+<p><font color="red" style="margin-left:5px;">*</font><%= t(:notice_required) %></p>
+
+<div class="sheet">
+		<table class="commonSheet">
+		<tr>
+		<th><%= f.label :id %></th>
+		<td>
+			<%= @process_prices.id %>
+		    <%= f.hidden_field :id %>
+		</td>
+		</tr>
+
+		<tr>
+		<th><%= f.label :type %></th>
+		<td><%= f.text_field :type %><font class="mark-required" style="margin-left:5px;">*</font></td>
+		</tr>
+
+		<tr>
+		<th><%= f.label :item_id %></th>
+		<td>
+		  <%= f.text_field :item_id %><font class="mark-required" style="margin-left:5px;">*</font>
+		</td>
+		</tr>
+		<tr>
+		<th><%= f.label :trader_id %></th>
+		<td>
+		  <%= f.text_field :trader_id %><font class="mark-required" style="margin-left:5px;">*</font>
+		</td>
+		</tr>
+		<tr>
+		<th><%= f.label :material_id %></th>
+		<td>
+		  <%= f.text_field :material_id %>
+		</td>
+		</tr>
+		<tr>
+		<th><%= f.label :name %></th>
+		<td>
+		  <%= f.text_field :name %>
+		</td>
+		</tr>
+		<tr>
+		<th><%= f.label :conditions %></th>
+		<td>
+		  <%= f.text_field :conditions %>
+		</td>
+		</tr>
+		<tr>
+		<th><%= f.label :price %></th>
+		<td>
+		  <%= f.text_field :price %>
+		</td>
+		</tr>
+		<tr>
+		<th><%= f.label :unit %></th>
+		<td>
+		  <%= f.text_field :unit %>
+		</td>
+		</tr>
+		<tr>
+		<th><%= f.label :set %></th>
+		<td>
+		  <%= f.text_field :set %>
+		</td>
+		</tr>
+		<tr>
+		<th><%= f.label :addition_price %></th>
+		<td>
+		  <%= f.text_field :addition_price %>
+		</td>
+		</tr>
+		<tr>
+		<th><%= f.label :addition_unit %></th>
+		<td>
+		  <%= f.text_field :addition_unit %>
+		</td>
+		</tr>
+		<tr>
+		<th><%= f.label :condition_weight %></th>
+		<td>
+		  <%= f.text_field :condition_weight %>
+		</td>
+		</tr>
+		<tr>
+		<th><%= f.label :condition_following %></th>
+		<td>
+		  <%= f.text_field :condition_following %>
+		</td>
+		</tr>
+		</table>
+<!--/ sheet--></div>
+
+	<%= f.hidden_field :lock_version %>
+	
+<div class="control">
+	<%= yield :control %>
+<!--/ control--></div>
+
+<% end %>
+	
+<!--/ #main--></div>

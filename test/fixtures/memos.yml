@@ -1,0 +1,15 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  production_id: 1
+  seq: 1
+  contents: MyString
+  user_id: 1
+  lock_version: 1
+
+two:
+  production_id: 1
+  seq: 1
+  contents: MyString
+  user_id: 1
+  lock_version: 1

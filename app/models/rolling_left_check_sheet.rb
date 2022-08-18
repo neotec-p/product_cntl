@@ -1,0 +1,2 @@
+class RollingLeftCheckSheet < CheckSheet
+end

@@ -1,0 +1,170 @@
+<div id="main" style="width: 800px;">
+    <%= raw main_title %>
+    <%= raw flash_tag %>
+
+    <%= render :partial => "items/disp_item" %>
+
+	<div class="spacer"></div>
+
+    <%= form_for(@process_expense) do |f| %>
+
+    <%= @process_expense.errors.full_messages.join("<br>") %>
+
+    <p><font color="red" style="margin-left:5px;">*</font><%= t(:notice_required) %></p>
+
+    <div class="sheet">
+        <h4><%= f.label :t_process_expense_ratio %></h4>
+        <table class="commonSheet">
+            <tr>
+                <th style="width: 100px;">
+                    <%= f.label :hd %>
+                </th>
+                <td style="width: 120px;">
+                    <%= @process_expense.hd %>
+                </td>
+                <th style="width: 220px;">
+                    <%= f.label :hd_addition %>
+                </th>
+                <td style="width: 130px;">
+                    <%= f.text_field :hd_addition, :class => "price fmt-formatted-number" %>
+                </td>
+                <th style="width: 100px;">
+                    <%= f.label :ratio_hd %>
+                </th>
+                <td style="width: 80px;">
+                    <%= @process_expense.ratio_hd %>
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    <%= f.label :barrel %>
+                </th>
+                <td>
+                    <%= @process_expense.barrel %>
+                </td>
+                <td colspan="2"></td>
+                <th>
+                    <%= f.label :ratio_barrel %>
+                </th>
+                <td>
+                    <%= @process_expense.ratio_barrel %>
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    <%= f.label :ro1 %>
+                </th>
+                <td>
+                    <%= @process_expense.ro1 %>
+                </td>
+                <th>
+                    <%= f.label :ro1_addition %>
+                </th>
+                <td>
+                    <%= f.text_field :ro1_addition, :class => "price fmt-formatted-number" %>
+                </td>
+                <th>
+                    <%= f.label :ratio_ro1 %>
+                </th>
+                <td>
+                    <%= @process_expense.ratio_ro1 %>
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    <%= f.label :ro2 %>
+                </th>
+                <td>
+                    <%= @process_expense.ro2 %>
+                </td>
+                <th>
+                    <%= f.label :ro2_addition %>
+                </th>
+                <td>
+                    <%= f.text_field :ro2_addition, :class => "price fmt-formatted-number" %>
+                </td>
+                <th>
+                    <%= f.label :ratio_ro2 %>
+                </th>
+                <td>
+                    <%= @process_expense.ratio_ro2 %>
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    <%= f.label :heat %>
+                </th>
+                <td>
+                    <%= @process_expense.heat %>
+                </td>
+                <th>
+                    <%= f.label :heat_addition %>
+                </th>
+                <td>
+                    <%= f.text_field :heat_addition, :class => "price fmt-formatted-number" %>
+                </td>
+                <th>
+                    <%= f.label :ratio_heat %>
+                </th>
+                <td>
+                    <%= @process_expense.ratio_heat %>
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    <%= f.label :surface %>
+                </th>
+                <td>
+                    <%= @process_expense.surface %>
+                </td>
+                <th>
+                    <%= f.label :surface_addition %>
+                </th>
+                <td>
+                    <%= f.text_field :surface_addition, :class => "price fmt-formatted-number" %>
+                </td>
+                <th>
+                    <%= f.label :ratio_surface %>
+                </th>
+                <td>
+                    <%= @process_expense.ratio_surface %>
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    <%= f.label :inspection %>
+                </th>
+                <td>
+                    <%= @process_expense.inspection %>
+                </td>
+                <th>
+                    <%= f.label :inspection_addition %>
+                </th>
+                <td>
+                    <%= f.text_field :inspection_addition, :class => "price fmt-formatted-number" %>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="4">
+                </td>
+                <th>
+                    <%= f.label :t_sum_ratio %>
+                </th>
+                <td>
+                    <%= @process_expense.sum_ratio %>
+                </td>
+            </tr>
+        </table>
+    </div><!--/ sheet-->
+
+    <%= f.hidden_field :lock_version %>
+    <%= f.hidden_field :item_id %>
+
+    <div class="control">
+        <%= yield :control %>
+        <!--/ control-->
+    </div>
+
+    <% end %>
+    <!--/ #main-->
+</div>

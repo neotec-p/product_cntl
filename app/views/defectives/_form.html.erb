@@ -1,0 +1,189 @@
+<% content_for :tabmenu do %>
+	<%= render partial: "layouts/defective_tab" %>
+<% end %> 
+
+<div id="main" style="width:800px;">
+	<%= raw main_title %>
+
+	<%= raw flash_tag %>
+
+	<%= form_for(@defective) do |f| %>
+
+	<% if @defective.errors.any? %>
+          <% @defective.errors.full_messages.each do |msg| %>
+            <div><%= msg %></div>
+          <% end %>
+        <% end %>
+
+	<p><font color="red" style="margin-left:5px;">*</font><%= t(:notice_required) %></p>
+
+<%
+item = Item.new
+item = @defective.item unless @defective.item.nil?
+%>
+
+	<div class="sheet">
+		<h4><%= hlabel(:defective, :t_defective_info) %></h4>
+		<table class="commonSheet">
+			<tr>
+				<th style="width: 145px;"><%= f.label :id %></th>
+				<td>
+					<%= @defective.id %>
+				</td>
+				<td colspan="2">
+				</td>
+			</tr>
+			<tr>
+				<th style="width: 145px;">
+					<%= f.label :outbreak_ymd %><font class="mark-required" style="margin-left:5px;">*</font>
+				</th>
+				<td style="width: 235px;">
+					<%= f.date_select :outbreak_ymd %><%= clear_cal_button_tag %>
+				</td>
+				<th style="width: 145px;">
+					<%= f.label :defective_process_type_id %><font class="mark-required" style="margin-left:5px;">*</font>
+				</th>
+				<td style="width: 235px;">
+					<%= f.collection_select :defective_process_type_id, @defective_process_types, :id, :name, {:include_blank => t(:notice_select)} %>
+				</td>
+			</tr>
+			<tr>
+				<th><%= f.label :model_id %><font class="mark-required" style="margin-left:5px;">*</font></th>
+				<td>
+					<%= f.select :model_id, @model_id_options, {:include_blank => true} %>
+				</td>
+				<th><%= hlabel :commons, :item_code %><font class="mark-required" style="margin-left:5px;">*</font></th>
+				<td>
+					<%= f.text_field :item_customer_code, :size => 5 %>
+					-
+					<%= f.text_field :item_code, :size => 5 %></td>
+				</td>
+			</tr>
+			<tr>
+				<th><%= hlabel :item, :drawing_no %></th>
+				<td><%= item.drawing_no %></td>
+				<th><%= hlabel :item, :name %></th>
+				<td><%= item.name %></td>
+			</tr>
+			<tr>
+				<th><%= f.label :contents %></th>
+				<td colspan="3">
+					<%= f.text_field :contents, :size => 60 %>
+				</td>
+			</tr>
+			<tr>
+				<th><%= f.label :amount %><font class="mark-required" style="margin-left:5px;">*</font></th>
+				<td><%= f.text_field :amount, :class => "amount fmt-formatted-number" %></td>
+				<th><%= f.label :weight %><font class="mark-required" style="margin-left:5px;">*</font></th>
+				<td><%= f.text_field :weight, :class => "amount fmt-formatted-number" %></td>
+			</tr>
+		</table>
+	</div><!--/ sheet-->
+
+	<div class="sheet">
+		<h4><%= hlabel(:defective, :t_material_washer_info) %></h4>
+		<table class="commonSheet">
+			<tr>
+				<th style="width: 145px;"><%= f.label :material_stock_id1 %><font class="mark-required" style="margin-left:5px;">*</font></th>
+				<td style="width: 235px;">
+					<%= f.text_field :material_stock_id1, :size => 5 %>
+				</td>
+				<th style="width: 145px;"><%= f.label :material_weight1 %></th>
+				<td style="width: 235px;">
+					<%= f.text_field :material_weight1, :class => "amount fmt-formatted-number" %>
+				</td>
+			</tr>
+			<tr>
+				<th><%= f.label :washer_stock_id1 %></th>
+				<td><%= f.text_field :washer_stock_id1, :size => 5 %></td>
+				<th><%= f.label :washer_quantity1 %></th>
+				<td>
+					<%= f.text_field :washer_quantity1, :class => "amount fmt-formatted-number" %>
+				</td>
+			</tr>
+			<tr>
+				<th><%= f.label :washer_stock_id2 %></th>
+				<td><%= f.text_field :washer_stock_id2, :size => 5 %></td>
+				<th><%= f.label :washer_quantity2 %></th>
+				<td>
+					<%= f.text_field :washer_quantity2, :class => "amount fmt-formatted-number" %>
+				</td>
+			</tr>
+		</table>
+	</div><!--/ sheet-->
+
+	<div class="sheet">
+		<h4><%= hlabel(:defective, :t_expense_info) %></h4>
+		<table class="commonSheet">
+			<tr>
+				<th style="width: 145px;"><%= f.label :t_expense %></th>
+				<td class="number" style="width: 235px;">
+					<%= hnumber @defective.expense %>
+				</td>
+				<td colspan="2"></td>
+			</tr>
+			<tr>
+				<th style="width: 145px;"><%= f.label :t_material_expense %></th>
+				<td class="number" style="width: 235px;">
+					<%= hnumber @defective.material_expense %>
+				</td>
+				<th style="width: 145px;"><%= f.label :t_process_expense %></th>
+				<td class="number" style="width: 235px;">
+					<%= hnumber @defective.process_expense %>
+				</td>
+			</tr>
+		</table>
+	</div><!--/ sheet-->
+	
+	<div class="sheet">
+		<h4><%= hlabel(:defective, :t_process_expense_info) %></h4>
+		<table class="commonSheet">
+			<tr>
+				<th style="width: 145px;"><%= f.label :t_hd %></th>
+				<td class="number" style="width: 235px;">
+					<%= hnumber @defective.hd %>
+				</td>
+				<th style="width: 145px;"><%= f.label :t_hd_addition %></th>
+				<td class="number" style="width: 235px;">
+					<%= hnumber @defective.hd_addition %>
+				</td>
+			</tr>
+			<tr>
+				<th style="width: 145px;"><%= f.label :t_barrel %></th>
+				<td class="number" style="width: 235px;">
+					<%= hnumber @defective.barrel %>
+				</td>
+				<td colspan="2"></td>
+			</tr>
+			<tr>
+				<th style="width: 145px;"><%= f.label :t_ro1 %></th>
+				<td class="number" style="width: 235px;">
+					<%= hnumber @defective.ro1 %>
+				</td>
+				<th style="width: 145px;"><%= f.label :t_ro1_addition %></th>
+				<td class="number" style="width: 235px;">
+					<%= hnumber @defective.ro1_addition %>
+				</td>
+			</tr>
+			<tr>
+				<th style="width: 145px;"><%= f.label :t_ro2 %></th>
+				<td class="number" style="width: 235px;">
+					<%= hnumber @defective.ro2 %>
+				</td>
+				<th style="width: 145px;"><%= f.label :t_ro2_addition %></th>
+				<td class="number" style="width: 235px;">
+					<%= hnumber @defective.ro2_addition %>
+				</td>
+			</tr>
+		</table>
+	</div><!--/ sheet-->
+	
+	
+	<%= f.hidden_field :lock_version %>
+
+	<div class="control">
+		<%= yield :control %>
+	</div><!--/ control-->
+
+	<% end %>
+</div><!--/ #main-->

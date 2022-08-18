@@ -1,0 +1,8 @@
+<!-- コントロールボタン -->
+<% content_for :control do %>
+    <%= submit_button_tag %>
+	<%= cancel_button_tag %>
+	<%= delete_image_button_tag @defective %>
+<% end %>
+
+<%= render :partial => 'form' %>

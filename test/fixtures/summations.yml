@@ -1,0 +1,13 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  summation_type_id: 1
+  asynchro_status_id: 1
+  target: MyString
+  lock_version: 1
+
+two:
+  summation_type_id: 1
+  asynchro_status_id: 1
+  target: MyString
+  lock_version: 1

@@ -1,0 +1,83 @@
+<div id="main">
+	<%= raw main_title %>
+
+	<%= raw flash_tag %>
+
+	<%= form_for(@heat_process_price) do |f| %>
+
+	<%= @heat_process_price.errors.full_messages.join("<br>") %>
+
+	<p><font color="red" style="margin-left:5px;">*</font><%= t(:notice_required) %></p>
+
+	<div class="sheet">
+		<h4><%= hlabel_model(get_model_by_controller({})) %></h4>
+		<table class="commonSheet">
+			<tr>
+				<th><%= hlabel :process_order, :id %></th>
+				<td><%= @heat_process_price.id %></td>
+				<td colspan="2"></td>
+			</tr>
+			<tr>
+				<th style="width: 15%;"><%= hlabel :commons, :item_code %><font class="mark-required" style="margin-left:5px;">*</font></th>
+				<td style="width: 35%;">
+					<%= f.text_field :customer_code, :size => 5 %>
+					-
+					<%= f.text_field :code, :size => 5 %>
+				</td>
+				<th style="width: 15%;"><%= hlabel :process_price, :material_id %><font class="mark-required" style="margin-left:5px;">*</font></th>
+				<td style="width: 35%;">
+<%
+material = Material.find_by_id(@heat_process_price.material_id) unless @heat_process_price.material_id.nil?
+%>
+					<span id="material_name">
+						<%= material.disp_text unless material.nil? %>
+						<%= disp_none if material.nil? %>
+					</span>
+					<%= f.hidden_field :material_id %><br/>
+<%= 
+popup_button_tag(t(:button_change), :controller => :materials, :action => :pop_material_for_text,
+ :params => {:id_material_id => "heat_process_price_material_id"},
+ :height => 450, :button_class => :formInBtn) %>
+				</td>
+			</tr>
+			<tr>
+				<th><%= hlabel :process_order, :trader_id %><font class="mark-required" style="margin-left:5px;">*</font></th>
+				<td><%= f.collection_select :trader_id, @heat_processor_options, :id, :name, {:include_blank => t(:notice_select)} %></td>
+				<th><%= hlabel :process_price, :process %><font class="mark-required" style="margin-left:5px;">*</font></th>
+				<td><%= f.text_field :process %></td>
+			</tr>
+			<tr>
+				<th><%= hlabel :process_price, :condition %></th>
+				<td><%= f.text_field :condition %></td>
+				<th><%= hlabel :process_price, :price %><font class="mark-required" style="margin-left:5px;">*</font></th>
+				<td><%= f.text_field :price, :class => "price fmt-formatted-number" %></td>
+			</tr>
+			<tr>
+				<th><%= hlabel :process_price, :unit %></th>
+				<td><%= f.text_field :unit %></td>
+				<th><%= hlabel :process_price, :set %></th>
+				<td><%= f.text_field :set %></td>
+			</tr>
+			<tr>
+				<th><%= hlabel :process_price, :addition_price %></th>
+				<td><%= f.text_field :addition_price, :class => "price fmt-formatted-number" %></td>
+				<th><%= hlabel :process_price, :addition_unit %></th>
+				<td><%= f.text_field :addition_unit %></td>
+			</tr>
+			<tr>
+				<th><%= hlabel :process_price, :condition_weight %></th>
+				<td><%= f.text_field :condition_weight, :class => "amount fmt-formatted-number" %></td>
+				<th><%= hlabel :process_price, :condition_following %></th>
+				<td><%= f.text_field :condition_following %></td>
+			</tr>
+		</table>
+	</div><!--/ sheet-->
+
+	<%= f.hidden_field :lock_version %>
+
+	<div class="control">
+		<%= yield :control %>
+	</div><!--/ control-->
+
+	<% end %>
+</div><!--/ #main-->

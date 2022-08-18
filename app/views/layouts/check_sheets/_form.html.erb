@@ -1,0 +1,233 @@
+<div id="main" style="width:950px;">
+    <%= raw main_title %>
+    <%= raw flash_tag %>
+
+    <%= render :partial => "items/disp_item" %>
+
+    <div class="subTabmenu">
+        <%= tab_menu_for_check_sheet(@check_sheet) %>
+    </div>
+	
+    <%= form_for(@check_sheet) do |f| %>
+
+    <%= @check_sheet.errors.full_messages.join("<br>") %>
+    <p><font color="red" style="margin-left:5px;">*</font><%= t(:notice_required) %></p>
+
+    <div class="sheet">
+        <h4><%= hlabel_model(get_model_by_controller({})) %></h4>
+        <table class="commonSheet">
+            <tr>
+                <th>
+                    <%= hlabel :check_sheet, :column1 %>
+                </th>
+                <td>
+                    <%= f.text_field :column1, :size => 20 %>
+                </td>
+                <th>
+                    <%= hlabel :check_sheet, :standard1_top %>
+                </th>
+                <td>
+                    <%= f.text_field :standard1_top, :size => 20 %>
+                </td>
+                <th>
+                    <%= hlabel :check_sheet, :standard1_bottom %>
+                </th>
+                <td>
+                    <%= f.text_field :standard1_bottom, :size => 20 %>
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    <%= hlabel :check_sheet, :column2 %>
+                </th>
+                <td>
+                    <%= f.text_field :column2, :size => 20 %>
+                </td>
+                <th>
+                    <%= hlabel :check_sheet, :standard2_top %>
+                </th>
+                <td>
+                    <%= f.text_field :standard2_top, :size => 20 %>
+                </td>
+                <th>
+                    <%= hlabel :check_sheet, :standard2_bottom %>
+                </th>
+                <td>
+                    <%= f.text_field :standard2_bottom, :size => 20 %>
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    <%= hlabel :check_sheet, :column3 %>
+                </th>
+                <td>
+                    <%= f.text_field :column3, :size => 20 %>
+                </td>
+                <th>
+                    <%= hlabel :check_sheet, :standard3_top %>
+                </th>
+                <td>
+                    <%= f.text_field :standard3_top, :size => 20 %>
+                </td>
+                <th>
+                    <%= hlabel :check_sheet, :standard3_bottom %>
+                </th>
+                <td>
+                    <%= f.text_field :standard3_bottom, :size => 20 %>
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    <%= hlabel :check_sheet, :column4 %>
+                </th>
+                <td>
+                    <%= f.text_field :column4, :size => 20 %>
+                </td>
+                <th>
+                    <%= hlabel :check_sheet, :standard4_top %>
+                </th>
+                <td>
+                    <%= f.text_field :standard4_top, :size => 20 %>
+                </td>
+                <th>
+                    <%= hlabel :check_sheet, :standard4_bottom %>
+                </th>
+                <td>
+                    <%= f.text_field :standard4_bottom, :size => 20 %>
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    <%= hlabel :check_sheet, :column5 %>
+                </th>
+                <td>
+                    <%= f.text_field :column5, :size => 20 %>
+                </td>
+                <th>
+                    <%= hlabel :check_sheet, :standard5_top %>
+                </th>
+                <td>
+                    <%= f.text_field :standard5_top, :size => 20 %>
+                </td>
+                <th>
+                    <%= hlabel :check_sheet, :standard5_bottom %>
+                </th>
+                <td>
+                    <%= f.text_field :standard5_bottom, :size => 20 %>
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    <%= hlabel :check_sheet, :column6 %>
+                </th>
+                <td>
+                    <%= f.text_field :column6, :size => 20 %>
+                </td>
+                <th>
+                    <%= hlabel :check_sheet, :standard6_top %>
+                </th>
+                <td>
+                    <%= f.text_field :standard6_top, :size => 20 %>
+                </td>
+                <th>
+                    <%= hlabel :check_sheet, :standard6_bottom %>
+                </th>
+                <td>
+                    <%= f.text_field :standard6_bottom, :size => 20 %>
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    <%= hlabel :check_sheet, :column7 %>
+                </th>
+                <td>
+                    <%= f.text_field :column7, :size => 20 %>
+                </td>
+                <th>
+                    <%= hlabel :check_sheet, :standard7_top %>
+                </th>
+                <td>
+                    <%= f.text_field :standard7_top, :size => 20 %>
+                </td>
+                <th>
+                    <%= hlabel :check_sheet, :standard7_bottom %>
+                </th>
+                <td>
+                    <%= f.text_field :standard7_bottom, :size => 20 %>
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    <%= hlabel :check_sheet, :column8 %>
+                </th>
+                <td>
+                    <%= f.text_field :column8, :size => 20 %>
+                </td>
+                <th>
+                    <%= hlabel :check_sheet, :standard8_top %>
+                </th>
+                <td>
+                    <%= f.text_field :standard8_top, :size => 20 %>
+                </td>
+                <th>
+                    <%= hlabel :check_sheet, :standard8_bottom %>
+                </th>
+                <td>
+                    <%= f.text_field :standard8_bottom, :size => 20 %>
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    <%= hlabel :check_sheet, :column9 %>
+                </th>
+                <td>
+                    <%= f.text_field :column9, :size => 20 %>
+                </td>
+                <th>
+                    <%= hlabel :check_sheet, :standard9_top %>
+                </th>
+                <td>
+                    <%= f.text_field :standard9_top, :size => 20 %>
+                </td>
+                <th>
+                    <%= hlabel :check_sheet, :standard9_bottom %>
+                </th>
+                <td>
+                    <%= f.text_field :standard9_bottom, :size => 20 %>
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    <%= hlabel :check_sheet, :column10 %>
+                </th>
+                <td>
+                    <%= f.text_field :column10, :size => 20 %>
+                </td>
+                <th>
+                    <%= hlabel :check_sheet, :standard10_top %>
+                </th>
+                <td>
+                    <%= f.text_field :standard10_top, :size => 20 %>
+                </td>
+                <th>
+                    <%= hlabel :check_sheet, :standard10_bottom %>
+                </th>
+                <td>
+                    <%= f.text_field :standard10_bottom, :size => 20 %>
+                </td>
+            </tr>
+        </table>
+        <!--/ sheet-->
+    </div>
+
+    <%= f.hidden_field :lock_version %>
+    <%= f.hidden_field :item_id %>
+
+    <div class="control">
+        <%= yield :control %>
+        <!--/ control-->
+    </div>
+
+    <% end %>
+    <!--/ #main-->
+</div>

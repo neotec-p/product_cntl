@@ -1,0 +1,81 @@
+<% content_for :tabmenu do %>
+	<%= tab_menu_for_production %>
+<% end %>
+
+<% content_for :control do %>
+<% unless @production.summation_id.nil? %>
+    <%= submit_button_tag(:conf => confirm_force_submit)%>
+<% else %>
+    <%= submit_button_tag %>
+<% end %>
+	<%= cancel_button_tag(:action => :vote_no_index) %>
+<% end %>
+
+<% content_for :add_js do %>
+function check_edit_material_edit(){
+	$("[id^='material_edit']").focus(function(){
+		check_edit_core();
+	});
+}
+
+$(function() {
+	check_edit_material_edit();
+});
+<% end %>
+
+<div id="main" style="width: 1050px;">
+	<%= raw main_title %>
+	<%= raw flash_tag %>
+
+    <%= render :partial => "productions/disp_production" %>
+	
+    <div class="subTabmenu">
+        <%= tab_submenu_for_production(@production) %>
+    </div>
+
+	<%= form_tag(edit_material_update_production_path, {:method => :put}) do %>
+	<%= fields_for :material_edit, @material_edit do |field| %>
+	
+	<%= error_messages_for 'material_edit' %>
+
+	<div class="sheet" style="width: 450px;">
+		<h4><%= t("actions.edit_material") %></h4>
+		<table class="commonSheet">
+			<tr>
+				<th style="width: 140px;">
+					<%= hlabel(:material_edit, :title_material) %>
+				</th>
+				<td style="width: 300px;">
+<%
+material = Material.find(@material_edit.material_id) unless @material_edit.material_id.nil?
+%>
+					<span id="material_name">
+						<%= material.disp_text unless material.nil? %>
+						<%= disp_none if material.nil? %>
+					</span>
+					<%= field.hidden_field :material_id %><br/>
+<%= 
+popup_button_tag(t(:button_change), :controller => :materials, :action => :pop_material_for_text,
+ :height => 450, :button_class => :formInBtn) %>
+				</td>
+			</tr>
+			<tr>
+				<th>
+					<%= field.label :material_stock_id1 %>
+				</th>
+				<td>
+					<%= field.text_field :material_stock_id1, :size => 5 %>
+				</td>
+			</tr>
+		</table>
+	</div><!--/ list-->
+
+	<%= field.hidden_field :production_lock_version %>
+
+    <div class="control">
+        <%= yield :control %>
+    </div><!--/ control-->
+	
+	<% end %>
+	<% end %>
+</div><!--/ #main-->

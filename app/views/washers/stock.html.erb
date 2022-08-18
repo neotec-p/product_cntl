@@ -1,0 +1,59 @@
+<% content_for :header_title do %>
+	<%= t(:washer_stocks, :scope => :controllers) %>
+<% end %>
+
+<% content_for :tabmenu do %>
+	<%= tab_menu_for_washer_stock %>
+<% end %>
+
+<% content_for :control do %>
+	<%= cancel_button_tag :action => :stock_index %>
+<% end %>
+
+<div id="main" style="width:1000px;">
+	<%= raw main_title(:controller => :washer_stocks, :action => :stock) %>
+
+	<%= raw flash_tag %>
+
+    <%= render :partial => "washers/disp_washer", :locals => { :washer => @washer, :title => hlabel(:washer, :t_washer_info) } %>
+
+    <div class="subTabmenu">
+        <%= tab_submenu_for_washer_stock %>
+    </div>
+
+	<div class="control">
+		<%= yield :control %>
+	</div><!--/ control-->
+
+	<div class="sheet" style="width: 600px;">
+		<h4><%= hlabel(:washer_stock,:t_accept_washer_info) %></h4>
+			<table class="commonSheet">
+				<tr>
+					<th style="width: 130px;"><%= hlabel :washer, :excess_amount %></th>
+					<td class="number" style="width: 130px;"><%= hnumber_with_precision_and_sign(@washer.excess_amount, :precision => 0) %></td>
+					<th style="width: 130px;"><%= hlabel :washer, :stock_amount %></th>
+					<td class="number" style="width: 130px;"><%= hnumber_with_precision(@washer.stock_amount, :precision => 0) %></td>
+				</tr>
+				<tr>
+					<th style="width: 130px;"><%= hlabel :washer, :planned_amount %></th>
+					<td class="number" style="width: 130px;"><%= hnumber_with_precision(@washer.planned_amount, :precision => 0) %></td>
+					<th style="width: 130px;"><%= hlabel :washer, :orderd_amount %></th>
+					<td class="number" style="width: 130px;"><%= hnumber_with_precision(@washer.orderd_amount, :precision => 0) %></td>
+				</tr>
+				<tr>
+					<th style="width: 130px;"><%= hlabel :washer, :stock_price %></th>
+					<td class="number" style="width: 130px;"><%= hnumber_with_precision(@washer.stock_price, :precision => 0) %></td>
+					<td colspan="2"></td>
+				</tr>
+			</table>
+	</div><!--/ sheet-->
+
+    <%= render :partial => "washer_orders" %>
+    
+    <%= render :partial => "washer_stocks" %>
+
+	<div class="control">
+		<%= yield :control %>
+	</div><!--/ control-->
+
+</div><!--/ #main-->

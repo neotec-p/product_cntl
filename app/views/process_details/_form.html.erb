@@ -1,0 +1,68 @@
+<div id="main">
+	<%= raw main_title %>
+	<%= raw flash_tag %>
+
+    <%= render :partial => "items/disp_item" %>
+
+	<div class="spacer"></div>
+
+	<%= form_tag(url, {:method => method}) do %>
+	
+	<%= error_messages_for 'process_detail', :object => @process_details %>
+	
+    <p><font color="red" style="margin-left:5px;">*</font><%= t(:notice_required) %></p>
+
+	<div class="list">
+        <h4><%= hlabel_model(get_model_by_controller({})) %></h4>
+		<table class="commonList">
+			<thead>
+				<tr>
+					<th><%= hlabel :commons, :id %></th>
+					<th><%= hlabel :process_type, :name %></th>
+					<th><%= hlabel :process_detail, :name %></th>
+					<th><%= hlabel :process_detail, :condition %></th>
+					<th><%= hlabel :process_detail, :model %></th>
+				</tr>
+			</thead>
+			<tbody>
+				<% @process_details.each do |process_detail| %>
+				<%= fields_for process_detail, :index => process_detail.process_type_id do |field| %>
+<%
+disable_flag = true unless process_detail.process_type.protected_flag.blank?
+%>
+				<tr>
+					<td>
+						<%= process_detail.process_type_id %>
+					</td>
+					<td>
+						<%= process_detail.process_type.name %>
+						<%= field.hidden_field :lock_version %>
+					</td>
+					<td><%= field.text_field :name, :size =>"15", :disabled => disable_flag %></td>
+					<td>
+						<%= field.text_field :condition, :size =>"15", :disabled => disable_flag %>
+<% if process_detail.process_type.processor_flag == PROCESSOR_FLAG_HEAT %>
+						<%= field.select :tanaka_flag, @tanaka_options, {:include_blank => true}, :disabled => disable_flag %>
+<% end %>
+<% if process_detail.process_type.processor_flag == PROCESSOR_FLAG_SURFACE %>					
+						<%= field.select :hexavalent_flag, @hexavalent_options, {:include_blank => true}, :disabled => disable_flag %>
+<% end %>
+					</td>
+					<td>
+						<%= field.collection_select :trader_id, @processor_options, :id, :name, {:include_blank => true}, :disabled => disable_flag %>
+					</td>
+				</tr>
+				<% end %>
+				<% end %>
+			</tbody>
+		</table>
+	</div><!--/ sheet-->
+	
+	<%= hidden_field_tag :item_id, @item.id %>
+	
+    <div class="control">
+        <%= yield :control %>
+    </div><!--/ control-->
+	
+	<% end %>
+</div><!--/ #main-->

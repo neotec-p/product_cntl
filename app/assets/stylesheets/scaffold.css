@@ -1,0 +1,110 @@
+/*
+body { background-color: #fff; color: #333; }
+
+body, p, ol, ul, td {
+  font-family: verdana, arial, helvetica, sans-serif;
+  font-size:   13px;
+  line-height: 18px;
+}
+
+pre {
+  background-color: #eee;
+  padding: 10px;
+  font-size: 11px;
+}
+
+a { color: #000; }
+a:visited { color: #666; }
+a:hover { color: #fff; background-color:#000; }
+*/
+
+
+.fieldWithErrors {
+  display: inline-block;
+  padding: 2px;
+  background-color: #ffcce5;
+}
+
+.fieldWithErrors input,
+.fieldWithErrors textarea,
+.fieldWithErrors select {
+  background-color: #ffcce5;
+}
+
+
+th > .fieldWithErrors {
+  background: #aaa;
+}
+
+/*
+.fieldWithErrors input,
+.fieldWithErrors select,
+.fieldWithErrors textarea{
+  padding: 2px;
+  background-color: #ffcce5;
+}
+*/
+
+
+#errorExplanation {
+  font-size: 14px;
+  line-height: 120%;
+  background: #ffffc6;
+  margin: 20px;
+  padding: 10px;
+  border: 1px solid #ff7fbf;
+}
+
+#errorExplanation h2 {
+  font-weight: bold;
+  padding: 5px 5px 5px 15px;
+  font-size: 12px;
+  background-color: #ffcce5;
+  color: #ff007f;
+}
+
+#errorExplanation p {
+  margin: 0;
+  padding: 5px 5px 5px 20px;
+}
+
+#errorExplanation ul li {
+  font-size: 12px;
+  list-style: square;
+  list-style-position: inside;
+  padding-left: 20px;
+}
+
+/*
+
+#errorExplanation {
+  width: 400px;
+  border: 2px solid red;
+  padding: 7px;
+  padding-bottom: 12px;
+  margin-bottom: 20px;
+  background-color: #f0f0f0;
+}
+
+#errorExplanation h2 {
+  text-align: left;
+  font-weight: bold;
+  padding: 5px 5px 5px 15px;
+  font-size: 12px;
+  margin: -7px;
+  background-color: #c00;
+  color: #fff;
+}
+
+#errorExplanation p {
+  color: #333;
+  margin-bottom: 0;
+  padding: 5px;
+}
+
+#errorExplanation ul li {
+  font-size: 12px;
+  list-style: square;
+}
+
+*/

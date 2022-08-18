@@ -1,0 +1,106 @@
+<% content_for :tabmenu do %>
+	<%= tab_menu_for_production %>
+<% end %>
+
+<div id="main" style="width: 900px;">
+	<%= raw main_title(:action => :production_status_yeild) %>
+
+	<%= raw flash_tag %>
+
+    <div class="subTabmenu">
+        <%= raw tab_submenu_for_production_status %>
+    </div>
+
+        <div class="condition" style="width: 500px;">
+                <%= form_tag({:action => :yeild_index}, {:method => :get, :name => :form_search, :id => :form_search }) do -%>
+
+<%= hidden_field_tag(:sort) %>
+<%= hidden_field_tag(:order) %>
+
+                <h4><%= t(:search_condition) %></h4>
+                <table class="commonCondition" style="width: 800px;">
+                        <tr>
+                                <th>
+                                        <%=hlabel :commons, :item_code %>
+                                </th>
+                                <td>
+                                        <%= text_field_tag(:cond_item_customer_code, params[:cond_item_customer_code], :size => 5) %>
+                                        -
+                                        <%= text_field_tag(:cond_item_code, params[:cond_item_code], :size => 5) %>
+                                </td>
+
+                                <td class="button"> <%= submit_tag t(:search, :scope => :actions) %> </td>
+                        </tr>
+                </table>
+                <% end %>
+        </div><!--/ condition-->
+
+	<div class="sheet" style="width: 300px;">
+		<h4><%= hlabel :production_detail, :production_status %> : <%= I18n.l Date.today, :format => :long %> (単位：千円)</h4>
+		<table class="commonSheet">
+<% @total_prices_by_keys.each do |k, v| %>
+			<tr>
+				<th style="width: 100px;"><%= k.name %></th>
+				<td class="button">
+					<%= hnumber_with_precision(v, :precision => 0) %>
+				</td>
+			</tr>
+<% end %>
+<tr><th style="padding: 1px;"></th><td style="padding: 1px;"></td></tr>
+			<tr>
+				<th style="width: 100px;">合計</th>
+				<td class="button" >
+					<%= hnumber_with_precision(@total_price_k, :precision => 0) %>
+				</td>
+			</tr>
+		</table>
+	</div><!--/ sheet-->
+
+<br>
+
+        <div class="list">
+                <table class="commonList">
+                        <thead>
+                                <tr>
+                                        <th><%= hlabel :commons, :vote_no %></th>
+                                        <th style="width: 80px;"><%= hlabel :commons, :item_code %></th>
+					<th> <%= hlabel :item, :name %></th>
+                                        <th >実績数量（本）<!--<%= hlabel :production_detail, :result_amount_production %>--></th>
+                                        <th >倉入金額（円）</th>
+                                </tr>
+                        </thead>
+                        <tbody>
+                                <% @production_details.each do |production_detail| %>
+                                <%= fields_for :production_detail, production_detail, :index => production_detail.no_in_list do |field| %>
+                                        <tr>
+<%
+production = production_detail.production
+production ||= Production.new
+item = production.item
+item ||= Item.new
+order = production.order
+order ||= Order.new
+report = production.reports.last
+report ||= Report.new
+attr = prepare_print_all_attr(report)
+%>
+                                                <td><%= link_to production.disp_text, edit_production_path(production) %></td>
+                                                <td><%= item.disp_text %></td>
+						<td><%= item.name %></td>
+                                                <td class="number"><%= hnumber production_detail.result_amount_production %></td>
+                                                <td><%= hnumber item.price * production_detail.result_amount_production  %></td>
+                                        </tr>
+                                        <% end %>
+                                <% end %>
+                        </tbody>
+                </table>
+                
+                <%= will_paginate @production_details %>
+
+<%= hidden_field_tag(:page, params[:page]) %>
+
+        </div><!--/ list-->
+
+
+
+</div><!--/ #main-->

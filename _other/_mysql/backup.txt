@@ -1,0 +1,7 @@
+（バックアップ）
+mysqldump --opt --add-drop-table --add-locks -u neotecuser neotec > neotec.sql -p
+Enter password:
+
+（リストア）
+mysql -u neotecuser -p neotec < neotec.sql
+ 

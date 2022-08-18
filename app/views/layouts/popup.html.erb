@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><% t(:t_system) %></title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= stylesheet_link_tag 'scaffold' %>
+
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+<%#= stylesheet_link_tag 'jquery-ui-1.8.10.custom' %>
+<%#= javascript_include_tag 'prototype' %>
+<%#= javascript_include_tag 'jquery-1.4.4.min' %>
+<%#= javascript_include_tag 'jquery-ui-1.8.10.custom.min' %>
+<%#= javascript_include_tag 'scriptaculous' %>
+<%#= javascript_include_tag 'application' %>
+<%#= javascript_include_tag 'jquery.ui.datepicker-ja' %>
+
+<script type="text/javascript">
+<!--
+<%= render :partial => "layouts/js_erb" %>
+<%= yield :add_js %>
+//-->
+</script>
+
+</head>
+<body>
+    <div id="wrapperPop">
+    <%= yield %>
+    </div><!--/ #wrapper-->
+</body>
+</html>

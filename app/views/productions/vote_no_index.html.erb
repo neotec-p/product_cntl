@@ -1,0 +1,112 @@
+<% content_for :tabmenu do %>
+	<%= raw tab_menu_for_production %>
+<% end %>
+
+<div id="main" style="width: 1080px;">
+	<%= raw main_title(:action => :production_status_vote_no) %>
+
+	<%= raw flash_tag %>
+
+    <div class="subTabmenu">
+        <%= raw tab_submenu_for_production_status %>
+    </div>
+
+	<div class="condition" style="width: 250px;">
+		<%= form_tag({:action => :vote_no_index}, {:method => :get, :name => :form_search, :id => :form_search }) do -%>
+		<h4><%= t(:search_condition) %></h4>
+		<table class="commonCondition">
+			<tr>
+				<th><%= hlabel :commons, :vote_no %></th>
+				<td><%= text_field_tag(:cond_vote_no, params[:cond_vote_no], :size => 15) %></td>
+				<td class="button"> <%= submit_tag t(:search, :scope => :actions) %> </td>
+			</tr>
+		</table>
+
+		<% end %>
+	</div><!--/ condition-->
+
+	<div class="list">
+	<h4><%= hlabel :production_detail, :production_status %> : <%= I18n.l Date.today, :format => :long %></h4>
+	
+<% if @production_details.empty? %>
+		<%= t(:notice_empty) %>
+<% else %>
+		<table class="commonList">
+			<thead>
+				<tr>
+					<th colspan="2"><%= hlabel :commons, :purchase_department %></th>
+					<th colspan="11"><%= hlabel :commons, :production_department %></th>
+				</tr>
+				<tr class="top_separate">
+					<th rowspan="2" style="width:70px;"><%= hlabel :order, :delivery_ymd %></th>
+					<th rowspan="2" style="width:70px;"><%= hlabel :order, :order_amount %></th>
+					<th rowspan="2"><%= hlabel :commons, :item_code %><br/><%= hlabel :item, :name %></th>
+					<th rowspan="2" style="width:60px;"><%= hlabel :commons, :vote_no %></th>
+					<th rowspan="2" style="width:70px;"><%= hlabel :order, :necessary_amount %></th>
+					<th rowspan="2" style="width:70px;"><%= hlabel :commons, :result_amount %></th>
+					<th rowspan="2" style="width:70px;"><%= hlabel :commons, :excess_amount %></th>
+					<th rowspan="2" style="width:40px;"><%= hlabel :commons, :memo %></th>
+					<th colspan="4"><%= hlabel :production_detail, :t_breakdown %></th>
+					<th style="width:70px;"><%= hlabel :production_detail, :t_plan %></th>
+				</tr>
+				<tr class="top_separate">
+					<th class="left_separate"><%= hlabel :commons, :branch_no %></th>
+					<th style="width:70px;"><%= hlabel :commons, :result_amount %></th>
+					<th><%= hlabel :commons, :process_name %></th>
+					<th style="width:70px;"><%= hlabel :production_detail, :t_finish_status %></th>
+					<th style="width:70px;"><%= hlabel :production_detail, :t_finish_plan %></th>
+				</tr>
+			</thead>
+			<tbody class="color_row_skip">
+				<% @production_details.each_with_index do |production_detail, i| %>
+<%
+production = production_detail.production unless production_detail.production.nil?
+production ||= Production.new
+order = production.order unless production.order.nil?
+order ||= Order.new
+item = production.item unless production.item.nil?
+item ||= Item.new
+
+if i == 0
+%>					<tr>
+						<td><%= hdate order.delivery_ymd %></td>
+						<td class="number"><%= hnumber order.order_amount %></td>
+						<td><%= item.disp_text %><br/><%= item.name %>
+						<td><%= production.vote_no %>
+						<td class="number"><%= hnumber order.necessary_amount %></td>
+						<td class="number"><%= hnumber order.sum_result_amount %></td>
+						<td class="number"><%= hnumber_with_sign((order.sum_result_amount.to_i - order.necessary_amount.to_i), :zero_green => true) %></td>
+						<td style="text-align: center;">
+<%= momo_button(production) %>
+						</td>
+						<td>---</td>
+						<td>---</td>
+						<td>---</td>
+						<td>---</td>
+					</tr>
+<%
+end
+%>
+					<tr>
+						<td class="weak"></td>
+						<td class="weak"></td>
+						<td class="weak"></td>
+						<td class="weak"></td>
+						<td class="weak"></td>
+						<td class="weak"></td>
+						<td class="weak"></td>
+						<td class="weak"></td>
+						<td><%= link_to production.disp_branch_no, edit_production_path(production) %>
+						<td class="number"><%= hnumber production_detail.result_amount_production %></td>
+						<td><%= production_detail.process_detail.process_type.name %></td>
+						<td><%= production_detail.curretn_status_or_end_date %></td>
+						<td><%= hdate production.finish_plan_date %></td>
+					</tr>
+				<% end %>
+			</tbody>
+
+		</table>
+	<% end %>
+	</div><!--/ list-->
+	
+</div><!--/ #main-->

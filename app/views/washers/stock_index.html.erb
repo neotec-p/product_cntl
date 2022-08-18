@@ -1,0 +1,50 @@
+<% content_for :header_title do %>
+	<%= t(:washer_stocks, :scope => :controllers) %>
+<% end %>
+
+<% content_for :tabmenu do %>
+	<%= raw tab_menu_for_washer_stock %>
+<% end %>
+
+<div id="main" style="width: 900px;">
+	<%= raw main_title(:controller => "washer_stocks") %>
+
+	<%= raw flash_tag %>
+
+	<%= render :partial => 'layouts/search_cond_washer', :locals => {:target_action => :stock_index} %>
+
+	<div class="list">
+		<div class="paginationCnt"><%= t(:all_count, :scope => :paginate, :cnt => @washers.count) %></div>
+		<table class="commonList">
+			<thead>
+				<tr>
+					<th><%= hlabel :commons, :washer_name %></th>
+					<th><%= hlabel :washer, :excess_amount %></th>
+					<th><%= hlabel :washer, :stock_amount %></th>
+					<th><%= hlabel :washer, :planned_amount %></th>
+					<th><%= hlabel :washer, :orderd_amount %></th>
+					<th><%= hlabel(:washer, :unit_price) %></th>
+					<th><%= hlabel(:washer, :stock_price) %></th>
+				</tr>
+			</thead>
+			<tbody>
+				<% @washers.each do |washer| %>
+				<tr>
+					<td>
+						<%= link_to(washer.disp_text, stock_washer_url(washer)) %>
+          			</td>
+					<td class="number"><%= hnumber_with_precision_and_sign(washer.excess_amount, :precision => 0) %></td>
+					<td class="number"><%= hnumber_with_precision(washer.stock_amount, :precision => 0) %></td>
+					<td class="number"><%= hnumber_with_precision(washer.planned_amount, :precision => 0) %></td>
+					<td class="number"><%= hnumber_with_precision(washer.orderd_amount, :precision => 0) %></td>
+					<td class="number"><%= hnumber_with_precision(washer.unit_price, :precision => 4) %></td>
+					<td class="number"><%= hnumber_with_precision(washer.stock_price, :precision => 0) %></td>
+				</tr>
+				<% end %>
+			</tbody>
+		</table>
+
+		<%= will_paginate @washers %>
+
+	</div><!--/ list-->
+</div><!--/ #main-->

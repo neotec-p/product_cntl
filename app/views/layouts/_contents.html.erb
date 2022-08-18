@@ -1,0 +1,18 @@
+<div id="contents">
+    <div class="areaHeader">
+        <h2>
+			<% unless content_for?(:header_title).blank? -%>
+				<%= yield :header_title %>
+			<% end %>
+			<% if content_for?(:header_title).blank? -%>
+	        	<%= t(controller_name, :scope => :controllers) %>
+			<% end %>
+        </h2>
+		<% unless content_for?(:tabmenu).blank? -%>
+			<%= yield :tabmenu %>
+		<% end %>
+    </div>
+
+    <%= yield %>
+
+</div><!--/ #contents-->

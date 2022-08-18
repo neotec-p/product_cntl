@@ -1,0 +1,2 @@
+class HeaderLeftCheckSheet < CheckSheet
+end

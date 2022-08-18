@@ -1,0 +1,17 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  production_id: 1
+  lot_no: 1
+  weight: 9.99
+  case: 9.99
+  insert_ymd: 2012-01-31
+  lock_version: 1
+
+two:
+  production_id: 1
+  lot_no: 1
+  weight: 9.99
+  case: 9.99
+  insert_ymd: 2012-01-31
+  lock_version: 1

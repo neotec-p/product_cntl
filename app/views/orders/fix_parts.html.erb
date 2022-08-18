@@ -1,0 +1,181 @@
+<% content_for :add_js do %>
+function fix_parts_submit(col_index) {
+	if(!confirm('<%= t(:confirm_fix_parts) %>')){
+		return false;
+	}
+	
+	target = "#parts_" + col_index + "_fix_flag";
+	$(target).val(<%=FLAG_ON%>);
+	
+	$("#form_fix_parts").submit();
+}
+function set_blank(col_index, washer_no){
+	if(!confirm('<%= t(:confirm_set_blank_washer) %>')){
+		return false;
+	}
+
+	$("#parts_" + col_index + "_washer_id"  + washer_no).val("");
+	$("#link_washer" + washer_no + "_" + col_index).html("<%= DISP_NONE %>");
+	$("#link_washer" + washer_no + "_" + col_index).attr('href', "<%= fix_parts_orders_path %>");
+	$("#washer" + washer_no + "_excess_amount_" + col_index).text("");
+}
+
+function confirm_change_link(){
+	$("[id^='link_material']").click(function(){
+		return confirm_change_tab_core();
+	});
+	$("[id^='link_washer']").click(function(){
+		return confirm_change_tab_core();
+	});
+}
+
+$(function() {
+    confirm_change_link();
+});
+<% end %>
+
+<% content_for :tabmenu do %>
+	<%= raw tab_menu_for_order %>
+<% end %> 
+
+<!-- default 800px; -->
+<div id="main" style="width: 1080px;">
+	<%= raw main_title %>
+
+	<%= raw flash_tag %>
+
+	<%= form_tag(fix_parts_update_orders_path, {:method => :put, :name => :form_fix_parts, :id => :form_fix_parts}) do %>
+
+	<%= error_messages_for 'parts', :object => @partses %>
+
+	<div class="list">
+<% if action_name == 'fix_parts'%>
+		<div class="paginationCnt"><%= t(:all_count, :scope => :paginate, :cnt => @productions.count) %></div>
+<% end %>
+		<table class="commonList">
+			<thead>
+				<tr>
+					<th style="width:60px;"><%= raw hlabel :parts, :title_fix_parts %></th>
+					<th style="width:70px;"><%= raw hlabel :order, :delivery_ymd %></th>
+					<th><%= raw hlabel :commons, :vote_no %><br/><%= hlabel :commons, :item_code %><br/><%= hlabel :item, :name %></th>
+					<th style="width:300px;"><%= raw hlabel :parts, :material_id %></th>
+					<th style="width:80px;"><%= raw simple_format(t(:t_excess_amount, :scope => [:activerecord, :attributes, :material])) %></th>
+					<th style="width:300px;"><%= raw hlabel :parts, :washer_id1 %><br/><%= hlabel :parts, :washer_id2 %></th>
+					<th style="width:80px;"><%= raw simple_format(t(:t_excess_amount, :scope => [:activerecord, :attributes, :washer])) %></th>
+				</tr>
+			</thead>
+			<tbody class="color_row_skip">
+				<% @partses.each do |parts| %>
+   			        <%= fields_for 'parts[]', parts, :index => parts.no_in_list do |field| %>
+<%
+even = cycle("", "even")
+
+production = parts.production unless parts.production.nil?
+production ||= Production.new
+order = production.order unless production.nil?
+order ||= Order.new
+item = production.item unless production.nil?
+item ||= Item.new
+material = parts.material
+washer1 = parts.washer1
+washer2 = parts.washer2
+%>
+					<tr class=<%=even%>>
+						<td rowspan="2">
+							<%= button_tag(t(:button_fix), :onclick => "javascript:fix_parts_submit('#{parts.no_in_list}')", :class => :formInBtn, :type => "button") %>
+							<%= field.hidden_field :fix_flag, :value => FLAG_OFF %>
+							<%= field.hidden_field :production_id, :value => production.id %>
+							<%= field.hidden_field :production_lock_version, :value => production.lock_version %>
+	          			</td>
+						<td rowspan="2"><%= hdate order.delivery_ymd %></td>
+						<td rowspan="2"><%= production.disp_text %><br/><%= item.disp_text %><br/><%= item.name %></td>
+						<td rowspan="2">
+							<%= link_to(material.disp_text, stock_material_path(material), :id => ("link_material_" + parts.no_in_list.to_s)) %><br/>
+<%=
+popup_button_tag(t(:button_change), 
+:controller => :materials, :action => :pop_material_for_link, :params => {:col_index => parts.no_in_list},
+:height => 450, :button_class => :formInBtn)
+%>
+							<%= field.hidden_field :material_id %>
+						</td>
+						<td rowspan="2" class="number">
+							<span id=<%= "material_excess_amount_" + parts.no_in_list.to_s %>><%= hnumber_with_precision_and_sign(material.excess_amount, :precision => 1) %></span>
+						</td>
+						<td>
+<%
+if item.washer1.nil?
+%>
+							<%= disp_none %>
+<%
+else
+	washer1_link_id = "link_washer1_" + parts.no_in_list.to_s
+	
+	washer1_link = stock_washer_path(washer1) unless washer1.nil?
+	washer1_link ||= fix_parts_orders_path
+	washer1_name = washer1.disp_text unless washer1.nil?
+	washer1_name ||= disp_none
+%>
+							<%= link_to(washer1_name, washer1_link, :id => washer1_link_id) %>
+							<br/>
+<%=
+popup_button_tag(t(:button_change), 
+:controller => :washers, :action => :pop_washer_for_link, :params => {:col_index => parts.no_in_list, :washer_no => 1},
+:height => 450, :button_class => :formInBtn)
+%>
+							<%= field.hidden_field :washer_id1 %>
+<%
+end
+%>
+						</td>
+						<td class="number">
+							<span id=<%= "washer1_excess_amount_" + parts.no_in_list.to_s %>><%= hnumber_with_precision_and_sign(washer1.excess_amount, :precision => 0) unless washer1.nil? %></span>
+						</td>
+					</tr>
+					<tr class=<%=even%>>
+						<td>
+<%
+if item.washer2.nil?
+%>
+							<%= disp_none %>
+<%
+else
+	washer2_link_id = "link_washer2_" + parts.no_in_list.to_s
+	
+	washer2_link = stock_washer_path(washer2) unless washer2.nil?
+	washer2_link ||= fix_parts_orders_path
+	washer2_name = washer2.disp_text unless washer2.nil?
+	washer2_name ||= disp_none
+%>
+							<%= link_to(washer2_name, washer2_link, :id => washer2_link_id) %>
+							<br/>
+<%=
+popup_button_tag(t(:button_change), 
+:controller => :washers, :action => :pop_washer_for_link, :params => {:col_index => parts.no_in_list, :washer_no => 2},
+:height => 450, :button_class => :formInBtn)
+%>
+							<%= field.hidden_field :washer_id2 %>
+<%
+end
+%>
+						</td>
+						<td class="number">
+							<span id=<%= "washer2_excess_amount_" + parts.no_in_list.to_s %>><%= hnumber_with_precision_and_sign(washer2.excess_amount, :precision => 0) unless washer2.nil? %></span>
+						</td>
+					</tr>
+     				<% end %>
+				<% end %>
+			</tbody>
+		</table>
+
+<% if action_name == 'fix_parts'%>
+		<%= will_paginate @productions %>
+<% else %>
+                <p><font color="red" style="margin-left:5px;">*</font><%= t(:notice_required) %></p>
+                <p style="text-align: center;"><%= t(:notice_paginate_edit) %></p>
+<% end %>
+<%= hidden_field_tag(:page, params[:page]) %>
+
+	</div><!--/ list-->
+	
+	<% end %>
+</div><!--/ #main-->

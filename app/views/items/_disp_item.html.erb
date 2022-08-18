@@ -1,0 +1,29 @@
+<% item = @item if item.nil? %>
+<% title = t("activerecord.models.item") if title.nil? %>
+
+<div class="sheet">
+    <h4><%= title %></h4>
+    <table class="commonSheet">
+        <tr>
+            <th style="width:80px;">
+                <%= hlabel :commons, :item_code %>
+            </th>
+            <td>
+                <%= item.disp_text %>
+            </td>
+            <th style="width:80px;">
+                <%=hlabel :item, :drawing_no %>
+            </th>
+            <td>
+                <%= item.drawing_no %>
+            </td>
+            <th style="width:80px;">
+                <%=hlabel :item, :name %>
+            </th>
+            <td>
+                <%= item.name %>
+            </td>
+        </tr>
+    </table>
+    <!--/ sheet-->
+</div>

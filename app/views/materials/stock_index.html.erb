@@ -1,0 +1,50 @@
+<% content_for :header_title do %>
+	<%= t(:material_stocks, :scope => :controllers) %>
+<% end %>
+
+<% content_for :tabmenu do %>
+	<%= render :partial => "layouts/tab_menu_for_material_stock" %>
+<% end %>
+
+<div id="main" style="width: 900px;">
+	<%= raw main_title(:controller => "material_stocks") %>
+
+	<%= raw flash_tag %>
+
+	<%= render :partial => 'layouts/search_cond_material', :locals => {:target_action => :stock_index} %>
+
+	<div class="list">
+		<div class="paginationCnt"><%= t(:all_count, :scope => :paginate, :cnt => @materials.count) %></div>
+		<table class="commonList">
+			<thead>
+				<tr>
+					<th><%= hlabel :commons, :material_name %></th>
+					<th><%= hlabel :material, :excess_amount %></th>
+					<th><%= hlabel :material, :stock_amount %></th>
+					<th><%= hlabel :material, :planned_amount %></th>
+					<th><%= hlabel :material, :orderd_amount %></th>
+					<th><%= hlabel(:material, :unit_price) %></th>
+					<th><%= hlabel(:material, :stock_price) %></th>
+				</tr>
+			</thead>
+			<tbody>
+				<% @materials.each do |material| %>
+				<tr>
+					<td>
+						<%= link_to(material.disp_text, stock_material_url(material)) %>
+          			</td>
+					<td class="number"><%= hnumber_with_precision_and_sign(material.excess_amount, :precision => 1) %></td>
+					<td class="number"><%= hnumber_with_precision(material.stock_amount, :precision => 1) %></td>
+					<td class="number"><%= hnumber_with_precision(material.planned_amount, :precision => 1) %></td>
+					<td class="number"><%= hnumber_with_precision(material.orderd_amount, :precision => 1) %></td>
+					<td class="number"><%= hnumber_with_precision(material.unit_price, :precision => 3) %></td>
+					<td class="number"><%= hnumber_with_precision(material.stock_price, :precision => 0) %></td>
+				</tr>
+				<% end %>
+			</tbody>
+		</table>
+
+		<%= will_paginate @materials %>
+
+	</div><!--/ list-->
+</div><!--/ #main-->

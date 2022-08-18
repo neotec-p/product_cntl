@@ -1,0 +1,46 @@
+<div id="header">
+<div class="spacer"></div>
+</div><!--/ #header-->
+
+<div id="contents">
+	<div class="areaHeader">
+	<h2><%= I18n.t(controller_name, :scope => [:controllers]) %></h2>
+	</div>
+
+	<div id="main">
+		<%= raw flash_tag %>
+
+		<div class="list">
+			<h4><%= t("actions.index") %></h4>
+			<table class="commonList">
+				<thead>
+					<tr>
+						<th style="width: 20px;"></th>
+						<th style="width: 80px;"><%= hlabel :memo, :user_id %></th>
+						<th style="width: 150px;"><%= hlabel :commons, :created_at %></th>
+						<th><%= hlabel :memo, :contents %></th>
+					</tr>
+				</thead>
+				<tbody>
+					<% @memos.each do |memo| %>
+					<tr>
+						<td><%= memo.seq %></td>
+						<td><%= memo.user.disp_text unless memo.user.nil? %></td>
+						<td><%= hdate memo.created_at %></td>
+						<td><%= memo.contents %></td>
+					</tr>
+					<% end %>
+				</tbody>
+			</table>
+			<%= t(:notice_empty) if @memos.empty? %>
+		</div><!--/ list-->
+
+		<div class="control">
+			<span style="padding-left: 5px;"><%= close_button_tag(:style => "margin-left:10px;") %></span>
+		</div><!--/ control-->
+		
+	</div><!--/ #main-->
+</div><!--/ #contents-->
+
+<div id ="footer">
+</div><!--/ #footer-->

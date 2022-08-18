@@ -1,0 +1,17 @@
+<div class="condition" style="width: 650px;">
+	<%= form_tag({:action => :index}, {:method => :get, :name => :form_search, :id => :form_search }) do -%>
+	<h4><%= t(:search_condition) %></h4>
+	<table class="commonCondition">
+		<tr>
+			<th><%= hlabel :commons, :id %></th>
+			<td><%= text_field_tag(:cond_id, params[:cond_id], :size => 5) %></td>
+			<th><%= hlabel :trader, :name %></th>
+			<td><%= text_field_tag(:cond_name, params[:cond_name], :size => 15) %></td>
+			<th><%= hlabel :trader, :address %></th>
+			<td><%= text_field_tag(:cond_address, params[:cond_address], :size => 15) %></td>
+			<td class="button"> <%= submit_tag t(:search, :scope => :actions) %> </td>
+		</tr>
+	</table>
+
+	<% end %>
+</div><!--/ condition-->

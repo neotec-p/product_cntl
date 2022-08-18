@@ -1,0 +1,58 @@
+<% content_for :add_js do %>
+function confirm_finish_stock(){
+	return confirm('<%= t(:confirm_stock_finish) %>');
+}
+<% end %>
+
+<% if (@washer_stocks.empty?) %>
+	<div class="box">
+		<h4><%= hlabel(:washer_stock, :t_stock_list) %></h4>
+		<%= t(:notice_empty) %>
+	</div><!--/ box-->
+
+<% else %>
+	<div class="list" style="width: 840px;">
+		<h4><%= hlabel(:washer_stock, :t_stock_list) %></h4>
+		<table class="commonList">
+			<thead>
+				<tr>
+					<th style="width: 60px;"><%= simple_format(t(:t_id, :scope => [:activerecord, :attributes, :washer_stock])) %></th>
+					<th style="width: 170px;"><%= simple_format(t(:t_inspection_no, :scope => [:activerecord, :attributes, :washer_stock])) %></th>
+					<th style="width: 120px;"><%= hlabel :washer_stock, :accept_ymd %></th>
+					<th style="width: 120px;"><%= hlabel :washer_stock, :accept_quantity %></th>
+					<th style="width: 120px;"><%= hlabel :washer_stock, :t_excess_amount %></th>
+					<th style="width: 120px;"><%= hlabel :washer_stock, :t_stock_price %></th>
+					<th colspan="2"><%= hlabel :washer_stock, :t_stock_status %></th>
+				</tr>
+			</thead>
+			<tbody>
+				<% @washer_stocks.each do |washer_stock| %>
+				<tr>
+					<td>
+						<%= link_to(washer_stock.id, edit_washer_stock_url(washer_stock)) %>
+	      			</td>
+					<td><%= washer_stock.inspection_no %></td>
+					<td><%= hdate washer_stock.accept_ymd %></td>
+					<td class="number"><%= hnumber_with_precision(washer_stock.accept_quantity, :precision => 0) %></td>
+					<td class="number"><%= hnumber_with_precision(washer_stock.excess_amount, :precision => 0) %></td>
+					<td class="number"><%= hnumber_with_precision(washer_stock.stock_price, :precision => 0) %></td>
+					<td style="width: 80px;">
+						<%= washer_stock.disp_print_flag %>
+					</td>
+					<td style="width: 50px;">
+<% if washer_stock.collect_flag == FLAG_OFF %>
+	<%= button_to(t(:button_stock_finish),
+	 {:action => :collect_print, :id => washer_stock.washer.id, :washer_stock_id => washer_stock.id, 
+	 	:washer_stock_lock_version => washer_stock.lock_version}, 
+	 :method => :put, :class => "formInBtn", :onClick => "return confirm_finish_stock();") %>
+<% end %>
+					</td>
+				</tr>
+				<% end %>
+			</tbody>
+		</table>
+	
+		<%= will_paginate @washer_stocks, :param_name => :washer_stocks_page %>
+	
+	</div><!--/ list-->
+<% end %>

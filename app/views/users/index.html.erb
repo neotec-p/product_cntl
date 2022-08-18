@@ -1,0 +1,60 @@
+<!-- default 800px; -->
+<div id="main">
+	<%= raw main_title %>
+
+	<%= raw flash_tag %>
+
+	<div class="control">
+		<%= new_button_tag %>
+	</div><!--/ control-->
+
+	<div class="condition" style="width: 700px;">
+		<%= form_tag({:action => :index}, {:method => :get, :name => :form_search, :id => :form_search }) do %>
+		<h4><%= t(:search_condition) %></h4>
+		<table class="commonCondition">
+<%
+empty_role = Role.new(:name => t(:notice_select_all))
+roles = [empty_role] + @roles
+%>
+			<tr>
+				<th><%= hlabel :commons, :code %></th>
+				<td><%= text_field_tag(:cond_code, params[:cond_code], :size => 5) %></td>
+				<%= render :partial => "layouts/search_cond_user" %>
+				<th><%= hlabel :user, :role_id %></th>
+				<td><%= select_tag(:cond_role_id, options_from_collection_for_select(roles, :id, :name, params[:cond_role_id].to_i)) %></td>
+				<td class="button"> <%= submit_tag t(:search, :scope => :actions) %> </td>
+			</tr>
+		</table>
+		<% end %>
+	</div><!--/ condition-->
+
+	<div class="list">
+		<div class="paginationCnt">
+			<div class='paginationCnt'><%= t(:all_count, :scope => :paginate, :cnt => @users.count) %></div>
+		</div>
+		<table class="commonList">
+			<thead>
+				<tr>
+					<th><%= hlabel :commons, :code %></th>
+					<th><%= hlabel :user, :t_name %></th>
+					<th><%= hlabel :user, :role_id %></th>
+				</tr>
+			</thead>
+			<tbody>
+				<% @users.each do |user| %>
+				<tr>
+					<td><%= link_to user.login_id, edit_polymorphic_url(user) %></td>
+					<td><%= user.last_name %><%= user.first_name %></td>
+					<td><%= user.role.name %></td>
+				</tr>
+				<% end %>
+			</tbody>
+		</table>
+		<%= will_paginate @users %>
+	</div><!--/ list-->
+
+	<div class="control">
+		<%= new_button_tag %>
+	</div><!--/ control-->
+
+</div><!--/ #main-->

@@ -1,0 +1,49 @@
+<ul class="tabmenu">
+<%
+    material = @material
+    material = @material_order.material unless @material_order.nil?
+    material = @material_stock.material unless @material_stock.nil?
+    material_order = @material_order
+    material_order = @material_stock.material_order unless @material_stock.nil?
+    material_stock = @material_stock
+
+    stock_link = link_to(t("actions.stock"), stock_material_path(material))
+
+    material_order_link = ""
+    unless material_order.nil?
+      label = t("actions.order")
+      if material_order.new_record?
+        material_order_link = link_to(label, {:controller => :material_orders, :action => :new, :material_id => @material})
+      else
+        material_order_link = link_to(label, edit_material_order_path(material_order))
+      end
+    end
+
+    material_stock_link = ""
+    unless material_stock.nil?
+      label = t("actions.stock_manage")
+      if material_stock.new_record?
+        material_stock_link = link_to(label, {:controller => :material_stocks, :action => :new, :material_order_id => @material_order})
+      else
+        material_stock_link = link_to(label, edit_material_stock_path(material_stock))
+      end
+    end
+
+    class_name = ""
+    class_name = "act" if controller_name == "materials"
+    stock_link = raw(content_tag(:li, stock_link, { :class => class_name }, false))
+
+    unless material_order_link.blank?
+      class_name = ""
+      class_name = "act" if controller_name == "material_orders"
+      material_order_link = raw(content_tag(:li, material_order_link, { :class => class_name }, false))
+    end
+
+    unless material_stock_link.blank?
+      class_name = ""
+      class_name = "act" if controller_name == "material_stocks"
+      material_stock_link = raw(content_tag(:li, material_stock_link, { :class => class_name }, false))
+    end
+%>
+  <%= stock_link + material_order_link + material_stock_link %>
+</ul>

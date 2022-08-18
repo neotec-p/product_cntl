@@ -1,0 +1,108 @@
+<div id="menu">
+<% if(@app.user.role.id == ROLE_PRODUCTION || @app.user.role.id == ROLE_ADMIN) %>
+    <div class="areaHeader">
+        <h2><%= t(:t_menu) %></h2>
+    </div>
+
+    <ul id="mainMenu">
+        <li>
+			<%= menu(:orders) %>
+        </li>
+    </ul>
+
+    <ul id="mainMenu">
+        <li>
+			<%= link_to(t("controllers.material_orders"), :controller => :materials, :action => :stock_index) %>
+        </li>
+        <li>
+			<%= link_to(t("controllers.washer_orders"), :controller => :washers, :action => :stock_index) %>
+        </li>
+    </ul>
+
+    <ul id="mainMenu">
+        <li>
+			<%= link_to(t("controllers.productions"), :controller => :productions, :action => :vote_no_index) %>
+        </li>
+        <li>
+            <%= menu(:defectives)%>
+        </li>
+    </ul>
+
+    <ul id="mainMenu">
+        <li>
+			<%= menu(:summations) %>
+        </li>
+    </ul>
+<% end %>
+
+<% if(@app.user.role.id == ROLE_PURCHASE || @app.user.role.id == ROLE_SALES) %>
+    <ul id="mainMenu">
+        <li>
+			<%= link_to(t("controllers.productions"), :controller => :productions, :action => :item_code_index) %>
+        </li>
+    </ul>
+<% end %>
+
+<% if(@app.user.role.id == ROLE_ACCOUTING) %>
+    <ul id="mainMenu">
+        <li>
+			<%= link_to(t("controllers.material_orders"), :controller => :material_orders, :action => :cond_print_t140) %>
+        </li>
+        <li>
+			<%= link_to(t("controllers.washer_orders"), :controller => :washer_orders, :action => :cond_print_t141) %>
+        </li>
+    </ul>
+    <ul id="mainMenu">
+        <li>
+			<%= menu(:summations) %>
+        </li>
+    </ul>
+<% end %>
+
+<% unless(@app.user.role.id == ROLE_PURCHASE || @app.user.role.id == ROLE_SALES) %>
+    <ul id="mainMenu">
+        <li>
+			<%= menu(:reports) %>
+        </li>
+    </ul>
+<% end %>
+
+<% if(@app.user.role.id == ROLE_ADMIN) %>
+    <ul id="mainMenu">
+        <li>
+			<%= menu(:items) %>
+        </li>
+        <li>
+			<%= menu(:customers) %>
+        </li>
+        <li>
+            <%= menu(:heat_processors) %>
+        </li>
+        <li>
+            <%= menu(:material_suppliers) %>
+        </li>
+        <li>
+			<%= menu(:models) %>
+        </li>
+        <li>
+			<%= menu(:materials) %>
+        </li>
+        <li>
+			<%= menu(:washers) %>
+        </li>
+        <li>
+			<%= menu(:users) %>
+        </li>
+        <li>
+			<%= menu(:calendars) %>
+        </li>
+        <li>
+            <%= menu(:heat_process_prices) %>
+        </li>
+        <li>
+			<%= menu(:notices) %>
+        </li>
+    </ul>
+<% end %>
+
+</div><!--/ #menu-->

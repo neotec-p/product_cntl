@@ -1,0 +1,27 @@
+<%
+company = Company.first
+company ||= Company.new
+%>
+
+<div id="header">
+    <a href="/"><h1 title="<%= t(:t_system) %>"><%= t(:t_system) %></h1></a>
+    <div id="hBox">
+        <h2 id="hCompany"><%= company.name %></h2>
+        <ul id="hNavi">
+            <li>
+				<%= link_to(t("actions.help"), MANUAL_PATH)%></a>
+            </li>
+            <li>
+				<%= link_to(t("actions.passwd"), passwd_user_path(@app.user)) %>
+            </li>
+            <li>
+				<%= link_to(t("actions.logout"), :controller => :auth, :action => :logout) %>
+            </li>
+        </ul>
+        <ul id="hUser">
+            <li>
+                <%= @app.user.login_id + ' : ' + @app.user.disp_text %>
+            </li>
+        </ul>
+    </div><!--/ #hBox-->
+</div><!--/ #header-->

@@ -1,0 +1,48 @@
+<div id="header">
+<h1><%= t(:t_system) %></h1>
+</div><!--/ #header-->
+
+<div id="contents">
+
+	<div class="areaHeader">
+	<h2><%= t("actions.login") %></h2>
+	</div>
+
+	<div id="main">
+		
+	<% if flash[:notice] %>
+	<div class="errorMessage">
+	<p><%= flash[:notice] %></p>
+	</div>
+	<% end %>
+	
+	<%= form_tag do %>
+	<div id="loginArea">
+		<div id="login">
+	      <fieldset>
+	        <legend><%= t("actions.login") %></legend>
+	          <dl>
+	            <dt><label for="id"><%= hlabel(:user, :login_id) %></label></dt>
+	              <dd>
+	              	<%= text_field_tag :id, params[:id] %>
+				  </dd>
+	            <dt><label for="password"><%= hlabel(:user, :password) %></label></dt>
+	              <dd>
+	              	<%= password_field_tag :password, params[:password] %>
+				  </dd>
+	          </dl>
+	          <p class="login">
+					<%= image_submit_tag(image_path_locale('btn_blue_login'), :alt=> t("actions.login")) %>
+	          </p>
+	      </fieldset>
+		</div>
+		
+		<div id="loginBottom"></div>
+	</div><!--/ #loginArea-->
+	<% end %>
+	
+	</div><!--/ #main-->
+</div><!--/ #contents-->
+
+<div id ="footer">
+</div><!--/ #footer-->

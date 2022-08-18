@@ -1,0 +1,95 @@
+@charset "utf-8";
+
+/* ------------------------------------------- CSS Information
+ File Name:      default.css
+ Author:
+ Style Info:
+----------------------------------------------------------- */
+
+/* ----------------------- Browser Default Initialization */
+html {
+}
+body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, form, fieldset, input, textarea, p, blockquote, th, td	{
+	margin: 0;	padding: 0;
+	word-wrap: break-word;
+	word-break: break-all;
+
+}
+address, caption, cite, code, dfn, em, strong, th, var	{
+	font-style: normal;
+}
+table	{
+	border-collapse: collapse;	border-spacing: 0;
+}
+caption, th	{
+	text-align: left;
+}
+q:before ,q:after	{
+	content: '';
+}
+object, embed	{
+	vertical-align: top;
+}
+hr, legend	{
+	display: none;
+}
+h1, h2, h3, h4, h5, h6	{
+	font-size: 100%;
+}
+img, abbr, acronym, fieldset	{
+	border: 0;
+}
+li	{
+	list-style-type: none;
+}
+
+/* ----------------------- Basic Style */
+/* ------------ Font Style */
+body {
+/*
+	font-family: verdana,"ヒラギノ角ゴ Pro W3","Hiragino Kaku Gothic Pro",Osaka,"ＭＳ Ｐゴシック","MS PGothic",Sans-Serif;
+*/
+  font-family: "メイリオ","Meiryo","ヒラギノ角ゴ Pro W3","Hiragino Kaku Gothic Pro","Osaka","ＭＳ Ｐゴシック", "MS P Gothic",Verdana,Arial, Helvetica, sans-serif;
+
+	color: #666;
+	font-size: 75%;
+	line-height: 150%;
+}
+html>/**/body {
+	font-size: 13px;
+}
+
+* + html body {
+	font-family: "メイリオ","Meiryo";
+}
+
+h1 {
+  font-size: 200%;
+}
+h2 {
+  font-size: 140%;
+}
+h3 {
+  font-size: 120%;
+}
+h4 {
+  font-size: 100%;
+}
+
+/* ------------ A Style */
+a, a:link, a:visited	{
+	text-decoration: underline;
+	color: #33F;
+}
+a:hover	{
+	text-decoration: underline;
+	color: #666;
+}
+a:active	{
+	text-decoration: underline;
+	color: #666;
+}
+a[href^="javascript:pop"] {
+	background: transparent url(/images/pop.png) center right no-repeat;
+	padding-right: 20px;
+}

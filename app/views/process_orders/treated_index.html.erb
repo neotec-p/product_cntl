@@ -1,0 +1,86 @@
+<% content_for :tabmenu do %>
+	<%= tab_menu_for_production %>
+<% end %> 
+
+<div id="main">
+	<%= raw main_title(:action => :treated_index) %>
+
+	<%= raw flash_tag %>
+
+    <div class="subTabmenu">
+        <%= tab_submenu_for_process_order %>
+    </div>
+	
+	<div class="condition" style="width:600px;">
+	<%= form_tag({:action => :treated_index}, {:method => :get, :name => :form_search, :id => :form_search }) do -%>
+		<h4><%= t(:search_condition) %></h4>
+		<table class="commonCondition">
+			<tr>
+				<th><%=hlabel :lot, :lot_no %></th>
+				<td><%= text_field_tag(:cond_lot_no, params[:cond_lot_no], :size => 10) %></td>
+				<th><%=hlabel :process_order, :delivery_ymd %></th>
+				<td>
+					<%= date_select(:search_cond_date_from_to, :cond_date_from, :object => @search_cond_date_from_to) %><%= clear_cal_button_tag %>
+					<span style="margin-left: 10px;"><%= t(:notice_date_from_only) %></span>
+				</td>
+				<td class="button">
+				<%= submit_tag t(:search, :scope => :actions) %>
+				</td>
+			</tr>
+			<tr>
+				<th><%=hlabel :process_order, :trader_id %></th>
+<%
+empty_processor = Processor.new(:name => t(:notice_select_all))
+processors = [empty_processor] + @processors
+%>				
+				<td colspan="3"><%= select_tag(:cond_trader_id, options_from_collection_for_select(processors, :id, :name, params[:cond_trader_id].to_i)) %></td>
+			</tr>
+		</table>
+	<% end %>
+	</div><!--/ condition-->
+
+	<div class="list">
+		<div class="paginationCnt"><%= t(:all_count, :scope => :paginate, :cnt => @process_orders.count) %></div>
+		<table class="commonList">
+			<thead>
+				<tr>
+					<th><%= hlabel :commons, :lot_no %></th>
+					<th><%= hlabel :process_order, :id %></th>
+					<th><%= hlabel :process_order, :type %></th>
+					<th><%= hlabel :process_order, :trader_id %></th>
+					<th><%= hlabel :process_order, :process %></th>
+					<th><%= hlabel :process_order, :order_ymd %></th>
+					<th><%= hlabel :process_order, :delivery_ymd %></th>
+					<th><%= hlabel :process_order, :arrival_ymd %></th>
+				</tr>
+			</thead>
+			<tbody>
+				<% @process_orders.each do |process_order| %>
+<%
+production_detail = ProductionDetail.new
+production_detail = process_order.production_detail unless process_order.production_detail.nil?
+production = Production.new
+production = production_detail.production unless production_detail.production.nil?
+lot = Lot.new
+lot = production.lot unless production.lot.nil?
+trader = Processor.new
+trader = process_order.trader unless process_order.trader.nil?
+%>
+				<tr>
+					<td><%= lot.lot_no.to_s %></td>
+					<td><%= link_to(process_order.id, edit_polymorphic_url(process_order)) %></td>
+					<td><%= t("activerecord.models.%s" % [process_order.type.to_s.underscore]) %></td>
+					<td><%= trader.name %></td>
+					<td><%= process_order.process %></td>
+					<td><%= hdate process_order.order_ymd %></td>
+					<td><%= hdate process_order.delivery_ymd %></td>
+					<td><%= hdate process_order.arrival_ymd %></td>
+				</tr>
+				<% end %>
+			</tbody>
+		</table>
+		
+		<%= will_paginate @process_orders %>
+	</div><!--/ list-->
+	
+</div><!--/ #main-->

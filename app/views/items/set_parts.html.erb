@@ -1,0 +1,120 @@
+<% content_for :tabmenu do %>
+	<%= tab_menu_for_item %>
+<% end %>
+
+<% content_for :control do %>
+    <%= submit_button_tag %>
+	<%= cancel_button_tag({:controller => :items}) %>
+	</ul>
+<% end %>
+
+<% content_for :add_js do %>
+function set_blank(washer_no){
+	if(!confirm('<%= t(:confirm_set_blank_washer) %>')){
+		return false;
+	}
+	
+	$("#parts_washer_id" + washer_no).val("");
+	$("#washer_name" + washer_no).text("<%= DISP_NONE %>");
+}
+
+function check_edit_washer_edit(){
+	$("[id^='parts_']").focus(function(){
+		check_edit_core();
+	});
+}
+
+$(function() {
+	check_edit_washer_edit();
+});
+<% end %>
+
+<div id="main">
+	<%= raw main_title_direct(t("actions.set_parts"), t("actions.edit")) %>
+
+	<%= raw flash_tag %>
+
+	<%= render :partial => "items/disp_item" %>
+
+	<div class="spacer"></div>
+
+	<%= form_tag(set_parts_update_item_path(@item), :method => :put) do %>
+
+    <%= fields_for :parts do |f| %>
+    
+	<%= @item.errors.full_messages.join("<br>") %>
+
+	<p><font color="red" style="margin-left:5px;">*</font><%= t(:notice_required) %></p>
+
+	<div class="sheet">
+		<h4><%= hlabel :commons, :material %></h4>
+		<table class="commonSheet">
+			<tr>
+				<th style="width: 15%;"><%= f.label :material_id %><font class="mark-required" style="margin-left:5px;">*</font></th>
+				<td colspan="3" style="width: 85%;">
+<%
+material = Material.find_by_id(@parts.material_id) unless @parts.material_id.nil?
+%>
+					<span id="material_name">
+						<%= material.disp_text unless material.nil? %>
+						<%= disp_none if material.nil? %>
+					</span>
+					<%= f.hidden_field :material_id %><br/>
+<%=
+popup_button_tag(t(:button_change), :controller => :materials, :action => :pop_material_for_text,
+ :params => {:id_material_id => "parts_material_id"},
+ :height => 450, :button_class => :formInBtn) %>
+				</td>
+			</tr>
+		</table>
+	</div><!--/ sheet-->
+
+	<div class="sheet">
+		<h4><%= hlabel :commons, :washer %></h4>
+		<table class="commonSheet">
+			<tr>
+				<th style="width: 15%;"><%= f.label :washer_id1 %> </th>
+				<td style="width: 35%;">
+<%
+washer1 = Washer.find_by_id(@parts.washer_id1) unless @parts.washer_id1.nil?
+%>
+					<span id="washer_name1">
+						<%= washer1.disp_text unless washer1.nil? %>
+						<%= disp_none if washer1.nil? %>
+					</span>
+					<%= f.hidden_field :washer_id1 %><br/>
+<%=
+popup_button_tag(t(:button_change), :controller => :washers, :action => :pop_washer_for_text,
+ :params => {:id_washer_id => "parts_washer_id1", :id_washer_name => "washer_name1"},
+ :height => 450, :button_class => :formInBtn) %>
+<%= button_tag(t(:button_delete), :onclick => "javascript:set_blank(1)", :class => :formInBtn, :style => "float:right;", :type => "button") %>
+				</td>
+				<th style="width: 15%;"><%= f.label :washer_id2 %> </th>
+				<td style="width: 35%;">
+<%
+washer2 = Washer.find_by_id(@parts.washer_id2) unless @parts.washer_id2.nil?
+%>
+					<span id="washer_name2">
+						<%= washer2.disp_text unless washer2.nil? %>
+						<%= disp_none if washer2.nil? %>
+					</span>
+					<%= f.hidden_field :washer_id2 %><br/>
+<%=
+popup_button_tag(t(:button_change), :controller => :washers, :action => :pop_washer_for_text,
+ :params => {:id_washer_id => "parts_washer_id2", :id_washer_name => "washer_name2"},
+ :height => 450, :button_class => :formInBtn) %>
+<%= button_tag(t(:button_delete), :onclick => "javascript:set_blank(2)", :class => :formInBtn, :style => "float:right;", :type=> "button") %>
+				</td>
+			</tr>
+		</table>
+	</div><!--/ sheet-->
+
+	<%= f.hidden_field :item_lock_version, :value => @item.lock_version %>
+
+	<div class="control">
+		<%= yield :control %>
+	</div><!--/ control-->
+
+	<% end %>
+	<% end %>
+</div><!--/ #main-->

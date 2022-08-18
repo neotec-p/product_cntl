@@ -1,0 +1,116 @@
+<% content_for :tabmenu do %>
+	<%= tab_menu_for_production %>
+<% end %>
+
+<div id="main" style="width: 950px;">
+
+	<%= raw main_title :action => :production_status_material %>
+
+	<%= raw flash_tag %>
+
+    <div class="subTabmenu">
+        <%= tab_submenu_for_production_status %>
+    </div>
+
+	<%= render :partial => 'layouts/search_cond_material', :locals => {:target_action => :material_index} %>
+
+	<div class="list">
+		<h4><%= hlabel(:production, :t_material_info) %></h4>
+		<table class="commonList">
+			<thead>
+				<tr>
+					<th><%= hlabel :commons, :material_name %></th>
+					<th><%= hlabel :material, :excess_amount %></th>
+					<th><%= hlabel :material, :stock_amount %></th>
+					<th><%= hlabel :material, :planned_amount %></th>
+					<th><%= hlabel :material, :orderd_amount %></th>
+					<th><%= hlabel(:material, :unit_price) %></th>
+					<th><%= hlabel(:material, :stock_price) %></th>
+				</tr>
+			</thead>
+<% unless @materials.empty? %>
+			<tbody>
+				<% @materials.each do |material| %>
+				<tr>
+					<td>
+						<%= link_to(material.disp_text, stock_material_url(material)) %>
+          			</td>
+					<td class="number"><%= hnumber_with_precision_and_sign(material.excess_amount, :precision => 1) %></td>
+					<td class="number"><%= hnumber_with_precision(material.stock_amount, :precision => 1) %></td>
+					<td class="number"><%= hnumber_with_precision(material.planned_amount, :precision => 1) %></td>
+					<td class="number"><%= hnumber_with_precision(material.orderd_amount, :precision => 1) %></td>
+					<td class="number"><%= hnumber_with_precision(material.unit_price, :precision => 3) %></td>
+					<td class="number"><%= hnumber_with_precision(material.stock_price, :precision => 0) %></td>
+				</tr>
+				<% end %>
+			</tbody>
+<% end %>
+		</table>
+<% if @materials.empty? %>
+		<%= hlabel(:production, :notice_material_info_empty) %>
+<% end %>
+	</div><!--/ list-->
+
+	<div class="spacer"></div>
+	<div class="spacer"></div>
+
+	<div class="list">
+		<div class="table-layout" style="width: 950px;">
+			<div class="right" style="width: 300px; padding-left: 0px;">
+				<h4><%= hlabel :production_detail, :production_status %> : <%= I18n.l Date.today, :format => :long %></h4>
+			</div>
+			<div class="left" style="width: 650px;; padding-right: 0px; text-align: right;">
+				<div class="paginationCnt">
+					<div class='paginationCnt'><%= t(:all_count, :scope => :paginate, :cnt => @production_details.count) %></div>
+				</div>
+			</div>
+		</div>
+		<table class="commonList">
+			<thead>
+				<tr>
+					<th style="width: 120px;"><%= raw hlabel :commons, :process_name %></th>
+					<th><%= raw hlabel :order, :delivery_ymd %></th>
+					<th><%= raw hlabel :commons, :vote_no %></th>
+					<th><%= raw hlabel :commons, :item_code %><br/><%= hlabel :item, :name %></th>
+					<th><%= raw hlabel :commons, :material %></th>
+					<th style="width:80px;"><%= raw simple_format(t(:title_necessary_amount, :scope => [:activerecord, :attributes, :order])) %></th>
+					<th style="width:80px;"><%= raw simple_format(t(:title_plan_weight, :scope => [:activerecord, :attributes, :production])) %></th>
+					<th style="width:80px;"><%= raw simple_format(t(:title_result_amount_production, :scope => [:activerecord, :attributes, :production_detail])) %></th>
+					<th style="width:80px;"><%= raw simple_format(t(:title_weight, :scope => [:activerecord, :attributes, :lot])) %></th>
+				</tr>
+			</thead>
+			<tbody>
+				<% @production_details.each do |production_detail| %>
+				<tr>
+<%
+production = production_detail.production unless production_detail.production.nil?
+production ||= Production.new
+item = production.item unless production.item.nil?
+item ||= Item.new
+order = production.order unless production.order.nil?
+order ||= Order.new
+material = production.material
+material ||= Material.new
+lot = production.lot
+lot ||= Lot.new
+%>
+					<td><%= production_detail.current_status_or_process_name %></td>
+					<td><%= hdate order.delivery_ymd %></td>
+					<td><%= link_to production.disp_text, edit_production_path(production) %></td>
+					<td><span title="<%= production.item.name %>">
+						<%= production.item.disp_text %></span><br/><%= item.name %></td>
+					<td><%= material.disp_text %></td>
+					<td class="number"><%= hnumber order.necessary_amount %></td>
+					<td class="number"><%= hnumber production.plan_weight %></td>
+					<td class="number"><%= hnumber production_detail.result_amount_production %></td>
+					<td class="number"><%= hnumber lot.weight %></td>
+				</tr>
+				<% end %>
+			</tbody>
+		</table>
+		
+		<%= will_paginate @production_details %>
+
+	</div><!--/ list-->
+
+</div><!--/ #main-->

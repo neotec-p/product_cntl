@@ -1,0 +1,7 @@
+<% title_last_name = hlabel(:user, :last_name) if title_last_name.nil? %>
+<% title_first_name = hlabel(:user, :first_name) if title_first_name.nil? %>
+
+<th><%= title_last_name %></th>
+<td><%= text_field_tag(:cond_user_last_name, params[:cond_user_last_name], :size => 5) %></td>
+<th><%= title_first_name %></th>
+<td><%= text_field_tag(:cond_user_first_name, params[:cond_user_first_name], :size => 5) %></td>

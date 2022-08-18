@@ -1,0 +1,91 @@
+<% content_for :add_js do %>
+function confirm_t150_print(){
+	if(!confirm('<%= t(:confirm_report) %>')){
+		return false;
+	}
+	return confirm_change_tab_core();
+}
+
+function confirm_collect_print(no_in_list){
+	if(!confirm('<%= t(:confirm_report_collect) %>')){
+		return false;
+	}
+
+	$("[name='material_stock[" + no_in_list + "][select_print]']").val(1);
+
+	return confirm_change_tab_core();
+}
+<% end %>
+
+<% if (@material_order.new_record? || @material_stocks.empty?) %>
+	<div class="box">
+		<h4><%= hlabel(:material_stock, :t_stock_list) %></h4>
+	<%= t(:notice_empty) %>
+	</div><!--/ box-->
+
+<% else %>
+	
+	<%= form_tag(print_t150_material_order_path(@material_order), {:method => :put}) do %>
+
+	<%= error_messages_for 'material_stock', :object => @material_stocks %>
+	<%= error_messages_for 'print_all' %>
+	
+	<div class="list" style="width: 1000px;">
+		<h4><%= hlabel(:material_stock, :t_stock_list) %></h4>
+		<table class="commonList">
+			<thead>
+				<tr>
+					<th style="width: 60px;"><%= simple_format(t(:t_id, :scope => [:activerecord, :attributes, :material_stock])) %></th>
+					<th style="width: 170px;"><%= simple_format(t(:t_inspection_no, :scope => [:activerecord, :attributes, :material_stock])) %></th>
+					<th style="width: 120px;"><%= hlabel :material_stock, :accept_ymd %></th>
+					<th style="width: 120px;"><%= hlabel :material_stock, :accept_weight %></th>
+					<th style="width: 120px;"><%= hlabel :material_stock, :t_excess_amount %></th>
+					<th style="width: 120px;"><%= hlabel :material_stock, :t_stock_price %></th>
+					<th colspan="2"><%= hlabel :material_stock, :t_print_info %></th>
+				</tr>
+			</thead>
+			<tbody>
+				<% @material_stocks.each do |material_stock| %>
+			        <%= fields_for :material_stock, material_stock, :index => material_stock.no_in_list do |field| %>
+<%
+report = material_stock.reports.last
+report ||= Report.new
+attr = prepare_print_all_attr(report)
+%>
+					<tr>
+						<td>
+							<%= link_to(material_stock.id, edit_material_stock_url(material_stock)) %>
+							<%= field.hidden_field :id %>
+							<%= field.hidden_field :lock_version %>
+		      			</td>
+						<td><%= material_stock.inspection_no %></td>
+						<td><%= hdate material_stock.accept_ymd %></td>
+						<td class="number"><%= hnumber_with_precision(material_stock.accept_weight, :precision => 1) %></td>
+						<td class="number"><%= hnumber_with_precision(material_stock.excess_amount, :precision => 1) %></td>
+						<td class="number"><%= hnumber_with_precision(material_stock.stock_price, :precision => 0) %></td>
+						<td style="width: 80px;">
+<% if material_stock.collect_flag == FLAG_OFF %>
+							<%= field.check_box :select_print, :disabled => attr[:disabled] %><%= attr[:label] %>
+<% end %>
+						</td>
+						<td style="width: 50px;">
+<% if material_stock.print_flag == FLAG_OFF && material_stock.collect_flag == FLAG_OFF %>
+<% elsif material_stock.print_flag == FLAG_ON && material_stock.collect_flag == FLAG_OFF %>
+	<%= submit_button_button_tag(t(:button_collect), :collect_print, :method => :put, :class => "formInBtn", :onClick => "return confirm_collect_print(" + material_stock.no_in_list.to_s + ");") %>
+<% else %>
+	<%= t(:status_print_collect) %>
+<% end %>
+						</td>
+					</tr>
+					<% end %>
+				<% end %>
+			</tbody>
+		</table>
+	</div><!--/ list-->
+	
+	<div class="control">
+		<%= submit_button_button_tag(t(:button_report_all), :print_all, :onClick => "return confirm_t150_print();") %>
+	</div><!--/ control-->
+	
+	<% end %>
+<% end %>

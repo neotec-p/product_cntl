@@ -1,0 +1,13 @@
+<% content_for :tabmenu do %>
+	<%= render :partial => "layouts/tab_menu_for_material_stock" %>
+<% end %>
+
+<% content_for :control do %>
+<% if @material_order.delivery_flag == FLAG_ON %>
+    <%= submit_button_tag(:conf => confirm_force_submit(:act => t(:status_arrival)))%>
+<% else %>
+    <%= submit_button_tag %>
+<% end %>
+<% end %>
+
+<%= render :partial => 'form' %>

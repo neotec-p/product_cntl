@@ -1,0 +1,87 @@
+<% content_for :tabmenu do %>
+	<%= render :partial => "layouts/tab_menu_for_material_stock" unless (@app.user.role.id == ROLE_ACCOUTING) %>
+<% end %> 
+
+<div id="main" style="width: 1000px;">
+
+<%= raw main_title %>
+
+<%= raw flash_tag %>
+
+<p><font color="red" style="margin-left:5px;">*</font><%= t(:notice_required) %></p>
+
+<%= error_messages_for 'purchase_list' %>
+
+<div class="sheet" style="width: 500px;">
+	<%= form_tag({:action => :print_t140}, {:method => :put, :name => :print_t140, :id => :print_t140 }) do %>
+	<h4><%= t(:search_condition) %></h4>
+	<table class="commonSheet">
+		<tr>
+			<th><%= hlabel(:purchase_list, :t_cond_date) %><font class="mark-required" style="margin-left:5px;">*</font></th>
+			<td>
+				<%= date_select(:search_cond_date_from_to, :cond_date_from, :object => @purchase_list) %><%= clear_cal_button_tag %>
+				<%= t(:search_condition_term) %>
+				<%= date_select(:search_cond_date_from_to, :cond_date_to, :object => @purchase_list) %><%= clear_cal_button_tag %>
+			</td>
+			</td>
+			<td class="button"><%= submit_tag(t(:button_report), :confirm => t(:confirm_report)) %></td>
+		</tr>
+	</table>
+	<% end %>
+
+</div><!--/ sheet-->
+
+<div class="list">
+	<div class="paginationCnt"><%= t(:all_count, :scope => :paginate, :cnt => @reports.count) %></div>
+	<h4><%= hlabel(:summation, :result_list) %></h4>
+
+	<table class="commonList">
+		<thead>
+			<tr>
+				<th><%= raw simple_format(t(:title_id, :scope => [:activerecord, :attributes, :report])) %></th>
+				<th><%= raw hlabel :report, :asynchro_status_id %></th>
+				<th><%= raw hlabel :report, :title_date %></th>
+				<th><%= raw hlabel :report, :user_id %></th>
+				<th><%= raw hlabel :material_order, :full_delivery_ymd %></th>
+				<th><%= raw hlabel :report, :file_name %></th>
+				<th><%= raw simple_format(t(:title_size, :scope => [:activerecord, :attributes, :report])) %></th>
+			</tr>
+		</thead>
+		<tbody>
+		<% @reports.each do |report| %>
+<%
+asynchro_status = AsynchroStatus.new
+asynchro_status = report.asynchro_status unless report.asynchro_status.nil?
+%>
+			<tr>
+				<td>
+					<%= report.id %>
+				</td>
+				<td>
+					<%= asynchro_status.name %>
+				</td>
+				<td>
+					<%=hdate report.created_at %>
+				</td>
+				<td>
+					<%= report.user.disp_text %>
+				</td>
+				<td>
+					<%= report.note %>
+				</td>
+				<td>
+					<%= link_to report.disp_name, {:controller => :reports, :action => :download, :id => report.id} if asynchro_status.id == ASYNCHRO_STATUS_DONE %>
+				</td>
+				<td class="number">
+					<%= number_to_human_size(report.size) %>
+				</td>
+			</tr>
+		<% end %>
+		</tbody>
+	</table>
+
+	<%= will_paginate @reports %>
+
+<!--/ list--></div>
+
+<!--/ #main--></div>

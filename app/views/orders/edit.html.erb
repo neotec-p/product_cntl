@@ -1,0 +1,84 @@
+<% content_for :tabmenu do %>
+	<%= raw tab_menu_for_order %>
+<% end %>
+
+<% content_for :control do %>
+	<%= submit_button_tag %>
+	<%= cancel_button_tag %>
+	<%= delete_image_button_tag @order %>
+<% end %>
+
+<div id="main" style="width:800px;">
+	<%= raw main_title %>
+	<%= raw flash_tag %>
+
+	<%= form_for(@order) do |f| %>
+
+	<div class="control">
+		<%= yield :control %>
+	</div><!--/ control-->
+
+	<%= @order.errors.full_messages.join("<br>") %>
+
+	<p><font color="red" style="margin-left:5px;">*</font><%= t(:notice_required) %></p>
+
+<%
+production = @order.productions.first unless @order.productions.first.nil?
+production ||= Production.new
+item = production.item unless production.nil?
+item ||= Item.new
+%>
+
+
+	<div class="sheet">
+		<h4><%= hlabel :order, :order_info %></h4>
+		<table class="commonSheet">
+			<tr>
+				<th style="width: 140px;"><%= f.label :order_no %><font class="mark-required" style="margin-left:5px;">*</font></th>
+				<td style="width: 240px;"><%= f.text_field :order_no, :size => 10 %></td>
+				<th style="width: 140px;"><%= f.label :order_ymd %><font class="mark-required" style="margin-left:5px;">*</font></th>
+				<td style="width: 240px;"><%= f.date_select :order_ymd %><%= clear_cal_button_tag %></td>
+			</tr>
+				<th><%= hlabel(:commons, :vote_no) %></th>
+				<td><%= production.vote_no %></td>
+				<td colspan="2"></td>
+			<tr>
+			</tr>
+		</table>
+	</div><!--/ sheet-->
+
+	<div class="sheet">
+		<h4><%= hlabel :order, :item_info %></h4>
+		<table class="commonSheet">
+			<tr>
+				<th style="width: 140px;"><%= hlabel :commons, :item_code %><font class="mark-required" style="margin-left:5px;">*</font></th>
+				<td style="width: 240px;">
+					<%= f.text_field :item_customer_code, :size => 5 %>
+					-
+					<%= f.text_field :item_code, :size => 5 %>
+				</td>
+				<td colspan="2"></td>
+			</tr>
+			<tr>
+				<th><%= hlabel :item, :drawing_no %></th>
+				<td><%= item.drawing_no %></td>
+				<th><%= hlabel :item, :name %></th>
+				<td><%= item.name %></td>
+			</tr>
+			<tr>
+				<th style="width: 140px;"><%= f.label :order_amount %><font class="mark-required" style="margin-left:5px;">*</font></th>
+				<td style="width: 240px;"><%= f.text_field :order_amount, :class => "amount fmt-formatted-number" %></td>
+				<th style="width: 140px;"><%= f.label :delivery_ymd %><font class="mark-required" style="margin-left:5px;">*</font></th>
+				<td style="width: 240px;"><%= f.date_select :delivery_ymd %><%= clear_cal_button_tag %></td>
+			</tr>
+		</table>
+	</div><!--/ sheet-->
+
+	<%= f.hidden_field :lock_version %>
+	
+	<div class="control">
+		<%= yield :control %>
+	</div><!--/ control-->
+
+	<% end %>
+</div><!--/ #main-->

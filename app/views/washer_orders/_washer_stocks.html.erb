@@ -1,0 +1,71 @@
+<% content_for :add_js do %>
+function confirm_finish_stock(no_in_list){
+	if(!confirm('<%= t(:confirm_stock_finish) %>')){
+		return false;
+	}
+
+	$("[name='washer_stock[" + no_in_list + "][select_print]']").val(1);
+
+	return confirm_change_tab_core();
+}
+<% end %>
+
+<% if (@washer_order.new_record? || @washer_stocks.empty?) %>
+	<div class="box">
+		<h4><%= hlabel(:washer_stock, :t_stock_list) %></h4>
+	<%= t(:notice_empty) %>
+	</div><!--/ box-->
+
+<% else %>
+	
+	<%= form_tag(collect_print_washer_order_path(@washer_order), {:method => :put}) do %>
+
+	<%= error_messages_for 'material_stock', :object => @material_stocks %>
+	<%= error_messages_for 'print_all' %>
+	
+	<div class="list" style="width: 1000px;">
+		<h4><%= hlabel(:washer_stock, :t_stock_list) %></h4>
+		<table class="commonList">
+			<thead>
+				<tr>
+					<th style="width: 60px;"><%= simple_format(t(:t_id, :scope => [:activerecord, :attributes, :washer_stock])) %></th>
+					<th style="width: 170px;"><%= simple_format(t(:t_inspection_no, :scope => [:activerecord, :attributes, :washer_stock])) %></th>
+					<th style="width: 120px;"><%= hlabel :washer_stock, :accept_ymd %></th>
+					<th style="width: 120px;"><%= hlabel :washer_stock, :accept_quantity %></th>
+					<th style="width: 120px;"><%= hlabel :washer_stock, :t_excess_amount %></th>
+					<th style="width: 120px;"><%= hlabel :washer_stock, :t_stock_price %></th>
+					<th colspan="2"><%= hlabel :washer_stock, :t_stock_status %></th>
+				</tr>
+			</thead>
+			<tbody>
+				<% @washer_stocks.each do |washer_stock| %>
+			        <%= fields_for :washer_stock, washer_stock, :index => washer_stock.no_in_list do |field| %>
+					<tr>
+						<td>
+							<%= link_to(washer_stock.id, edit_washer_stock_url(washer_stock)) %>
+							<%= field.hidden_field :id %>
+							<%= field.hidden_field :lock_version %>
+		      			</td>
+						<td><%= washer_stock.inspection_no %></td>
+						<td><%= hdate washer_stock.accept_ymd %></td>
+						<td class="number"><%= hnumber_with_precision(washer_stock.accept_quantity, :precision => 0) %></td>
+						<td class="number"><%= hnumber_with_precision(washer_stock.excess_amount, :precision => 0) %></td>
+						<td class="number"><%= hnumber_with_precision(washer_stock.stock_price, :precision => 0) %></td>
+						<td style="width: 80px;">
+							<%= washer_stock.disp_print_flag %>
+							<%= field.hidden_field :select_print %>
+						</td>
+						<td style="width: 50px;">
+<% if washer_stock.collect_flag == FLAG_OFF %>
+	<%= submit_button_button_tag(t(:button_stock_finish), :collect_print, :method => :put, :class => "formInBtn", :onClick => "return confirm_finish_stock(" + washer_stock.no_in_list.to_s + ");") %>
+<% end %>
+						</td>
+					</tr>
+					<% end %>
+				<% end %>
+			</tbody>
+		</table>
+	</div><!--/ list-->
+	
+	<% end %>
+<% end %>

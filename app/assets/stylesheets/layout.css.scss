@@ -1,0 +1,776 @@
+@charset "utf-8";
+/* ------------------------------------------- CSS Information
+ File Name:      layout.css
+ Author:
+ Style Info:
+ ----------------------------------------------------------- */
+/* ----------------------------------- Layout Box Style --*/
+body {
+    background: #eee;
+    background: image-url("bak.png") repeat-x;
+}
+
+/*wrapper要素
+ ---------------------------------------- */
+div#wrapper,
+div#wrapperPop  {
+    background: #fff;
+    margin: 0 auto;
+    text-align: left;
+    border-left: 1px dotted #bbb;
+    border-right: 1px dotted #bbb;
+}
+
+div#wrapperPop {
+	border-bottom: 1px dotted #bbb;
+}
+
+div#wrapper {
+    width: 1240px;
+}
+
+div#wrapperPop	{
+	width: 650px;
+}
+
+/*header要素
+ ---------------------------------------- */
+div#header,
+div#wrapperPop div#header {
+    background: #fff;
+    padding: 0px 0px 0px 10px;
+    border-top: solid 5px #24618E;  /*dynamic */
+}
+
+div#header {
+    width: 1230px;
+}
+
+div#wrapperPop div#header {
+	width: 640px;
+}
+
+#header h1 {
+    margin: 0;
+    padding: 0;
+    background: image-url("logo.png") no-repeat;
+    float: left;
+    width: 324px;
+    height: 80px;
+    text-indent: -100000em;
+}
+
+#hBox {
+    width: 500px;
+    float: right;
+    padding-top: 10px;
+}
+
+#header h2#hCompany {
+    text-align: right;
+    margin-right: 0.5em;
+    color: #666;
+}
+
+#header ul#hNavi {
+    text-align: right;
+}
+
+#header ul#hNavi li {
+    display: inline;
+    margin-right: 0.5em;
+}
+
+#header ul#hUser {
+    text-align: right;
+}
+
+#header ul#hUser li {
+    display: inline;
+    margin-right: 0.5em;
+}
+
+#header ul#hNavi li a {
+    padding-left: 10px;
+    background: transparent image-url("link.gif") left center no-repeat;
+    text-decoration: none;
+}
+
+#header div.spacer {
+	height: 10px;
+}
+
+/*middle要素
+ ---------------------------------------- */
+div#middle {
+    clear: both;
+    margin: 0;
+    padding: 0px 0px 0px 10px;
+}
+
+div#middle {
+    width: 1230px;
+}
+
+div.areaHeader {
+	height: 30px;
+    width: 100%;
+	margin: 0px 0px 5px 0px;
+    border-left: 10px solid #24618E;
+    border-bottom: 1px solid #24618E;
+    background-image: image-url("pageTitle_bak.png");
+	background-repeat: repeat-x;
+}
+
+/*menu要素
+ ---------------------------------------- */
+div#menu {
+    float: left;
+    width: 130px;
+    padding: 0;
+}
+
+#menu .areaHeader {
+    width: 120px;
+}
+
+#menu .areaHeader h2 {
+    padding: 3px 5px 3px 5px;
+    color: #666;
+}
+
+#menu h3 {
+/*    font-size: 120%;*/
+}
+
+#menu ul#mainMenu {
+/*    font-size: 120%;*/
+    font-size: 100%;
+    text-align: left;
+    padding-bottom: 10px;
+}
+
+#menu ul#mainMenu li a {
+    padding-left: 10px;
+}
+
+#menu ul#mainMenu li {
+    margin-right: 0.5em;
+}
+
+/*contents要素
+ ---------------------------------------- */
+div#contents,
+div#wrapperPop div#contents {
+    padding: 0px 0px 0px 10px;
+}
+
+div#wrapper div#contents {
+    float: left;
+    width: 1080px;
+}
+
+div#wrapperPop div#contents	{
+	clear: both;
+	width: 630px;
+    padding: 0px 10px 0px 10px;
+}
+
+div#wrapper #contents .areaHeader {
+    width: 1070px;
+}
+
+div#wrapperPop #contents .areaHeader {
+    width: 620px;
+}
+
+#contents .areaHeader h2 {
+    float: left;
+	width: 200px;
+    padding: 3px 5px 3px 5px;
+    color: #666;
+}
+
+/*タブメニュー要素
+ ---------------------------------------- */
+ul.tabmenu {
+	position: relative;
+	display: inline-block;
+	list-style: none;
+	border: none;
+/*	height: 25px;*/
+	height: 30px;
+	margin: 0px;
+	padding: 0px;
+}
+ul.tabmenu li {
+	position: relative;
+	display: inline-block;
+	font-size: 14px;
+/*	line-height: 25px;*/
+	line-height: 30px;
+	white-space: nowrap;
+	float: left;
+	color: #000000;
+	background: transparent image-url("tab_inact.gif") no-repeat 0px 0px;
+	margin: 0px 10px 0px 0px;
+	padding: 0px 0px 0px 10px;
+}
+ul.tabmenu li.act {
+/*	color: #000000;*/
+	color: #ffffff;
+	background: transparent image-url("tab_act.gif") no-repeat 0px 0px;
+}
+ul.tabmenu li a {
+	position: relative;
+	display: inline-block;
+	text-decoration: none;
+	color: #000000;
+	background: transparent image-url("tab_inact.gif") no-repeat 100% 0px;
+	margin: 0px -10px 0px 0px;
+	padding: 0px 10px 0px 0px;
+/*    border: solid 1px #f00; 	debug */
+}
+ul.tabmenu li.act a {
+/*	color: #000000;*/
+	color: #ffffff;
+	background: transparent image-url("tab_act.gif") no-repeat 100% 0px;
+}
+
+/*
+ul.tabmenu li a:visited {
+	color: #000000;
+}
+*/
+
+ul.tabmenu li:hover {
+	color: #ffffff;
+	background: transparent image-url("tab_sel.gif") no-repeat 0px 0px;
+}
+ul.tabmenu li:hover a, * ul.tabmenu li a:hover {
+	color: #ffffff;
+	background: transparent image-url("tab_sel.gif") no-repeat 100% 0px;
+}
+
+/*サブタブメニュー
+-------------------- */
+div.subTabmenu {
+    height: 30px;
+    width: 100%;
+    margin: 30px 0px 5px 0px;
+    border-bottom: 1px solid #24618E;
+    background-image: image-url("pageTitle_bak.png");
+    background-repeat: repeat-x;
+/*    border: solid 1px #f00;   debug */
+}
+
+/*login要素
+-------------------- */
+div#loginArea {
+	width: 100%;
+	font-size:14px;
+	line-height:120%;
+}
+
+div#login {
+	padding: 10px;
+	background-color: #fff;
+	/*float:left;*/
+}
+
+div#loginArea input {
+	margin: 5px;
+}
+div#loginArea dt{
+	margin-top: 5px;
+}
+
+div#loginBottom {
+	clear: both;
+	background-color: #fff;
+}
+
+p.login {
+	margin: 20px auto;
+}
+
+
+/*main要素
+ ---------------------------------------- */
+div#main,
+div#wrapperPop  div#main  {
+    clear: both;
+	width: 800px;
+}
+
+div#wrapperPop  div#main {
+	width: 630px;
+}
+
+div#main-title {
+    border-bottom: 1px dotted #bbb;
+    line-height: 140%;
+    margin: 0px 0px 10px 0px;
+}
+
+#main h3 {
+/*    font-size: 120%;*/
+}
+
+
+div#main,
+div#wrapperPop  div#main  div.table-layout  {
+	display: table;
+}
+
+div.table-layout div.right  {
+	display: table-cell;
+	padding-left: 10px;
+}
+div.table-layout div.left  {
+	display: table-cell;
+	padding-right: 10px;
+}
+
+#main div.spacer {
+	height: 10px;
+}
+
+
+/*message要素
+-------------------- */
+/* actionMessage */
+#main  div.actionMessage  {
+	font-size: 14px;
+	line-height: 120%;
+	margin: 20px 0px 20px 0px;
+	padding: 10px;
+	background: #e2ffc6;
+	border: 1px solid #7fffbf;
+}
+
+#main  div.alertMessage  {
+	font-size: 12px;
+	line-height: 120%;
+	margin: 20px 0px 20px 0px;
+	padding: 10px;
+	background: #ffcce5;
+	border: 1px solid #ff007f;
+	font-weight: bold;
+}
+
+/* errorMessage */
+#main .errorMessage {
+	font-size: 14px;
+	line-height: 120%;
+	background: #ffffc6;
+	margin: 20px;
+	padding: 10px;
+	border: 1px solid #ff7fbf;
+}
+
+/* confirmMessage */
+.cofirmNotice {
+	font-size: 14px;
+	line-height: 120%;
+	background: #ffffc6;
+	margin: 20px;
+	padding: 10px;
+	border: 1px solid #ffbf7f;
+}
+
+/* noticeMessage */
+.notice_icon_g,
+.notice_icon_p {
+	position: relative;
+	left: -20px;
+	top: -14px;
+	font-size: 14px;
+	padding: 10px 10px 10px 25px;
+}
+.notice_icon_g {
+	background: image-url("bubble_ex_g.png") 0 0 no-repeat;
+}
+.notice_icon_p {
+	background: image-url("bubble_ex_p.png") 0 0 no-repeat;
+}
+
+
+/*button要素
+ ---------------------------------------- */
+div.control {
+	clear: both;
+
+    width: 100%;
+	margin: 10px 0px 10px 0px;
+	padding:  10px 0px 10px 0px;
+	text-align: center;
+    background: image-url("control_bak.gif") repeat-x;
+}
+
+
+/*Page要素
+-------------------- */
+.pagination {
+	text-align: center;
+	margin: 5px 0px;
+}
+.pagination a {
+	padding: 2px 5px 2px 5px;
+	margin: 2px;
+	border: 1px solid #aaa;
+	text-decoration: none;
+	color: #666;
+}
+.pagination a:hover, .pagination a:active {
+	border: 1px solid #000099;
+	color: #000;
+}
+.pagination span.current {
+	padding: 2px 5px 2px 5px;
+	margin: 2px;
+	border: 1px solid #aaa;
+	font-weight: bold;
+	background-color: #aaa;
+	color: #FFF;
+}
+.pagination span.disabled {
+	padding: 2px 5px 2px 5px;
+	margin: 2px;
+	border: 1px solid #eee;
+	color: #ddd;
+}
+
+.paginationCnt {
+	text-align: right;
+	margin: 10px 0px 5px 0px;
+	font-size: 120%;
+	font-weight: bold;
+}
+
+
+/*Table要素
+-------------------- */
+table {
+	width: 100%;
+}
+
+th.indent1{
+	text-indent: 20px;
+}
+th.indent2{
+	text-indent: 40px;
+}
+th.indent3{
+	text-indent: 60px;
+}
+
+#wrapperPop th.indent1{
+	text-indent: 10px;
+}
+#wrapperPop th.indent2{
+	text-indent: 20px;
+}
+#wrapperPop th.indent3{
+	text-indent: 30px;
+}
+
+/*List要素
+-------------------- */
+.list {
+	clear: both;
+}
+
+.list h4 {
+	margin-top: 10px;
+}
+
+.commonList {
+	clear: both;
+	border: 1px solid #bbb;
+	background: #FFF;
+}
+
+.commonList th:first-child {
+	border-left: 1px solid #aaa;
+}
+
+.commonList th,
+.commonList td {
+	padding: 5px;
+	margin: 5px;
+
+}
+.commonList th {
+	background: #aaa;
+/* 緑	background: #0c0; */
+/* 桃	background: #f9c; */
+/* 薄青	background: #3cc; */
+	color: #fff;
+	border-left:1px solid #eee;
+	white-space: nowrap;
+}
+.commonList th.wrap {
+	background: #aaa;
+	color: #fff;
+	border-left:1px solid #eee;
+	white-space: normal;
+}
+.commonList .top_separate {
+	border-top:1px solid #eee;
+}
+.commonList th.left_separate {
+	border-left:1px solid #eee;
+}
+
+.commonList td {
+	border: 1px solid #bbb;
+}
+.commonList tr {
+
+}
+.commonList:not(.doublerow) tbody:not(.color_row_skip) tr:nth-child(even) td{
+	background: #EEE;
+}
+.commonList.doublerow tbody:not(.color_row_skip) tr:nth-child(4n+3) td,
+.commonList.doublerow tbody:not(.color_row_skip) tr:nth-child(4n) td{
+	background: #EEE;
+}
+.commonList .title{
+	font-size: 14px;
+}
+.commonList .title a{
+	display: block;
+}
+
+.unRead {
+	font-weight: bold;
+	background: transparent image-url("mail.png") top right no-repeat;
+	padding-right: 20px;
+}
+
+.commonList .indent1{
+	text-indent: 20px;
+}
+
+.commonList .number  {
+	text-align: right;
+}
+
+.commonList td.weak{
+	background: #EEE;
+}
+
+/*Sheet要素
+ -------------------- */
+.sheet {
+	clear: both;
+}
+.sheet h4 {
+	margin-top: 15px;
+}
+
+.commonSheet {
+	border: 1px solid #bbb;
+	background: #FFF;
+}
+
+.commonSheet tr {
+
+}
+
+.commonSheet tr:first-child th {
+	border-top: 1px solid #aaa;
+}
+
+.commonSheet th,
+.commonSheet td{
+	padding: 5px;
+	margin: 5px;
+}
+
+.commonSheet th {
+	border-top: 1px solid #eee;
+	background: #aaa;
+	color: #fff;
+	width:120px;
+}
+
+.commonSheet td {
+	border: 1px solid #bbb;
+}
+.commonSheet .even{
+	background: #EEE;
+}
+
+.commonSheet .number  {
+	text-align: right;
+}
+
+.commonSheet td.button {
+	text-align: right;
+	vertical-align: bottom;
+}
+
+#upload_frame {
+	width: 100%;
+	height: 180px;
+	border: none;
+	overflow:visible;
+}
+#upload_flame body{
+  background: #ffffff;
+}
+
+/*Box要素
+-------------------- */
+.box {
+	clear: both;
+}
+
+.box h4 {
+	margin-top: 10px;
+}
+
+.commonBox {
+	clear: both;
+	border: 1px solid #bbb;
+	background: #FFF;
+	padding: 5px;
+}
+
+
+/*Condition要素
+-------------------- */
+.condition {
+	clear: both;
+}
+.condition h4 {
+	margin-top: 10px;
+}
+
+.commonCondition {
+	border: 1px solid #bbb;
+	background: #FFF;
+}
+
+.commonCondition tr {
+
+}
+
+.commonCondition tr:first-child th {
+	border-top: 1px solid #aaa;
+}
+
+.commonCondition th,
+.commonCondition td{
+	padding: 5px;
+	margin: 5px;
+}
+
+.commonCondition th {
+	font-weight:normal;
+	border-style: dotted;
+	border-color: #bbb;
+	border-width: 1px 0px 1px 0px;
+}
+
+.commonCondition td {
+/*	border: 1px solid #bbb;*/
+	border-style: dotted;
+	border-color: #bbb;
+	border-width: 1px 0px 1px 0px;
+}
+.commonCondition .even{
+	background: #EEE;
+}
+
+.commonCondition td.button {
+	text-align: right;
+	vertical-align: bottom;
+}
+
+
+/*footer要素
+ ---------------------------------------- */
+div#footer,
+div#wrapperPop div#footer {
+    position: relative;
+    clear: both;
+    border-bottom: solid 5px #bbb;  /*dynamic */
+    border-bottom: solid 5px #24618E;  /*dynamic */
+    padding: 0px 10px 0px 0px;
+    /*	border: solid 1px #f00;  debug */
+}
+
+div#footer {
+    width: 1230px;
+}
+
+div#wrapperPop div#footer {
+	width: 640px;
+}
+
+div#footer div#tip {
+    position: fixed;
+    top: 6px;
+    left: 7px;
+    width: 90px;
+    font-weight: bolder;
+    padding: 5px;
+}
+
+.pageTop {
+    text-align: right;
+    /*	border: solid 1px #f00;  debug */
+}
+
+.pageTop a {
+    text-decoration: none;
+    font-size: 10px;
+    padding-left: 10px;
+    background: transparent image-url("link_t.gif") left center no-repeat;
+}
+
+/* ----------------------- NOSTYLE Initialization */
+.nostyle div {
+    margin: 0;
+    padding: 0;
+}
+
+.nostyle dl, .nostyle dt, .nostyle dd, .nostyle ul, .nostyle ol, .nostyle li, .nostyle h1, .nostyle h2, .nostyle h3, .nostyle h4, .nostyle h5, .nostyle h6, .nostyle pre, .nostyle form, .nostyle fieldset, .nostyle p, .nostyle blockquote, .nostyle th, .nostyle td {
+    margin: inherit;
+    padding: inherit;
+}
+
+.nostyle tr:first-child th {
+    border: 1px solid #666;
+}
+
+.nostyle th {
+    border: 1px solid #666;
+    background: #FFF;
+    color: #666;
+    width: inherit;
+}
+
+.nostyle td {
+    border: 1px solid #666;
+    font-style: normal;
+}
+
+.nostyle hr, .nostyle legend {
+    display: inherit;
+}
+
+.nostyle img {
+    border: none;
+}
+
+.nostyle abbr, .nostyle acronym, .nostyle fieldset {
+    border: inherit;
+}
+
+.nostyle li {
+    list-style-type: inherit;
+}

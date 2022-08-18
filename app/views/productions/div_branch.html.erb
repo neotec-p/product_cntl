@@ -1,0 +1,76 @@
+<% content_for :tabmenu do %>
+	<%= tab_menu_for_production %>
+<% end %>
+
+<% content_for :control do %>
+    <%= submit_button_tag %>
+<% end %>
+
+<div id="main" style="width: 1050px;">
+	<%= raw main_title %>
+	<%= raw flash_tag %>
+
+    <%= render :partial => "productions/disp_production" %>
+	
+    <div class="subTabmenu">
+        <%= tab_submenu_for_production(@production) %>
+    </div>
+
+	<%= form_tag(div_branch_update_production_path, {:method => :put}) do %>
+	<%= fields_for :production_div, @production_div do |field| %>
+	
+	<%= error_messages_for 'production_div' %>
+
+	<div class="table-layout">
+		<div class="left" style="width: 350px;">
+			<div class="sheet" style="width: 340px;">
+				<h4><%= hlabel(:production_div, :title_new_branch) %></h4>
+				<table class="commonSheet">
+					<tr>
+						<th style="width: 100px;">
+							<%= hlabel(:production_div, :title_new_branch) %>
+						</th>
+						<td style="width: 240px;">
+							<%= field.text_field :new_branch1_no, {:size => 5} %>
+							-
+							<%= field.text_field :new_branch2_no, {:size => 5} %>
+						</td>
+					</tr>
+				</table>
+			</div><!--/ list-->
+		</div><!-- / left -->
+
+		<div class="right" style="width: 200px;">
+			<div class="sheet" style="width: 190px;">
+				<h4><%= hlabel(:production_div, :title_reference) %></h4>
+				<table class="commonSheet">
+					<tr>
+						<th style="width: 100px;">
+							<%= hlabel(:production_div, :title_other_branches) %>
+						</th>
+						<td style="width: 90px;">
+							<% @all_branches.each do |branch| %>
+<% if branch.parts_fix_flag == FLAG_ON %>
+							<%= link_to branch.disp_branch_no, edit_production_path(branch) %>
+<% else %>
+							<%= link_to branch.disp_branch_no, fix_parts_orders_path %>
+<% end %>
+							<br/>
+							<% end %>
+						</td>
+					</tr>
+				</table>
+			</div><!--/ sheet-->
+		</div><!--/ rigth -->
+	</div><!--/ table-layout -->
+
+	<%= field.hidden_field :vote_no %>
+	<%= field.hidden_field :production_lock_version %>
+
+    <div class="control">
+        <%= yield :control %>
+    </div><!--/ control-->
+	
+	<% end %>
+	<% end %>
+</div><!--/ #main-->

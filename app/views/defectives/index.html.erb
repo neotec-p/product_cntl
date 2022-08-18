@@ -1,0 +1,97 @@
+<% content_for :tabmenu do %>
+	<%= render partial: "layouts/defective_tab" %>
+<% end %> 
+
+<div id="main" style="width: 1050px;">
+
+<%= raw main_title %>
+
+<%= raw flash_tag %>
+
+<div class="control">
+	<%= new_button_tag %>
+</div><!--/ control-->
+
+<div class="condition" style="width: 750px;">
+	<%= form_tag({:action => :index}, {:method => :get, :name => :form_search, :id => :form_search }) do -%>
+		<h4><%= t(:search_condition) %></h4>
+		<table class="commonCondition">
+			<tr>
+				<%= render :partial => "layouts/search_cond_date_from_to", :locals => {:title => hlabel(:defective, :outbreak_ymd)} %>
+				<th>
+					<%=hlabel :commons, :item_code %>
+				</th>
+				<td>
+					<%= text_field_tag(:cond_item_customer_code, params[:cond_item_customer_code], :size => 5) %>
+					-
+					<%= text_field_tag(:cond_item_code, params[:cond_item_code], :size => 5) %>
+				</td>
+				<td rowspan="2" class="button">
+				<%= submit_tag t(:search, :scope => :actions) %>
+				</td>
+			</tr>
+			<tr>
+				<th><%=hlabel :defective, :contents %></th>
+				<td colspan="4"><%= text_field_tag(:cond_contents, params[:cond_contents], :size => 30) %></td>
+			</tr>
+		</table>
+	<% end %>
+</div><!--/ condition-->
+
+<div class="list">
+	<div class="paginationCnt"><%= t(:all_count, :scope => :paginate, :cnt => @defectives.count) %></div>
+	<table class="commonList">
+	<thead>
+	  <tr>
+	    <th><%= raw simple_format(t(:t_id, :scope => [:activerecord, :attributes, :defective])) %></th>
+	    <th><%= raw hlabel :defective, :outbreak_ymd %></th>
+	    <th><%= raw hlabel :defective, :defective_process_type_id %></th>
+	    <th><%= raw hlabel :defective, :model_id %></th>
+	    <th><%= raw hlabel :commons, :item_code %></th>
+	    <th><%= raw hlabel :defective, :contents %></th>
+	    <th><%= raw simple_format(t(:t_amount, :scope => [:activerecord, :attributes, :defective])) %></th>
+	    <th><%= raw simple_format(t(:t_weight, :scope => [:activerecord, :attributes, :defective])) %></th>
+	    <th><%= raw simple_format(t(:t_process_price, :scope => [:activerecord, :attributes, :defective])) %></th>
+	    <th><%= raw simple_format(t(:t_material_expense_s, :scope => [:activerecord, :attributes, :defective])) %></th>
+	  </tr>
+	</thead>
+	<tbody>
+	<% @defectives.each do |defective| %>
+<%
+defective_process_type = DefectiveProcessType.new
+defective_process_type = defective.defective_process_type unless defective.defective_process_type.nil?
+item = Item.new
+item = defective.item unless defective.item.nil?
+model = Model.new
+model = defective.model unless defective.model.nil?
+%>
+	  <tr>
+	    <td><%= link_to defective.id, edit_defective_path(defective) %></td>
+	    <td><%= hdate(defective.outbreak_ymd) %></td>
+	    <td>
+	    	<%= defective_process_type.name %>
+	    </td>
+	    <td>
+	    	<%= model.disp_text %>
+	    </td>
+	    <td>
+	    	<%= item.disp_text %>
+	    </td>
+	    <td><%= defective.contents %></td>
+	    <td class="number"><%= hnumber defective.amount %></td>
+	    <td class="number"><%= hnumber defective.weight %></td>
+	    <td class="number"><%= hnumber defective.expense %></td>
+	    <td class="number"><%= hnumber defective.material_expense %></td>
+	  </tr>
+	<% end %>
+	</tbody>
+	</table>
+
+	<%= will_paginate @defectives %>
+</div><!--/ list-->
+
+<div class="control">
+	<%= new_button_tag %>
+</div><!--/ control-->
+
+</div><!--/ #main-->

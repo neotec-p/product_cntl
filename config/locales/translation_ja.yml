@@ -1,0 +1,1307 @@
+ja:
+  t_system: "生産管理システム"
+  t_menu: "メニュー"
+  
+  success_created: "作成しました。（%{id}）"
+  success_updated: "更新しました。（%{id}）"
+  success_deleted: "削除しました。（%{id}）"
+  failed_to_delete: "削除できません。"
+  success_simpled: "修正しました。"
+  success_imported: "インポートしました。（%{msg}）"
+#  success_sended: "送信しました。"
+  error_system_error: "システムエラー発生"
+  error_authorize: "ログインしてください。"
+  error_login:     "ログインIDとパスワードが一致しません。"
+  error_pwd_match: "新しいパスワードと新しいパスワード（確認）が一致しません。"
+  error_default:   "以下のエラーが発生しました。管理者に連絡してください。\n%{message}"
+#  error_upload:    "ファイルのアップロードに失敗しました。"
+#  note_file_size:  "ファイルサイズの上限は1MBです。"
+  error_stale_object: "他のユーザーが、先にデータを更新しました。\nお手数ですが、最初からやり直してください。"
+  error_imported:   "アップロードエラーが発生しました。次の項目を確認してください。\n%{msg}"
+  error_delete_self: "現在ログイン中のユーザーは削除できません。"
+  error_delete_relation: "関連データが存在するため、削除できません。"
+  error_valid_format: "不正な書式です。（%{msg}）"
+  error_process_detail_max_count: "工程は、最大%{max}個しか登録できません（計画と倉入は省く）。"
+  error_valid_calendars: "カレンダーマスタが登録されていません。（対象年月：%{ym}）"
+  error_summation_valid_material_orders: "完全に完納していない%{material_type}注文データが存在します。（注文管理ＩＤ:%{targets}）"
+  error_summation_valid_productions_not_rel_stocks: "倉入済みか不良で、%{material_type}在庫と紐づいていない生産データが存在します。（管理ＮＯ:%{targets}）"
+  error_summation_valid_productions_not_rel_lots: "倉入済みか不良で、ロットと紐づいていない生産データが存在します。（管理ＮＯ:%{targets}）"
+  error_summation_valid_productions_multi_details: "完全に倉入終了していない生産データが存在します。（管理ＮＯ:%{targets}）"
+  error_valid_productions_not_rel_stocks: "倉入済みですが、%{material_type}在庫と紐づいていません。"
+  error_valid_relate_auto_stocks: "紐付け可能な在庫が存在しません。\n在庫管理画面で、在庫量を確認してください。"
+
+  success_new_lot: "ロットＮＯを採番しました。（%{id}）"
+  success_report: "帳票発行を受付しました。（%{id}）\n帳票が発行済でなければ、しばらくしてから画面を再表示してください。"
+  success_report_all: "帳票発行を受付しました。（%{id}）\nしばらくしてから帳票発行履歴画面を確認してください。"
+  success_print_collect: "帳票を回収しました。（%{id}）"
+  success_summate: "締め処理を受付しました。（%{msg}）\n処理が終了していなければ、しばらくしてから画面を再表示してください。"
+  success_stock_finish: "在庫を終了にしました。（%{id}）"
+
+  search_condition: "絞込条件"
+  cases_unit: "件"
+  search_condition_date_from_to: "絞込期間"
+  search_condition_term: "～"
+  
+  notice_required: "印のついた項目は、必ず入力してください。"
+  notice_empty: "条件に合致するデータはありません。"
+  notice_paginate_edit: "処理確定するまでページ移動できません。処理を中止する場合は、検索からやり直してください。"
+  notice_select: "選択してください"
+  notice_select_all: "全て"
+  notice_price: "金額"
+  notice_weight: "重量"
+  notice_quantity: "数量"
+  notice_ratio: "比率"
+  notice_no_process: "[工程なし]"
+  notice_no_value: "[値なし]"
+  notice_down_load: "ダウンロード"
+  notice_import: "インポートしてから、「登録」ボタンを押下してください。"
+  notice_import_only: "インポートボタンを押下してください。"
+  notice_summate_month: "月締め後は、月締めの時点で倉入または不良の生産分に対する「生産管理」画面での編集は行えません。\n必要なデータは事前に入力・更新してください。"
+  notice_date_from_only: "から以降"
+  notice_welcome: "へようこそ"
+  notice_plan_done: "予定あり"
+  notice_plan_holiday: "休日"
+  notice_plan_today: "は、本日です。"
+  notice_font_green: "緑字"
+  notice_provide_materil_stock: "支給品のため、在庫管理できません。"
+  notice_process_price_matrix: "別紙単価表による"
+  notice_delivery_ymd_add: "に発送願います"
+  notice_calendar_master_template: "カレンダーマスタ登録用CSV"
+  notice_where_to_deliver: "納入場所は別途指示のない限り、当社所在地です。"
+  notice_system_error: "システムエラーが発生しました。\n管理者に連絡してください。"
+  
+  options_hd: "ＨＤ、追加工１"
+  options_ro: "ＲＯ１、追加工２、ＲＯ２、追加工３"
+  
+  init_passward: "パスワードを初期化する"
+  auto_update: "自動更新する"
+  provide_material: "支給品扱いする"
+  logical_weight: "重量計算は論理値で行う"
+  relate_auto: "残量が足りている在庫と紐付ける"
+  addition_process_expense: "追加工の場合、工程費計上をする"
+  
+  registered: "登録済"
+  not_registered: "未登録"
+  status_order_until: "未注文"
+  status_order_ordered: "注文済"
+  status_order_recieved: "受入済"
+  
+  status_print_yet: "未発行"
+#  status_print_wait: "発行中"
+  status_print_done: "発行済"
+#  status_print_error: "エラー"
+  status_print_collect: "回収済"
+  
+  status_stock: "在庫あり"
+  status_stock_finish: "在庫なし"
+
+  status_delivery_flag_yet: "未"
+  status_delivery_flag_full: "完納"
+  status_arrival: "受入"
+  
+  confirm_submit: "登録してもよろしいですか？"
+  confirm_delete: "削除してもよろしいですか？"
+  confirm_import: "インポートしてもよろしいですか？"
+  confirm_change_tab_js: "「登録」処理を行っていないため、入力内容が破棄されます。\\nこのまま、画面遷移を行ってもよろしいですか？" #javascriptエリアで使用するため、\が２つ必要
+  confirm_new_lot: "ロットＮＯを採番してもよろしいですか？"
+  confirm_report: "帳票発行してもよろしいですか？"
+  confirm_re_report: "帳票は既に発行されています。\n再発行してもよろしいですか？"
+  confirm_report_collect: "帳票回収してもよろしいですか？"
+  confirm_summate: "締め処理を実行してもよろしいですか？"
+  confirm_div_branch: "枝番発行をしてもよろしいですか？"
+  confirm_div_lot: "分割をしてもよろしいですか？"
+  confirm_set_material: "材料を設定してもよろしいですか？"
+  confirm_set_washer: "座金を設定してもよろしいですか？"
+  confirm_set_blank_washer: "座金を削除してもよろしいですか？"
+  confirm_fix_parts: "材料・座金を確定してもよろしいですか？"
+  confirm_stock_finish: "在庫終了してもよろしいですか？"
+  confirm_process_order: "二次加工注文画面に遷移してもよろしいですか？"
+  confirm_force_submit: "このデータは、%{act}処理済のため「登録」処理の実行は推奨されません。\n"
+  confirm_accept: "入荷処理をしてもよろしいですか？"
+  
+  button_close: "閉じる"
+  button_change: "変更"
+  button_edit: "編集"
+  button_submit: "登録"
+  button_fix: "確定"
+  button_delete: "削除"
+  button_clear: "消去"
+  button_import: "インポート"
+  button_plan: "計画"
+  button_collect: "回収"
+  button_report: "発行"
+  button_report_all: "一括発行"
+  button_re_report: "再発行"
+  button_new_order: "新規注文"
+  button_order_cancel: "注文キャンセル"
+  button_new_no: "採番"
+  button_fix_production: "注残調整"
+  button_fix_parts: "材料確定"
+  button_fix_parts: "材料確定"
+  button_accept: "入荷"
+  button_stock_print: "管理票印刷"
+  button_stock_collect: "管理票回収"
+  button_stock_finish: "在庫終了"
+  button_summate_month: "月締め"
+  button_summate_month_report: "月次集計（帳票のみ）"
+  button_div_branch: "枝番発行"
+  button_div_lot: "分割"
+  button_memo: "あり" #"メモ"
+  button_memo_none: "なし" #"メモ"
+  button_production_plan_list_hd: "生産計画日程表印刷（ＨＤ）"
+  button_production_plan_list_ro: "生産計画日程表印刷（ＲＯ）"
+  
+  main_title_pref: "データ"
+  
+  paginate:
+    all_count: "全%{cnt}件"
+  will_paginate:
+    previous_label: "&laquo; 前へ"
+    next_label: "次へ &raquo;"
+    page_gap: "&hellip;"
+
+#コントローラ名
+  controllers:
+    top: "システムトップ"
+    customers: "顧客マスタ"
+    models: "機種マスタ"
+    materials: "材料マスタ"
+    washers: "座金マスタ"
+    items: "品目マスタ" #基本データ
+    process_expenses: "品目マスタ" #工程費・工程比率・外注費
+    check_sheets: "品目マスタ" #工程品質チェックシート
+    header_left_check_sheets: "品目マスタ" #工程品質チェックシート ヘッダー（左）
+    header_right_check_sheets: "品目マスタ" #工程品質チェックシート ヘッダー（右）
+    rolling_left_check_sheets: "品目マスタ" #工程品質チェックシート ローリング（左）
+    rolling_right_check_sheets: "品目マスタ" #工程品質チェックシート ローリング（右）
+    process_details: "品目マスタ" #工程詳細
+    traders: "業者"
+    processors: "加工先マスタ"
+    heat_processors: "加工先マスタ" #熱処理加工先
+    surface_processors: "加工先マスタ" #表面処理加工先
+    addition_processors: "加工先マスタ" #追加工先
+    internal_processors: "加工先マスタ" #自社内部門
+    suppliers: "仕入先マスタ"
+    material_suppliers: "仕入先マスタ" #材料仕入先   
+    washer_suppliers: "仕入先マスタ" #座金仕入先
+    users: "ユーザーマスタ"
+
+    process_prices: "処理価格マスタ"
+    heat_process_prices: "処理価格マスタ" #"熱処理価格マスタ"
+    surface_process_prices: "処理価格マスタ" #"熱処理価格マスタ"
+
+    notices: "お知らせマスタ"
+    calendars: "カレンダーマスタ"
+
+    orders: "注文管理"
+    
+    material_stocks: "材料管理" #"材料在庫"
+    material_orders: "材料管理" #"材料注文管理"
+    washer_stocks: "座金管理" #"座金在庫"
+    washer_orders: "座金管理" #"座金注文管理"
+    
+    productions: "生産管理"
+    production_details: "生産管理" #"工程管理"
+    memos: "メモ登録"
+    
+    process_orders: "生産管理" #"加工注文"
+    heat_process_orders: "生産管理" #"熱処理加工注文"
+    surface_process_orders: "生産管理" #"表面処理加工注文"
+    addition_process_orders: "生産管理" #"追加工注文"
+    lots: "生産管理" #"ロット管理"
+
+    defectives: "不良"
+    reports: "帳票発行履歴"
+
+    summations: "月締め・集計" #"締め処理"
+    
+#アクション名
+  actions:
+    index: "一覧"
+    show: "詳細"
+    new: "新規作成"
+    create: "新規作成"
+    edit: "修正"
+    update: "修正"
+    multi_new: "新規作成"
+    multi_create: "新規作成"
+    multi_edit: "修正"
+    multi_update: "修正"
+    delete: "削除"
+    report: "印刷"
+    cancel: "戻る"
+    search: "検索"
+
+    set_parts: "材料・座金"
+
+    csv_import: "CSV一括登録"
+    hand: "手入力登録"
+    
+    un_treated_index: "未処理一覧"
+    treated_index: "処理済一覧"
+    
+    production_status: "生産状況"
+    production_status_process_type: "生産状況（工程別）"
+    production_status_material: "生産状況（材料別）"
+    production_status_vote_no: "生産状況（管理ＮＯ別）"
+    production_status_item_code: "生産状況（商品コード別）"
+    production_status_yeild: "生産状況（生産高）"
+
+    fix_production: "注残調整"
+    fix_production_update: "注残調整"
+    fix_parts: "材料・座金未確認一覧"
+    fix_parts_update: "材料・座金未確認一覧"
+    multi_plan: "日程計画"
+    multi_plan_update: "日程計画"
+    print_t040: "日程計画"
+    multi_model: "一括機種選択"
+    multi_model_update: "一括機種選択"
+    edit_material: "材料管理"
+    edit_material_update: "材料管理"
+    edit_washer: "座金管理"
+    edit_washer_update: "座金管理"
+    div_branch: "枝番発行"
+    div_branch_update: "枝番発行"
+    div_lot: "ロット分割"
+    div_lot_update: "ロット分割"
+
+    lot_no_index: "ロットＮＯ一覧" #タブメニュー表示専用
+    process_order_index: "二次加工一覧" #タブメニュー表示専用
+
+    order_index: "注文一覧" #タブメニュー表示専用
+    order: "注文詳細" #タブメニュー表示専用
+    
+    stock_index: "在庫一覧"
+    stock: "在庫詳細"
+    print_t150: "修正"
+    cond_print_t140: "購入履歴印刷"
+    print_t140: "購入履歴印刷"
+    cond_print_t141: "購入履歴印刷"
+    print_t141: "購入履歴印刷"
+
+    defective_index: "不良一覧" #タブメニュー表示専用
+    
+    stock_manage: "在庫管理詳細"
+    
+    summate_month: "月締め"
+    summate_month_report: "集計データ・帳票出力（現時点集計）"
+
+    pop_material_for_text: "材料選択"
+    pop_material_for_link: "材料選択"
+    pop_washer_for_text: "座金選択"
+    pop_washer_for_link: "座金選択"
+    pop_model_production_plan: "生産計画"
+    
+    login: "ログイン"
+    logout: "ログアウト"
+    passwd: "パスワード変更"
+    passwd_update: "パスワード変更"
+    help: "操作マニュアル"
+    
+#エンティティ
+  activerecord:
+    models:
+      customer: "顧客マスタ"
+      model: "機種マスタ"
+      material: "材料マスタ"
+      washer: "座金マスタ"
+      item: "基本データ" #品目マスタ
+      process_expense: "工程費・工程比率・外注費" #品目マスタ
+      check_sheet: "工程品質チェックシート" #品目マスタ
+      header_left_check_sheet: "ヘッダー（左）" #品目マスタ 工程品質チェックシート
+      header_right_check_sheet: "ヘッダー（右）" #品目マスタ 工程品質チェックシート
+      rolling_left_check_sheet: "ローリング（左）" #品目マスタ 工程品質チェックシート
+      rolling_right_check_sheet: "ローリング（右）" #品目マスタ 工程品質チェックシート
+      process_detail: "工程詳細" #品目マスタ
+      trader: "業者"
+      processor: "加工先"
+      heat_supplier: "熱処理加工先"
+      heat_processor: "熱処理加工先"
+      surface_processor: "表面処理加工先"    
+      internal_processor: "自社内部門"
+      addition_processor: "追加工先"
+      supplier: "仕入先"
+      material_supplier: "材料仕入先"
+      washer_supplier: "座金仕入先"
+      user: "ユーザーマスタ"
+
+      process_price: "処理価格"
+      heat_process_price: "熱処理価格"
+      surface_process_price: "表面処理価格"
+      
+      order: "注文管理"
+      production: "生産管理"
+      production_detail: "工程管理"
+      memo: "メモ"
+
+      material_order: "材料注文管理"
+      material_stock: "材料在庫管理"
+      washer_order: "座金注文管理"
+      washer_stock: "座金在庫管理"
+
+      process_order: "加工注文"
+      heat_process_order: "熱処理加工注文"
+      surface_process_order: "表面処理加工注文"
+      addition_process_order: "追加工注文"
+      lot: "ロット管理"
+      
+      defective: "不良"
+      report: "帳票発行履歴"
+
+      summation: "月締め・集計" #"締め処理"
+      summation_type: "締め処理区分"
+      asynchro_status: "非同期処理状態管理"
+      
+      notice: "お知らせ"
+      calendar: "カレンダー"
+
+    attributes:
+      commons:
+        id: "NO"
+        code: "コード"
+        name: "名称"
+        created_at: "作成日時"
+        updated_at: "更新日時"
+        note: "備考"
+        upload_file: "一括インポート"
+
+        process_name: "工程名"
+        vote_no: "管理ＮＯ"
+        branch_no: "枝番"
+        item_code: "商品コード"
+        amount_plan: "数量計画"
+        result_amount: "実績数量（本）"
+        excess_amount: "過不足（本）"
+        purchase_department: "購買部"
+        production_department: "製造部"
+        model_id: "機種ＩＤ"
+        material_name: "規格・径・表面処理"
+        washer_name: "鋼種・径・表面処理"
+        lot_no: "ロットＮＯ"
+        memo: "メモ"
+        material: "材料"
+        washer: "座金"
+        heat: "熱処理"
+        surface: "表面処理"
+        diameter_pai: "φ"
+
+      customer:
+        id: "顧客ＩＤ"
+        code: "顧客コード"
+        name: "顧客名称"
+        note: "備考"
+        lock_version: "ロックバージョン"
+
+      model:
+        id: "機種ＩＤ"
+        code: "機種コード"
+        name: "機種名称"
+        note: "備考"
+        lock_version: "ロックバージョン"
+
+        process: "対象工程"
+
+      material:
+        id: "材料ＩＤ"
+        trader_id: "仕入先"
+        standard: "規格"
+        diameter: "径"
+        surface: "表面処理"
+        process: "工程"
+        dimensions: "寸法"
+        unit_price_update_flag: "単価自動更新" #"単価自動更新フラグ" 
+        start_ymd: "適用開始日"
+        end_ymd: "適用終了日"
+        created_ymd: "作成日"
+        unit_price: "単価（円）"
+        provide_flag: "支給品" #"支給品フラグ"
+        lock_verion: "ロックバージョン"
+
+        excess_amount: "過不足（kg）" 
+        stock_amount: "実在庫（kg）" 
+        planned_amount: "投入予定（kg）"
+        orderd_amount: "注文済（kg）"
+        stock_price: "在庫金額（円）"
+        
+        t_material_info: "材料情報"
+        t_excess_amount: "過不足\n（kg）" 
+
+      washer:
+        id: "座金ＩＤ"
+        steel_class: "鋼種"
+        diameter: "径"
+        surface: "表面処理"
+        unit: "入数（ｐｃｓ）"
+        unit_price: "単価（円）"
+        provide_flag: "支給品" #"支給品フラグ"
+        lock_verion: "ロックバージョン"
+
+        excess_amount: "過不足（ｐｃｓ）" 
+        stock_amount: "実在庫（ｐｃｓ）" 
+        planned_amount: "投入予定（ｐｃｓ）"
+        orderd_amount: "注文済（ｐｃｓ）"
+        stock_price: "在庫金額（円）"
+
+        t_washer_info: "座金情報"
+        t_excess_amount: "過不足\n（ｐｃｓ）" 
+
+      item:
+        id: "品目ＩＤ"
+        customer_id: "顧客ＩＤ"
+        customer_code: "商品コード３桁（顧客コード）"
+        code: "商品コード４桁（連番）"
+        drawing_no: "品番／図番"
+        name: "品名"
+        price: "倉入単価（円）"
+        weight: "重量（Ｋｇ）"
+        tanaka: "田中熱工"
+        environment: "環境対応"
+        punch: "パンチ"
+        hd_model_name1: "登録ＨＤ機種１"
+        hd_model_name2: "登録ＨＤ機種２"
+        hd_model_name3: "登録ＨＤ機種３"
+        ro1_model_name1: "登録ＲＯ１機種１"
+        ro1_model_name2: "登録ＲＯ１機種２"
+        ro1_model_name3: "登録ＲＯ１機種３"
+        ro2_model_name1: "登録ＲＯ２機種１"
+        ro2_model_name2: "登録ＲＯ２機種２"
+        ro2_model_name3: "登録ＲＯ２機種３"
+        hd_addition_model_name: "追加工１機種"
+        ro1_addition_model_name: "追加工２機種"
+        ro2_addition_model_name: "追加工３機種"
+        vote_note: "管理票備考"
+        surface_note: "表面処理備考"
+        logical_weight_flag: "重量計算" #"理論重量計算フラグ"
+        lock_version: "ロックバージョン"
+        
+        t_model_info: "機種情報"
+        t_expense: "材料費（円）"
+        t_check_sheet: "工程品質\nチェックシート"
+        t_process_expense: "工程費・\n工程比率・\n外注費"
+
+      process_expense:
+        id: "工程費ＩＤ"
+        item_id: "品目データＩＤ"
+        hd: "ＨＤ（円）"
+        barrel: "バレル（円）"
+        hd_addition: "ＨＤ追加工（実費）（円）"
+        ro1: "ＲＯ１（円）"
+        ro1_addition: "ＲＯ１追加工（実費）（円）"
+        ro2: "ＲＯ２（円）"
+        ro2_addition: "ＲＯ２追加工（実費）（円）"
+        heat: "熱処理（円）"
+        heat_addition: "熱処理追加工（実費）（円）"
+        surface: "表面処理（円）"
+        surface_addition: "表面処理追加工（実費）（円）"
+        inspection: "選別・検査（円）"
+        inspection_addition: "選別・検査追加工（実費）（円）"
+        ratio_hd: "ＨＤ_比率" #工程費率_ＨＤ
+        ratio_barrel: "バレル_比率" #工程費率_バレル
+        ratio_ro1: "ＲＯ１_比率" #工程費率_ＲＯ１
+        ratio_ro2: "ＲＯ２_比率" #工程費率_ＲＯ２
+        ratio_heat: "熱処理_比率" #工程費率_熱処理
+        ratio_surface: "表面処理_比率" #工程費率_表面処理
+        start_ymd: "適用開始日"
+        end_ymd: "適用終了日"
+        lock_version: "ロックバージョン"
+
+        outside_heat_expense: "熱処理費" #外注費_熱処理費
+        outside_surface_expense: "表面処理費" #外注費_表面処理費
+        outside_addition_expense: "追加" #外注費_追加
+
+        t_process_expense_ratio: "工程費・工程比率"
+        t_outside_expense: "外注費"
+        t_sum_ratio: "合計_比率"
+        
+      check_sheet:
+        id: "チェックシートＩＤ"
+        type: "チェックシート種類"
+        item_id: "品目データＩＤ"
+        position_id: "位置ＩＤ"
+        column1: "項目１"
+        column2: "項目２"
+        column3: "項目３"
+        column4: "項目４"
+        column5: "項目５"
+        column6: "項目６"
+        column7: "項目７"
+        column8: "項目８"
+        column9: "項目９"
+        column10: "項目１０"
+        standard1_top: "規格１上"
+        standard1_bottom: "規格１下"
+        standard2_top: "規格２上"
+        standard2_bottom: "規格２下"
+        standard3_top: "規格３上"
+        standard3_bottom: "規格３下"
+        standard4_top: "規格４上"
+        standard4_bottom: "規格４下"
+        standard5_top: "規格５上"
+        standard5_bottom: "規格５下"
+        standard6_top: "規格６上"
+        standard6_bottom: "規格６下"
+        standard7_top: "規格７上"
+        standard7_bottom: "規格７下"
+        standard8_top: "規格８上"
+        standard8_bottom: "規格８下"
+        standard9_top: "規格９上"
+        standard9_bottom: "規格９下"
+        standard10_top: "規格１０上"
+        standard10_bottom: "規格１０下"
+        lock_version: "ロックバージョン"
+        
+      process_detail:
+        id: "工程詳細ＩＤ"
+        item_id: "品目データＩＤ"
+        process_type_id: "工程ＩＤ"
+        name: "工程"
+        condition: "条件"
+        model: "機種・加工区"
+        hexavalent_flag: "六価フラグ"
+        lock_version: "ロックバージョン"
+        
+        hexavalent: "六価"
+        not_hexavalent: "e"
+        tanaka_0SHARP: "0#"
+        tanaka_TP: "TP"
+        
+      trader:
+        id: "業者ＩＤ"
+        type: "業者種類"
+        name: "会社名"
+        zip_code: "郵便番号"
+        address: "住所"
+        tel: "ＴＥＬ"
+        fax: "ＦＡＸ"
+        addition_attr1: "希望納期追記" #"追加属性１"
+        addition_attr2: "単価条件" #"追加属性２"
+        addition_attr3: "工程費" #"追加属性３"
+        addition_attr4: "追加属性４"
+        addition_attr5: "追加属性５"
+        lock_version: "ロックバージョン"
+
+      processor:
+        id: "加工先ＩＤ"
+        type: "加工先種類"
+        code: "加工先コード"
+        
+      supplier: 
+        id: "仕入先ＩＤ"
+        type: "仕入先種類"
+        code: "仕入先コード"
+
+      process_type:
+        id: "工程ＩＤ"
+        name: "工程名称"
+        protected_flag: "必須工程フラグ"
+        plan_process_flag: "計画工程フラグ"
+        processor_flag: "外注加工フラグ"
+        seq: "画面表示順"
+
+      user:
+        id: "ユーザＩＤ"
+        login_id: "社員コード"
+        hashed_password: "パスワード"
+        salt: "ソルト文字列"
+        password_updated: "パスワード変更日時"
+        last_name: "氏名（姓）"
+        first_name: "氏名（名）"
+        role_id: "権限"
+        lock_version: "ロックバージョン"
+        
+        password: "パスワード"
+        password_required: "現在のパスワード"
+        password_new: "新しいパスワード"
+        password_confirmation: "新しいパスワード（確認）"
+        
+        t_name: "氏名"
+
+      order:
+        id: "注文ＩＤ"
+        order_header_id: "注文ヘッダーＩＤ"
+        formation_ymd: "編成日"
+        order_no: "注文Ｎｏ"
+        order_amount: "注文数量（本）"
+        delivery_ymd: "納期"
+        order_ymd: "注文日"
+        necessary_amount: "必要数量（本）"
+        lock_version: "ロックバージョン"
+        
+        item_customer_code: "商品コード"
+        item_code: "商品コード"
+        
+        order_info: "注文情報"
+        item_info: "商品情報"
+        result_amount: "実績数量（本）"
+        new_production: "新規生産"
+        title_necessary_amount: "必要数量\n（本）"
+
+      production:
+        id: "生産ＩＤ"
+        item_id: "品目データＩＤ"
+        process_type_id: "工程ＩＤ"
+        status_id: "状態"#"状態管理ＩＤ"
+        print_status_flag: "管理票"#"工程管理票印刷フラグ　20121022"
+        vote_no: "管理ＮＯ"
+        branch1_no: "枝番１"
+        branch2_no: "枝番２"
+        customer_code: "商品コード３桁（顧客コード）"
+        code: "商品コード４桁（連番）"
+        result_amount: "実績数量（本）"
+        finish_ymd: "終了日"
+        parts_fix_flag: "構成部品決定フラグ"
+        comment: "コメント"
+        print_flag: "工程管理票印刷フラグ"
+        summation_id: "締め処理ＩＤ"
+        lock_version: "ロックバージョン"
+
+        process_order: "外注\n加工"
+        result_amount_production: "実績数量\n最新（本）"
+        result_amount_history: "実績数量\n履歴（本）"
+        defectiveness_amount: "段取\n材料使用量"
+        result_amount_production_val: "実績数量最新（本）" #バリデーションチェック用
+        
+        result_amount_vote_no: "管理ＮＯ\n実績数量（本）"
+        result_amount_current: "枝番\n実績数量（本）"
+        
+        production_info: "生産情報"
+        report_info: "工程管理票"
+        
+        title_model_process_order: "機種・外注加工"
+        title_status: "状態管理"
+        title_branch: "分割\n枝番"
+        title_plan_weight: "計画重量\n（ｋｇ）"
+        title_plan_weight_long: "計画重量（ｋｇ）"
+        title_print: "管理票発行"
+
+        t_total_price_k: "生産高（千円）"
+        t_production_status: "生産状況"
+        t_material_info: "材料情報"
+        notice_material_info_empty: "材料情報は、「規格」「径」を両方選択した場合のみ表示します。"
+
+      production_detail:
+        id: "工程管理ＩＤ"
+        production_id: "生産ＩＤ"
+        process_type_id: "工程ＩＤ"
+        model_id: "機種ＩＤ"
+        plan_start_ymd: "計画開始"
+        plan_end_ymd: "計画終了"
+        result_start_ymd: "実績開始"
+        result_end_ymd: "実績終了"
+        result_amount_production: "実績数量最新（本）"
+        result_amount_history: "実績数量履歴（本）"
+        defectiveness_amount: "段取・不良材料使用量"
+        lock_version: "ロックバージョン"
+        
+        t_breakdown: "実績内訳"
+        t_finish_status: "終了日・状態"
+        t_plan: "予定"
+        t_finish_plan: "倉入予定日"
+        
+        production_status: "生産状況"
+        
+        title_result_amount_production: "実績数量\n最新（本）"
+
+      memo:
+        id: "メモＩＤ"
+        production_id: "生産ＩＤ"
+        seq: "順序"
+        contents: "内容"
+        user_id: "登録者" #"実行者ＩＤ"
+        lock_version: "ロックバージョン"
+
+      material_order:
+        id: "材料注文管理ＩＤ"
+        material_id: "材料ＩＤ"
+        trader_id: "材料仕入先" #"業者ＩＤ"
+        order_ymd: "注文日"
+        order_weight: "注文数量（ｋｇ）"
+        delivery_ymd: "希望納期"
+        purchase_price: "購入単価（円）"
+        reply_delivery_ymd: "回答納期"
+        full_delivery_ymd: "完納日"
+        delivery_flag: "納入（未/完納）" #"納入フラグ"
+        lock_version: "ロックバージョン"
+        
+#        material_supplier: "材料仕入先"
+        t_material_order_id: "材料注文\n管理ＩＤ"
+        accedpted_amount: "入荷済量（ｋｇ）"
+        
+        order_info: "注文情報"
+        reply_info: "回答情報"
+        accept_info: "受入情報"
+
+        t_id: "材料注文\n管理ＩＤ"
+        t_delivery_flag: "納入\n（未/完納）"
+        t_order_weight: "注文数量\n（ｋｇ）"
+        t_purchase_price: "購入単価\n（円）"
+        t_print: "注文書\n発行"
+        t_accedpted_amount: "入荷済量\n（ｋｇ）"
+        t_order_list: "注文一覧"
+
+      material_stock:
+        id: "材料在庫管理ＮＯ" #"材料在庫ＩＤ"
+        material_id: "材料ＩＤ"
+        material_order_id: "材料注文管理ＩＤ"
+        inspection_no: "検査番号・製造番号"
+        accept_weight: "入荷量（ｋｇ）"
+        accept_ymd: "入荷日"
+        adjust_weight: "残量調整（ｋｇ）"
+        print_flag: "印刷フラグ"
+        collect_flag: "材料管理票回収フラグ"
+        lock_version: "ロックバージョン"
+        
+        t_inspection_no: "検査番号\n製造番号"
+        t_id: "材料在庫\n管理ＮＯ" #"材料在庫ＩＤ"
+
+        t_stock_info: "在庫情報"
+        t_print_info: "管理票情報"
+        t_accept_coil_info: "入荷コイル情報"
+        t_stock_list: "在庫一覧"
+
+        t_excess_amount: "実残量（ｋｇ）"
+        t_stock_amount: "残量（ｋｇ）"
+        t_stock_price: "在庫金額（円）"
+        t_print_status: "状態"
+
+      washer_order:
+        id: "座金注文管理ＩＤ"
+        washer_id: "座金ＩＤ"
+        trader_id: "座金仕入先" #"業者ＩＤ"
+        order_ymd: "注文日"
+        order_quantity: "注文数量（ｐｃｓ）"
+        purchase_price: "購入単価（円）"
+        delivery_ymd: "希望納期"
+        reply_delivery_ymd: "回答納期"
+        full_delivery_ymd: "完納日"
+        delivery_flag: "納入（未/完納）" #"納入フラグ"
+        lock_version: "ロックバージョン"
+        
+        t_washer_order_id: "座金注文\n管理ＩＤ"
+        t_order_info: "注文情報"
+        t_reply_info: "回答情報"
+        t_accept_info: "受入情報"
+
+        t_id: "在庫注文\n管理ＩＤ"
+        t_delivery_flag: "納入\n（未/完納）"
+        t_order_quantity: "注文数量\n（ｐｃｓ）"
+        t_purchase_price: "購入単価\n（円）"
+        t_print: "注文書\n発行"
+        t_accedpted_amount: "入荷済量\n（ｐｃｓ）"
+        t_order_list: "注文一覧"
+
+      washer_stock:
+        id: "座金在庫管理ＮＯ" #"座金在庫ＩＤ"
+        washer_id: "座金ＩＤ"
+        washer_order_id: "座金注文管理ＩＤ"
+        inspection_no: "検査番号・製造番号"
+        accept_quantity: "入荷量（ｐｃｓ）"
+        accept_ymd: "入荷日"
+        adjust_quantity: "残量調整（ｐｃｓ）"
+        lock_version: "ロックバージョン"
+
+        t_inspection_no: "検査番号\n製造番号"
+        t_id: "座金在庫\n管理ＮＯ" #"座金在庫ＩＤ"
+
+        t_stock_info: "在庫情報"
+        t_accept_washer_info: "入荷座金情報"
+        t_stock_list: "在庫一覧"
+
+        t_excess_amount: "実残量（ｐｃｓ）"
+        t_stock_amount: "残量（ｐｃｓ）"
+        t_stock_price: "在庫金額（円）"
+        t_stock_status: "在庫状況"
+
+      process_order:
+        id: "加工注文ＩＤ"
+        production_detail_id: "生産詳細ＩＤ"
+        type: "加工注文種類"
+        trader_id: "加工先" #"加工先ＩＤ"
+        material: "材質"
+        thickness: "表面メッキ厚"
+        process: "処理"
+        delivery_ymd: "希望納期"
+        summary1: "摘要１"
+        summary2: "摘要２"
+        price: "単価"
+        order_ymd: "注文日"
+        arrival_ymd: "受入日"
+        print_flag: "印刷フラグ"
+        delivery_ymd_add: "希望納期追記"
+        lock_version: "ロックバージョン"
+        
+        order_info: "注文情報"
+        arrival_info: "受入情報"
+        title_print: "注文書\n発行"
+        title_id: "加工\n注文ＩＤ"
+
+      lot:
+        id: "ロットＩＤ"
+        production_id: "生産ＩＤ"
+        lot_no: "ロットＮＯ"
+        amount: "本数"
+        weight: "実質重量（ｋｇ）"
+        case: "ケース数"
+        insert_ymd: "登録日"
+        lock_version: "ロックバージョン"
+        
+        title_weight: "実質重量\n（ｋｇ）"
+
+      status:
+        id: "状態管理ＩＤ"
+        name: "状態管理名称"
+        lock_version: "ロックバージョン"
+
+      report:
+        id: "帳票発行ＩＤ"
+        asynchro_status_id: "状態" #"非同期処理状態管理ＩＤ"
+        report_type_id: "帳票種類" #"帳票種類ＩＤ"
+        file_name: "ファイル名"
+        file_path: "ファイルパス"
+        disp_name: "ファイル表示名"
+        content_type: "ファイル種類"
+        size: "ファイルサイズ"
+        user_id: "発行者" #"実行者ＩＤ"
+        lock_version: "ロックバージョン"
+
+        title_id: "帳票\n発行ＩＤ"
+        title_date: "発行日"
+        title_user_last_name: "発行者（姓）"
+        title_user_first_name: "発行者（名）"
+        title_size: "ファイル\nサイズ"
+
+      defective:
+        id: "不良管理ＩＤ"#"不良ＩＤ"
+        item_id: "品目データＩＤ"
+        item_customer_code: "商品コード３桁（得意先コード）"
+        item_code: "商品コード４桁（連番）"
+        model_id: "機種ＩＤ"
+        outbreak_ymd: "発生年月日"
+        defective_process_type_id: "発生工程" #"不良発生工程ＩＤ"
+        contents: "内容"
+        amount: "数量（本）"
+        weight: "重量（ｋｇ）"
+        lock_version: "ロックバージョン"
+        
+        material_stock_id1: "材料在庫管理ＩＤ"
+        material_weight1: "材料重量（ｋｇ）"
+        washer_stock_id1: "座金１在庫管理ＩＤ"
+        washer_stock_id2: "座金２在庫管理ＩＤ"
+        washer_quantity1: "座金１数量（ｐｃｓ）"
+        washer_quantity2: "座金２数量（ｐｃｓ）"
+        
+        t_defective_info: "不良情報"
+        t_material_washer_info: "材料・座金情報"
+        t_expense_info: "費用詳細（円）"
+        t_process_expense_info: "工程費詳細（円）"
+
+        t_id: "不良\n管理ＩＤ"#"不良ＩＤ"
+        t_amount: "数量\n（本）"
+        t_weight: "重量\n（ｋｇ）"
+        t_expense_s: "金額\n（円）"
+        t_process_price: "加工費\n（円）"
+        t_material_expense_s: "材料費\n（円）"
+
+        t_expense: "金額（円）"
+        t_material_expense: "材料費（円）"
+        t_process_expense: "仕掛＠（円）"
+        t_hd: "ＨＤ（円）"
+        t_barrel: "バレル（円）"
+        t_hd_addition: "ＨＤ追加工（円）"
+        t_ro1: "ＲＯ１（円）"
+        t_ro1_addition: "ＲＯ１追加工（円）"
+        t_ro2: "ＲＯ２（円）"
+        t_ro2_addition: "ＲＯ２追加工（円）"
+
+      defective_process_type:
+        id: "不良発生工程区分ＩＤ"
+        name: "不良発生工程区分名称"
+        seq: "表示順"
+        lock_version: "ロックバージョン"
+
+      summation:
+        id: "締め処理ＩＤ"
+        summation_type_id: "締め処理種類ＩＤ"
+        asynchro_status_id: "非同期処理状態管理ＩＤ"
+        target_ymd: "処理対象年月"
+        user_id: "実行者ＩＤ"
+        lock_version: "ロックバージョン"
+        
+        result_list: "出力済帳票一覧"
+
+        t_print_date: "出力年月日"
+        t_target_month: "対象年月"
+        t_status: "処理状態"
+        t_user: "実行者"
+        t_report_t120: "仕掛品棚卸票"
+        t_report_t121: "材料棚卸票"
+        t_file_name: "ファイル名"
+
+      summation_type:
+        id: "締め処理区分ＩＤ"
+        name: "集計種別" #"締め処理区分名"
+        lock_version: "ロックバージョン"
+
+      asynchro_status:
+        id: "非同期処理状態管理ＩＤ"
+        name: "非同期処理状態管理区分名"
+        lock_version: "ロックバージョン"
+    
+      process_price:
+        id: "処理価格ＩＤ"
+        type: "処理種類"
+        item_id: "品目データＩＤ"
+        trader_id: "加工先" #"業者ＩＤ" 
+        material_id: "材料" #"材料ＩＤ"
+        customer_code: "商品コード"
+        code: "商品コード"
+        process: "処理"
+        condition: "条件"
+        price: "価格"
+        unit: "単位"
+        set: "一式"
+        addition_price: "追加価格"
+        addition_unit: "追加単位"
+        condition_weight: "条件重量"
+        condition_following: "条件以下"
+        lock_version: "ロックバージョン"
+        
+      notice:
+        id: "お知らせＩＤ"
+        user_id: "登録者" #"実行者ＩＤ"
+        contents: "内容"
+        lock_version: "ロックバージョン"
+        
+        t_created_ymd: "登録日"
+
+      calendar:
+        id: "カレンダーＩＤ"
+        year: "年"
+        month: "月"
+        day: "日"
+        holiday: "休日"
+        lock_version: "ロックバージョン"
+
+#一括設定用 仮想model
+      production_plan:
+        id: "日程計画表ＩＤ"
+        production_id: "生産ＩＤ"
+        hd_model_id: "ＨＤ機種ＩＤ"
+        hd_start_ymd: "ＨＤ開始"
+        hd_end_ymd: "ＨＤ終了"
+        hd_addition_model_id: "追加工１機種ＩＤ"
+        hd_addition_start_ymd: "追加工１開始"
+        hd_addition_end_ymd: "追加工１終了"
+        ro1_model_id: "ＲＯ１機種ＩＤ"
+        ro1_start_ymd: "ＲＯ１開始"
+        ro1_end_ymd: "ＲＯ１終了"
+        ro1_addition_model_id: "追加工２機種ＩＤ"
+        ro1_addition_start_ymd: "追加工２開始"
+        ro1_addition_end_ymd: "追加工２終了"
+        ro2_model_id: "ＲＯ２機種ＩＤ"
+        ro2_start_ymd: "ＲＯ２開始"
+        ro2_end_ymd: "ＲＯ２終了"
+        ro2_addition_model_id: "追加工３機種ＩＤ"
+        ro2_addition_start_ymd: "追加工３開始"
+        ro2_addition_end_ymd: "追加工３終了"
+
+#材料決定用 仮想model
+      parts:
+        item_id: "品目ＩＤ"
+        material_id: "材料" #材料ＩＤ
+        washer_id1: "座金１" #座金ＩＤ１
+        washer_id2: "座金２" #座金ＩＤ２
+        lock_version: "ロックバージョン"
+
+        title_fix_parts: "確定"
+
+#材料管理用 仮想model
+      material_edit:
+        material_stock_id1: "材料在庫管理ＮＯ１"
+        material_stock_id2: "材料在庫管理ＮＯ２"
+        material_stock_id3: "材料在庫管理ＮＯ３"
+
+        title_material: "材料"
+
+#座金管理用 仮想model
+      washer_edit:
+        washer_id1: "座金１"
+        washer_stock_id1: "座金１在庫管理ＮＯ１"
+        washer_stock_id2: "座金１在庫管理ＮＯ２"
+        washer_stock_id3: "座金１在庫管理ＮＯ３"
+        washer_id2: "座金２"
+        washer_stock_id4: "座金２在庫管理ＮＯ１"
+        washer_stock_id5: "座金２在庫管理ＮＯ２"
+        washer_stock_id6: "座金２在庫管理ＮＯ３"
+
+        title_washer1: "座金１"
+        title_washer2: "座金２"
+
+#枝番発行用 仮想model
+      production_div:
+        vote_no: "管理ＮＯ"
+        new_branch1_no: "枝番" #"枝番１"
+        new_branch2_no: "枝番" #"枝番２"
+        
+        title_new_branch: "新規枝番"
+        title_reference: "参考情報"
+        title_other_branches: "発行済枝番"
+        title_title: "項目"
+        title_branch_no: "枝番"
+
+#ロット分割用 仮想model
+      lot_div:
+        vote_no: "管理ＮＯ"
+        new_branch1_no: "枝番" #"枝番１"
+        new_branch2_no: "枝番" #"枝番２"
+        
+        cur_result_amount: "実績数量最新（本）"
+        cur_status_id: "状態"
+        cur_weight: "実質重量（ｋｇ）"
+        cur_case: "ケース数"
+        new_result_amount: "実績数量最新（本）"
+        new_status_id: "状態"
+        new_weight: "実質重量（ｋｇ）"
+        new_case: "ケース数"
+        
+        title_result_amount: "実績数量（本）"
+        title_status: "状態"
+        title_div_lot_before: "分割前"
+        title_div_lot1: "分割１"
+        title_div_lot2: "分割２"
+
+#一括印刷用 仮想model
+      print_all:
+        targets: "印刷対象"
+
+#購入履歴印刷用 仮想model
+      purchase_list:
+        t_cond_date: "完納日"
+        cond_date_from: "完納日（開始）"
+        cond_date_to: "完納日（終了）"
+
+#不良一覧印刷用 仮想model
+      defective_list:
+        t_cond_date: "発生年月日"
+        cond_date_from: "発生年月日（開始）"
+        cond_date_to: "発生年月日（終了）"
+
+### 帳票 #######################################################################
+      report_common:
+        t_unit_quantity: "個"
+        t_unit_weight: "Ｋｇ"
+        t_unit_case: "ケース"
+        t_unit_amount: "本"
+        t_month: "月"
+        t_day: "日"
+        t_model: "外注工場"
+        t_item_name: "品名"
+        t_item_drawing_no: "品番"
+        t_vote_no: "管理票ＮＯ"
+        t_item_code: "商品コード"
+        t_order_no: "注文番号"
+        t_lot_no: "ロットＮＯ"
+        t_quantity: "数量"
+        t_process: "処理"
+        t_process_date: "処理日"
+        t_send_date: "発送日"
+        t_note: "備考"
+        t_test_report: "検査表添付"
+        t_customer_code: "ユーザーＩＤ"
+        t_sra: "/"
+        t_creator: "作成"
+        t_approver: "承認"
+        t_material_title: "品名・品番　サイズ"
+        t_unit_price: "単価"
+        t_delivery_date: "希望納期"
+        t_tel: "TEL:"
+        t_fax: "FAX:"
+        t_material_standard: "規格"
+        t_material_diameter: "径"
+        t_material_surface: "表面処理"
+        t_trader_name: "注文先"
+        t_rel: "～"
+        t_material: "材料"
+        t_washer: "座金"
+        t_washer_steel_class: "鋼種"
+        t_purchase_price: "購入金額"
+        t_material_title: "品名・品番　サイズ"
+        t_drawing_no: "品番／図番"
+
+      t010:
+        title: "工程管理票"
+        t_delivery_ymd: "納期"
+        t_heat_process: "熱処理"
+        t_surface_process: "表面処理"
+        t_barrel: "バレル方法"
+        t_lot_amount: "標準ロット数量"
+        t_order_necessary_amount: "必要数量"
+        t_print_out: "発行"
+        t_case: "ケース数"
+        t_material_stock: "材料\n管理NO."
+        t_material_lot: "材料\nロット"
+        t_defectiveness_amount: "段取､不良\n材料使用量"
+        t_d_no: "NO"
+        t_d_process: "工程名"
+        t_d_processor: "工区"
+        t_d_plan: "開始日 ― 終了日"
+        t_d_person: "担当印"
+        t_d_amount: "数量"
+        t_d_weight: "Ｋｇ"
+        t_plan: "/　　　―　　　/"
+        t_note_detail: "選別：要・不要\n不具合内容"
+        t_iso_id: "NT-45J"
+        t_rel_dept: "製造部→品管部→購買部→製造部保管(3ヵ月)"
+
+      t020:
+        title: "工程品質チェックシート"
+        t_machine_no: "機械ＮＯ"
+        t_check: "段取確認\n[\"✓\"記入]"
+        t_stamp: "確認印"
+        t_column: "項目"
+        t_standard: "規格"
+        t_center: "中心"
+        t_set_up: "段取時"
+        t_last_check: "最終検査"
+        t_iso_id: "NT-55G"
+        t_comment: "製造担当(ヘッダー,ローリング)→製造GL→品管部保管(６ヵ月)→品管部保存(３年)"
+        
+        t_hd: "ヘッダー"
+        t_ro: "ローリング"
+        t_hd_model_name: "revNO"
+        t_hd_check: "ﾌﾙﾊﾟﾝﾁ／ﾀﾞｲｽ･ﾋﾟﾝ／寸法調整／残留物Wﾁｪｯｸ(確認印:          )"
+        t_ro_model_name: "revNO"
+        t_ro_check: "ﾌﾙﾀﾞｲｽ／ｼｭｰﾄ･ﾊﾟｰﾂﾌｨｰﾀﾞｰ／寸法調整／残留物Wﾁｪｯｸ(確認印:          )"
+
+      t030:
+        title: "現品票（熱処理）"
+        t_tanaka: "種類"
+
+      t031:
+        title: "現品票（表面処理）"
+        t_thickness: "メッキ厚"
+        t_out_test: "出荷検査:"
+        t_test_result: "合格　不合格"
+        t_person: "担当者"
+        t_stamp: "印"
+
+      t040:
+        title: "生産計画日程表（ＨＤ）"
+        t_plan_top: "計画"
+        t_material_standard_top: "材質"
+        t_amount_top: "数量"
+        t_price_top: "金額"
+        t_holiday: "休"
+
+      t041:
+        title: "生産計画日程表（ＲＯ）"
+        
+      t050:
+        title: "FAX注文書"
+        t_order_date: "注文日:"
+        t_to: "送信先"
+        t_from: "発信先"
+        t_messrs: "御中"
+        t_esq: "様"
+        t_comment1: "※問題ある場合は備考欄に記入して発注部署までFAXして下さい。"
+        t_reply_delivery_ymd: "納期回答"
+        t_accept_ymd: "入荷日"
+        t_comment2: "※弊社からFAX後、2日以内に貴社確認印を押し弊社発注部署までFAXして下さい。\n※納入場所は別途指定のない限り、当社所在地です。"
+        #t_comment2: "※弊社からFAX後、2日以内に貴社確認印を押し弊社発注部署までFAXして下さい。"
+        t_supplier_stamp: "貴社受注"
+        t_company_stamp: "弊社受注"
+        t_stamp: "確認印"
+        t_weight: "数量（ｋｇ）"
+        t_quantity: "数量（ｐｃｓ）"
+
+      t060:
+        title: "注文書"
+        t_lot_no: "LotNo\n形状"
+        t_item_name: "品　番\n品　名"
+        t_material: "材　質\n処　理"
+        t_amount: "数量\n重量"
+        t_unit_price: "単価"
+        t_delivery_ymd: "納期"
+        t_summary: "摘要"
+        t_messrs: "御中"
+        t_notice: "消費税抜き単価です。\n納入場所は別途指定のない限り、当社所在地です。"
+        t_shonin: "承認"
+        t_tanto: "担当"
+
+        title1: "注文書（控）"
+        t_lot_no1: "LotNo\n形状"
+        t_item_name1: "品　番\n品　名"
+        t_material1: "材　質\n処　理"
+        t_amount1: "数量\n重量"
+        t_unit_price1: "単価"
+        t_delivery_ymd1: "納期"
+        t_summary1: "摘要"
+        t_messrs1: "御中"
+        t_notice1: "消費税抜き単価です。\n納入場所は別途指定のない限り、当社所在地です。"
+        t_shonin1: "承認"
+        t_tanto1: "担当"
+
+      t070:
+        title: "現品票（追加工）"
+
+      t080:
+        title: "不良一覧"
+        t_outbreak_ymd: "発生年月日"
+        t_defective_process_type: "工程"
+        t_model_code: "機種\nコード"
+        t_contents: "内容"
+        t_amount: "数量\n（本）"
+        t_weight: "重量\n（ｋｇ）"
+        t_material_stock_id: "材料\n管理ＮＯ"
+        t_washer_stock_id1: "座金１\n管理ＮＯ"
+        t_washer_stock_id2: "座金２\n管理ＮＯ"
+        t_process_expense: "仕掛＠\n（円）"
+        t_expense: "金額\n（円）"
+        t_material_expense: "材料費\n（円）"
+        t_total_expense: "合計額"
+        
+      t120:
+        title: "仕掛品棚卸票"
+        t_total_header: "半製品（転造前）"
+        t_total_rolling: "半製品（転造後）"
+        t_total_process_order: "外注処理中"
+        t_total_finish: "梱包待ち"
+        t_total_price: "仕掛品棚卸高　合計（円）"
+        t_process_name: "工程"
+        t_unit_price: "単価（円）"
+        t_result_amount_production: "数量（本）"
+        t_price: "金額（円）"
+        t_process_total_price: "合計（円）"
+
+      t121:
+        title: "材料棚卸票"
+        t_total_price: "材料棚卸高　合計（円）"
+        t_material_name: "品名"
+        t_unit_price: "単価（円）"
+        t_material_stock_id: "材料管理ＮＯ"
+        t_washer_stock_id: "座金管理ＮＯ"
+        t_stock_weight: "数量（ｋｇ）"
+        t_stock_quantity: "数量（ｐｃｓ）"
+        t_price: "金額（円）"
+        t_material_total_price: "合計（円）"
+
+      t140:
+        title: "材料購入履歴"
+        t_id: "材料管理ＮＯ"
+        t_full_delivery_ymd: "完納日"
+        t_purchase_price: "購入単価（円）"
+        t_order_weight: "入荷数量（ｋｇ）"
+        t_price: "購入金額（円）"
+        t_sub_total_price: "小計（円）"
+        t_total_price: "合計（円）"
+        
+      t141:
+        t_order_quantity: "入荷数量（ｐｃｓ）"
+        
+      t150:
+        title: "材料管理票"
+        t_id: "材料管理ＮＯ"
+        t_inspection_no: "検査番号\n製造番号"
+        t_accept_weight: "入荷量"
+        t_accept_ymd: "入荷日"
+        t_iso_id: "NT-80C"

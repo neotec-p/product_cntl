@@ -1,0 +1,204 @@
+-----------------------------------------------------------------------------------
+Started PATCH "/productions/11539" for ::1 at 2020-01-21 09:49:48 +0900
+Processing by ProductionsController#update as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"F5+y73O/nfVEErryZKsMZebLkc4wcxEMY2qRLRNLkBN89iv5sVhCHQUINMgDTbeHhMpPWixS753NXnm/ONiARQ==", "production"=>{"production_details_attributes"=>{"0"=>{"lock_version"=>"0", "plan_start_ymd"=>"", "plan_end_ymd"=>"", "result_start_ymd"=>"", "result_end_ymd"=>"", "result_amount_production"=>"0", "defectiveness_amount"=>"", "id"=>"112396"}, "1"=>{"lock_version"=>"1", "model_id"=>"4", "plan_start_ymd"=>"", "plan_end_ymd"=>"", "result_start_ymd"=>"", "result_end_ymd"=>"", "result_amount_production"=>"", "defectiveness_amount"=>"", "id"=>"112397"}, "2"=>{"lock_version"=>"0", "plan_start_ymd"=>"", "plan_end_ymd"=>"", "result_start_ymd"=>"", "result_end_ymd"=>"", "result_amount_production"=>"", "defectiveness_amount"=>"", "id"=>"112398"}, "3"=>{"lock_version"=>"1", "model_id"=>"38", "plan_start_ymd"=>"", "plan_end_ymd"=>"", "result_start_ymd"=>"", "result_end_ymd"=>"", "result_amount_production"=>"", "defectiveness_amount"=>"", "id"=>"112399"}, "4"=>{"lock_version"=>"0", "plan_start_ymd"=>"", "plan_end_ymd"=>"", "result_start_ymd"=>"", "result_end_ymd"=>"", "result_amount_production"=>"", "defectiveness_amount"=>"", "id"=>"112400"}, "5"=>{"lock_version"=>"0", "plan_start_ymd"=>"", "plan_end_ymd"=>"", "result_start_ymd"=>"", "result_end_ymd"=>"", "result_amount_production"=>"", "defectiveness_amount"=>"", "id"=>"112401"}, "6"=>{"lock_version"=>"0", "plan_start_ymd"=>"", "plan_end_ymd"=>"", "result_start_ymd"=>"", "result_end_ymd"=>"", "result_amount_production"=>"", "defectiveness_amount"=>"", "id"=>"112402"}, "7"=>{"lock_version"=>"0", "plan_start_ymd"=>"", "plan_end_ymd"=>"", "result_start_ymd"=>"", "result_end_ymd"=>"", "result_amount_production"=>"", "defectiveness_amount"=>"", "id"=>"112403"}, "8"=>{"lock_version"=>"0", "plan_start_ymd"=>"", "plan_end_ymd"=>"", "result_start_ymd"=>"", "result_end_ymd"=>"", "result_amount_production"=>"", "defectiveness_amount"=>"", "id"=>"112404"}, "9"=>{"lock_version"=>"0", "plan_start_ymd"=>"", "plan_end_ymd"=>"", "result_start_ymd"=>"", "result_end_ymd"=>"", "result_amount_production"=>"", "defectiveness_amount"=>"", "id"=>"112405"}, "10"=>{"lock_version"=>"0", "plan_start_ymd"=>"", "plan_end_ymd"=>"", "result_start_ymd"=>"", "result_end_ymd"=>"", "result_amount_production"=>"", "defectiveness_amount"=>"", "id"=>"112406"}}, "status_id"=>"1"}, "report"=>"再発行", "production_id"=>"11539", "process_order_production_detail_id"=>"", "id"=>"11539"}
+  User Load (0.8ms)  SELECT  `users`.* FROM `users` WHERE `users`.`id` = 19 LIMIT 1
+  ↳ app/controllers/application_controller.rb:41
+  Status Load (0.6ms)  SELECT `statuses`.* FROM `statuses` ORDER BY `statuses`.`id` ASC
+  ↳ app/controllers/productions_controller.rb:1023 <==================================================== create_status_options
+  Item Load (5.6ms)  SELECT `items`.* FROM `items` ORDER BY `items`.`id` ASC
+  ↳ app/controllers/productions_controller.rb:1024
+  ProcessType Load (1.6ms)  SELECT `process_types`.* FROM `process_types` WHERE (search_flag IS NOT NULL) ORDER BY `process_types`.`seq` ASC
+  ↳ app/controllers/productions_controller.rb:1025
+  Production Load (0.8ms)  SELECT  `productions`.* FROM `productions` WHERE `productions`.`id` = 11539 LIMIT 1
+  ↳ app/controllers/productions_controller.rb:1091
+  ProductionDetail Load (0.8ms)  SELECT `production_details`.* FROM `production_details` WHERE `production_details`.`production_id` = 11539 AND `production_details`.`id` IN (112396, 112397, 112398, 112399, 112400, 112401, 112402, 112403, 112404, 112405, 112406)
+  ↳ app/controllers/productions_controller.rb:192
+  ProductionDetail Load (1.5ms)  SELECT `production_details`.* FROM `production_details` WHERE `production_details`.`production_id` = 11539
+  ↳ app/models/production.rb:127
+  ProcessDetail Load (1.7ms)  SELECT  `process_details`.* FROM `process_details` WHERE `process_details`.`id` = 6271 LIMIT 1
+  ↳ app/models/production.rb:127
+  ProcessType Load (0.5ms)  SELECT  `process_types`.* FROM `process_types` WHERE `process_types`.`id` = 1 LIMIT 1
+  ↳ app/models/production.rb:127
+  ProcessDetail Load (0.4ms)  SELECT  `process_details`.* FROM `process_details` WHERE `process_details`.`id` = 6272 LIMIT 1
+  ↳ app/models/production.rb:127
+  ProcessType Load (0.6ms)  SELECT  `process_types`.* FROM `process_types` WHERE `process_types`.`id` = 2 LIMIT 1
+  ↳ app/models/production.rb:127
+  ProcessDetail Load (0.9ms)  SELECT  `process_details`.* FROM `process_details` WHERE `process_details`.`id` = 6276 LIMIT 1
+  ↳ app/models/production.rb:127
+  ProcessType Load (0.4ms)  SELECT  `process_types`.* FROM `process_types` WHERE `process_types`.`id` = 6 LIMIT 1
+  ↳ app/models/production.rb:127
+  ProcessDetail Load (1.1ms)  SELECT  `process_details`.* FROM `process_details` WHERE `process_details`.`id` = 6277 LIMIT 1
+  ↳ app/models/production.rb:127
+  ProcessType Load (1.0ms)  SELECT  `process_types`.* FROM `process_types` WHERE `process_types`.`id` = 7 LIMIT 1
+  ↳ app/models/production.rb:127
+  ProcessDetail Load (0.4ms)  SELECT  `process_details`.* FROM `process_details` WHERE `process_details`.`id` = 6273 LIMIT 1
+  ↳ app/models/production.rb:127
+  ProcessType Load (0.4ms)  SELECT  `process_types`.* FROM `process_types` WHERE `process_types`.`id` = 3 LIMIT 1
+  ↳ app/models/production.rb:127
+  ProcessDetail Load (0.8ms)  SELECT  `process_details`.* FROM `process_details` WHERE `process_details`.`id` = 6286 LIMIT 1
+  ↳ app/models/production.rb:127
+  ProcessType Load (1.1ms)  SELECT  `process_types`.* FROM `process_types` WHERE `process_types`.`id` = 16 LIMIT 1
+  ↳ app/models/production.rb:127
+  ProcessDetail Load (0.5ms)  SELECT  `process_details`.* FROM `process_details` WHERE `process_details`.`id` = 6287 LIMIT 1
+  ↳ app/models/production.rb:127
+  ProcessType Load (0.4ms)  SELECT  `process_types`.* FROM `process_types` WHERE `process_types`.`id` = 17 LIMIT 1
+  ↳ app/models/production.rb:127
+  ProcessDetail Load (0.6ms)  SELECT  `process_details`.* FROM `process_details` WHERE `process_details`.`id` = 6284 LIMIT 1
+  ↳ app/models/production.rb:127
+  ProcessType Load (1.0ms)  SELECT  `process_types`.* FROM `process_types` WHERE `process_types`.`id` = 14 LIMIT 1
+  ↳ app/models/production.rb:127
+  ProcessDetail Load (0.6ms)  SELECT  `process_details`.* FROM `process_details` WHERE `process_details`.`id` = 6290 LIMIT 1
+  ↳ app/models/production.rb:127
+  ProcessType Load (0.5ms)  SELECT  `process_types`.* FROM `process_types` WHERE `process_types`.`id` = 20 LIMIT 1
+  ↳ app/models/production.rb:127
+  ProcessDetail Load (1.0ms)  SELECT  `process_details`.* FROM `process_details` WHERE `process_details`.`id` = 6291 LIMIT 1
+  ↳ app/models/production.rb:127
+  ProcessType Load (1.6ms)  SELECT  `process_types`.* FROM `process_types` WHERE `process_types`.`id` = 21 LIMIT 1
+  ↳ app/models/production.rb:127
+  ProcessDetail Load (0.6ms)  SELECT  `process_details`.* FROM `process_details` WHERE `process_details`.`id` = 6289 LIMIT 1
+  ↳ app/models/production.rb:127
+  ProcessType Load (0.6ms)  SELECT  `process_types`.* FROM `process_types` WHERE `process_types`.`id` = 19 LIMIT 1
+  ↳ app/models/production.rb:127
+  Order Load (3.9ms)  SELECT  `orders`.* FROM `orders` WHERE `orders`.`id` = 6447 LIMIT 1
+  ↳ app/controllers/productions_controller.rb:195
+  Item Load (0.9ms)  SELECT  `items`.* FROM `items` WHERE `items`.`id` = 210 LIMIT 1
+  ↳ app/controllers/productions_controller.rb:195
+  Status Load (0.6ms)  SELECT  `statuses`.* FROM `statuses` WHERE `statuses`.`id` = 1 LIMIT 1
+  ↳ app/controllers/productions_controller.rb:195
+#<ProductionDetail id: 112396, production_id: 11539, process_detail_id: 6271, model_id: nil, plan_start_ymd: nil, plan_end_ymd: nil, result_start_ymd: nil, result_end_ymd: nil, result_amount_production: 0, result_amount_history: 0, defectiveness_amount: nil, lock_version: 0, created_at: "2019-12-11 13:56:38", updated_at: "2019-12-11 13:56:38">
+   (0.8ms)  BEGIN
+  ↳ app/controllers/productions_controller.rb:204
+  ReportType Load (1.5ms)  SELECT  `report_types`.* FROM `report_types` WHERE `report_types`.`code` = 'T010' LIMIT 1
+  ↳ app/jobs/asynchro_print_production.rb:324
+  AsynchroStatus Load (1.1ms)  SELECT  `asynchro_statuses`.* FROM `asynchro_statuses` WHERE `asynchro_statuses`.`id` = 1 LIMIT 1
+  ↳ app/jobs/asynchro_print_production.rb:325
+  Report Create (6.8ms)  INSERT INTO `reports` (`asynchro_status_id`, `report_type_id`, `user_id`, `created_at`, `updated_at`, `lock_version`) VALUES (1, 1, 19, '2020-01-21 00:49:49', '2020-01-21 00:49:49', 0)
+  ↳ app/jobs/asynchro_print_production.rb:328
+  Production::HABTM_Reports Create (0.7ms)  INSERT INTO `productions_reports` (`production_id`, `report_id`) VALUES (11539, 17360)
+  ↳ app/controllers/productions_controller.rb:220
+  Delayed::Backend::ActiveRecord::Job Create (11.3ms)  INSERT INTO `delayed_jobs` (`handler`, `run_at`, `created_at`, `updated_at`) VALUES ('--- !ruby/object:Delayed::PerformableMethod\nobject: !ruby/class \'AsynchroPrintProduction\'\nmethod_name: :report\nargs:\n- !ruby/object:Report\n  concise_attributes:\n  - !ruby/object:ActiveModel::Attribute::FromDatabase\n    name: id\n    value_before_type_cast: 17360\n  - !ruby/object:ActiveModel::Attribute::FromDatabase\n    name: asynchro_status_id\n    value_before_type_cast: 1\n  - !ruby/object:ActiveModel::Attribute::FromDatabase\n    name: report_type_id\n    value_before_type_cast: 1\n  - !ruby/object:ActiveModel::Attribute::FromDatabase\n    name: file_name\n  - !ruby/object:ActiveModel::Attribute::FromDatabase\n    name: file_path\n  - !ruby/object:ActiveModel::Attribute::FromDatabase\n    name: disp_name\n  - !ruby/object:ActiveModel::Attribute::FromDatabase\n    name: content_type\n  - !ruby/object:ActiveModel::Attribute::FromDatabase\n    name: size\n  - !ruby/object:ActiveModel::Attribute::FromDatabase\n    name: user_id\n    value_before_type_cast: 19\n  - !ruby/object:ActiveModel::Attribute::FromDatabase\n    name: note\n  - !ruby/object:ActiveModel::Attribute::FromDatabase\n    name: lock_version\n    value_before_type_cast: 0\n  - !ruby/object:ActiveModel::Attribute::FromDatabase\n    name: created_at\n    value_before_type_cast: 2020-01-21 00:49:49.000000000 Z\n  - !ruby/object:ActiveModel::Attribute::FromDatabase\n    name: updated_at\n    value_before_type_cast: 2020-01-21 00:49:49.000000000 Z\n  new_record: false\n  active_record_yaml_version: 2\n- !ruby/object:User\n  concise_attributes:\n  - !ruby/object:ActiveModel::Attribute::FromDatabase\n    name: id\n    value_before_type_cast: 19\n  - !ruby/object:ActiveModel::Attribute::FromDatabase\n    name: login_id\n    value_before_type_cast: \'099\'\n  - !ruby/object:ActiveModel::Attribute::FromDatabase\n    name: hashed_password\n    value_before_type_cast: dbd0dedcdb1ceae701e8b03dedffa51121cf47de\n  - !ruby/object:ActiveModel::Attribute::FromDatabase\n    name: salt\n    value_before_type_cast: \"-6258952480.9512502735228\"\n  - !ruby/object:ActiveModel::Attribute::FromDatabase\n    name: password_updated\n    value_before_type_cast: 2012-05-14 15:21:26.000000000 Z\n  - !ruby/object:ActiveModel::Attribute::FromDatabase\n    name: last_name\n    value_before_type_cast: 井口\n  - !ruby/object:ActiveModel::Attribute::FromDatabase\n    name: first_name\n    value_before_type_cast: 政徳\n  - !ruby/object:ActiveModel::Attribute::FromDatabase\n    name: role_id\n    value_before_type_cast: 99\n  - !ruby/object:ActiveModel::Attribute::FromDatabase\n    name: lock_version\n    value_before_type_cast: 2\n  - !ruby/object:ActiveModel::Attribute::FromDatabase\n    name: created_at\n    value_before_type_cast: 2012-05-11 00:00:00.000000000 Z\n  - !ruby/object:ActiveModel::Attribute::FromDatabase\n    name: updated_at\n    value_before_type_cast: 2012-05-14 15:21:26.000000000 Z\n  new_record: false\n  active_record_yaml_version: 2\n- !ruby/object:Production\n  concise_attributes:\n  - !ruby/object:ActiveModel::Attribute::FromUser\n    name: status_id\n    value_before_type_cast: \'1\'\n    original_attribute: !ruby/object:ActiveModel::Attribute::FromDatabase\n      name: status_id\n      value_before_type_cast: 1\n      type: &1 !ruby/object:ActiveModel::Type::Integer\n        precision: \n        scale: \n        limit: 4\n        range: !ruby/range\n          begin: -2147483648\n          end: 2147483648\n          excl: true\n  - !ruby/object:ActiveModel::Attribute::FromDatabase\n    name: id\n    value_before_type_cast: 11539\n  - !ruby/object:ActiveModel::Attribute::FromUser\n    name: result_amount\n    value_before_type_cast: 0\n    original_attribute: !ruby/object:ActiveModel::Attribute::FromDatabase\n      name: result_amount\n      value_before_type_cast: 0\n      type: *1\n  - !ruby/object:ActiveModel::Attribute::FromDatabase\n    name: order_id\n    value_before_type_cast: 6447\n  - !ruby/object:ActiveModel::Attribute::FromDatabase\n    name: item_id\n    value_before_type_cast: 210\n  - !ruby/object:ActiveModel::Attribute::FromDatabase\n    name: vote_no\n    value_before_type_cast: 106421\n  - !ruby/object:ActiveModel::Attribute::FromDatabase\n    name: branch1_no\n    value_before_type_cast: 4\n  - !ruby/object:ActiveModel::Attribute::FromDatabase\n    name: branch2_no\n    value_before_type_cast: 0\n  - !ruby/object:ActiveModel::Attribute::FromDatabase\n    name: customer_code\n    value_before_type_cast: \'106\'\n  - !ruby/object:ActiveModel::Attribute::FromDatabase\n    name: code\n    value_before_type_cast: \'0002\'\n  - !ruby/object:ActiveModel::Attribute::FromDatabase\n    name: parts_fix_flag\n    value_before_type_cast: 1\n  - !ruby/object:ActiveModel::Attribute::FromDatabase\n    name: finish_ymd\n  - !ruby/object:ActiveModel::Attribute::FromDatabase\n    name: comment\n  - !ruby/object:ActiveModel::Attribute::FromDatabase\n    name: print_flag\n    value_before_type_cast: 1\n  - !ruby/object:ActiveModel::Attribute::FromDatabase\n    name: summation_id\n  - !ruby/object:ActiveModel::Attribute::FromDatabase\n    name: lock_version\n    value_before_type_cast: 1\n  - !ruby/object:ActiveModel::Attribute::FromDatabase\n    name: created_at\n    value_before_type_cast: 2019-12-11 13:56:38.000000000 Z\n  - !ruby/object:ActiveModel::Attribute::FromDatabase\n    name: updated_at\n    value_before_type_cast: 2019-12-11 13:56:43.000000000 Z\n  new_record: false\n  active_record_yaml_version: 2\n', '2020-01-21 00:49:49', '2020-01-21 00:49:49', '2020-01-21 00:49:49')
+  ↳ app/controllers/productions_controller.rb:224
+  ReportType Load (0.5ms)  SELECT  `report_types`.* FROM `report_types` WHERE `report_types`.`code` = 'T010' LIMIT 1
+  ↳ app/models/report_type.rb:6
+#<ProductionDetail id: 112396, production_id: 11539, process_detail_id: 6271, model_id: nil, plan_start_ymd: nil, plan_end_ymd: nil, result_start_ymd: nil, result_end_ymd: nil, result_amount_production: 0, result_amount_history: 0, defectiveness_amount: nil, lock_version: 0, created_at: "2019-12-11 13:56:38", updated_at: "2019-12-11 13:56:38">
+   (6.1ms)  COMMIT
+  ↳ app/controllers/productions_controller.rb:204
+Redirected to http://localhost:3000/productions/11539/edit
+Completed 302 Found in 516ms (ActiveRecord: 62.8ms)
+
+
+Started GET "/productions/11539/edit" for ::1 at 2020-01-21 09:49:49 +0900
+Processing by ProductionsController#edit as HTML
+  Parameters: {"id"=>"11539"}
+  User Load (0.7ms)  SELECT  `users`.* FROM `users` WHERE `users`.`id` = 19 LIMIT 1
+  ↳ app/controllers/application_controller.rb:41
+  Status Load (0.6ms)  SELECT `statuses`.* FROM `statuses` ORDER BY `statuses`.`id` ASC
+  ↳ app/controllers/productions_controller.rb:1023
+  Item Load (6.8ms)  SELECT `items`.* FROM `items` ORDER BY `items`.`id` ASC
+  ↳ app/controllers/productions_controller.rb:1024
+  ProcessType Load (0.5ms)  SELECT `process_types`.* FROM `process_types` WHERE (search_flag IS NOT NULL) ORDER BY `process_types`.`seq` ASC
+  ↳ app/controllers/productions_controller.rb:1025
+  Production Load (1.1ms)  SELECT  `productions`.* FROM `productions` WHERE `productions`.`id` = 11539 LIMIT 1
+  ↳ app/controllers/productions_controller.rb:1091
+  ProductionDetail Load (1.5ms)  SELECT `production_details`.* FROM `production_details` WHERE `production_details`.`production_id` = 11539
+  ↳ app/models/production.rb:127
+  ProcessDetail Load (0.5ms)  SELECT  `process_details`.* FROM `process_details` WHERE `process_details`.`id` = 6271 LIMIT 1
+  ↳ app/models/production.rb:127
+  ProcessType Load (0.5ms)  SELECT  `process_types`.* FROM `process_types` WHERE `process_types`.`id` = 1 LIMIT 1
+  ↳ app/models/production.rb:127
+  ProcessDetail Load (0.7ms)  SELECT  `process_details`.* FROM `process_details` WHERE `process_details`.`id` = 6272 LIMIT 1
+  ↳ app/models/production.rb:127
+  ProcessType Load (1.7ms)  SELECT  `process_types`.* FROM `process_types` WHERE `process_types`.`id` = 2 LIMIT 1
+  ↳ app/models/production.rb:127
+  ProcessDetail Load (0.7ms)  SELECT  `process_details`.* FROM `process_details` WHERE `process_details`.`id` = 6276 LIMIT 1
+  ↳ app/models/production.rb:127
+  ProcessType Load (0.5ms)  SELECT  `process_types`.* FROM `process_types` WHERE `process_types`.`id` = 6 LIMIT 1
+  ↳ app/models/production.rb:127
+  ProcessDetail Load (0.6ms)  SELECT  `process_details`.* FROM `process_details` WHERE `process_details`.`id` = 6277 LIMIT 1
+  ↳ app/models/production.rb:127
+  ProcessType Load (0.6ms)  SELECT  `process_types`.* FROM `process_types` WHERE `process_types`.`id` = 7 LIMIT 1
+  ↳ app/models/production.rb:127
+  ProcessDetail Load (0.7ms)  SELECT  `process_details`.* FROM `process_details` WHERE `process_details`.`id` = 6273 LIMIT 1
+  ↳ app/models/production.rb:127
+  ProcessType Load (0.8ms)  SELECT  `process_types`.* FROM `process_types` WHERE `process_types`.`id` = 3 LIMIT 1
+  ↳ app/models/production.rb:127
+  ProcessDetail Load (1.1ms)  SELECT  `process_details`.* FROM `process_details` WHERE `process_details`.`id` = 6286 LIMIT 1
+  ↳ app/models/production.rb:127
+  ProcessType Load (0.6ms)  SELECT  `process_types`.* FROM `process_types` WHERE `process_types`.`id` = 16 LIMIT 1
+  ↳ app/models/production.rb:127
+  ProcessDetail Load (1.1ms)  SELECT  `process_details`.* FROM `process_details` WHERE `process_details`.`id` = 6287 LIMIT 1
+  ↳ app/models/production.rb:127
+  ProcessType Load (0.6ms)  SELECT  `process_types`.* FROM `process_types` WHERE `process_types`.`id` = 17 LIMIT 1
+  ↳ app/models/production.rb:127
+  ProcessDetail Load (0.5ms)  SELECT  `process_details`.* FROM `process_details` WHERE `process_details`.`id` = 6284 LIMIT 1
+  ↳ app/models/production.rb:127
+  ProcessType Load (0.7ms)  SELECT  `process_types`.* FROM `process_types` WHERE `process_types`.`id` = 14 LIMIT 1
+  ↳ app/models/production.rb:127
+  ProcessDetail Load (0.5ms)  SELECT  `process_details`.* FROM `process_details` WHERE `process_details`.`id` = 6290 LIMIT 1
+  ↳ app/models/production.rb:127
+  ProcessType Load (3.1ms)  SELECT  `process_types`.* FROM `process_types` WHERE `process_types`.`id` = 20 LIMIT 1
+  ↳ app/models/production.rb:127
+  ProcessDetail Load (0.6ms)  SELECT  `process_details`.* FROM `process_details` WHERE `process_details`.`id` = 6291 LIMIT 1
+  ↳ app/models/production.rb:127
+  ProcessType Load (0.8ms)  SELECT  `process_types`.* FROM `process_types` WHERE `process_types`.`id` = 21 LIMIT 1
+  ↳ app/models/production.rb:127
+  ProcessDetail Load (1.4ms)  SELECT  `process_details`.* FROM `process_details` WHERE `process_details`.`id` = 6289 LIMIT 1
+  ↳ app/models/production.rb:127
+  ProcessType Load (1.5ms)  SELECT  `process_types`.* FROM `process_types` WHERE `process_types`.`id` = 19 LIMIT 1
+  ↳ app/models/production.rb:127
+  Rendering productions/edit.html.erb within layouts/application
+  Order Load (2.7ms)  SELECT  `orders`.* FROM `orders` WHERE `orders`.`id` = 6447 LIMIT 1
+  ↳ app/views/productions/_disp_production.html.erb:5
+  Item Load (1.1ms)  SELECT  `items`.* FROM `items` WHERE `items`.`id` = 210 LIMIT 1
+  ↳ app/views/productions/_disp_production.html.erb:7
+  Material Load (1.7ms)  SELECT  `materials`.* FROM `materials` INNER JOIN `material_production_seqs` ON `materials`.`id` = `material_production_seqs`.`material_id` WHERE `material_production_seqs`.`production_id` = 11539 ORDER BY `materials`.`id` ASC LIMIT 1
+  ↳ app/models/production.rb:141
+  WasherProductionSeq Load (1.7ms)  SELECT  `washer_production_seqs`.* FROM `washer_production_seqs` WHERE `washer_production_seqs`.`production_id` = 11539 AND `washer_production_seqs`.`seq` = 1 ORDER BY `washer_production_seqs`.`id` ASC LIMIT 1
+  ↳ app/models/production.rb:656
+  WasherProductionSeq Load (1.2ms)  SELECT  `washer_production_seqs`.* FROM `washer_production_seqs` WHERE `washer_production_seqs`.`production_id` = 11539 AND `washer_production_seqs`.`seq` = 2 ORDER BY `washer_production_seqs`.`id` ASC LIMIT 1
+  ↳ app/models/production.rb:656
+   (1.1ms)  SELECT SUM(`productions`.`result_amount`) FROM `productions` WHERE (vote_no = 106421)
+  ↳ app/views/productions/_disp_production.html.erb:58
+  SQL (1.1ms)  SELECT  `production_details`.`id` AS t0_r0, `production_details`.`production_id` AS t0_r1, `production_details`.`process_detail_id` AS t0_r2, `production_details`.`model_id` AS t0_r3, `production_details`.`plan_start_ymd` AS t0_r4, `production_details`.`plan_end_ymd` AS t0_r5, `production_details`.`result_start_ymd` AS t0_r6, `production_details`.`result_end_ymd` AS t0_r7, `production_details`.`result_amount_production` AS t0_r8, `production_details`.`result_amount_history` AS t0_r9, `production_details`.`defectiveness_amount` AS t0_r10, `production_details`.`lock_version` AS t0_r11, `production_details`.`created_at` AS t0_r12, `production_details`.`updated_at` AS t0_r13, `process_details`.`id` AS t1_r0, `process_details`.`item_id` AS t1_r1, `process_details`.`process_type_id` AS t1_r2, `process_details`.`name` AS t1_r3, `process_details`.`condition` AS t1_r4, `process_details`.`model` AS t1_r5, `process_details`.`hexavalent_flag` AS t1_r6, `process_details`.`tanaka_flag` AS t1_r7, `process_details`.`lock_version` AS t1_r8, `process_details`.`created_at` AS t1_r9, `process_details`.`updated_at` AS t1_r10, `process_details`.`trader_id` AS t1_r11, `process_types`.`id` AS t2_r0, `process_types`.`name` AS t2_r1, `process_types`.`protected_flag` AS t2_r2, `process_types`.`ratio_flag` AS t2_r3, `process_types`.`plan_process_flag` AS t2_r4, `process_types`.`processor_flag` AS t2_r5, `process_types`.`barrel_flag` AS t2_r6, `process_types`.`seq` AS t2_r7, `process_types`.`created_at` AS t2_r8, `process_types`.`updated_at` AS t2_r9, `process_types`.`process_category` AS t2_r10, `process_types`.`expense_sum_category` AS t2_r11, `process_types`.`search_flag` AS t2_r12 FROM `production_details` LEFT OUTER JOIN `process_details` ON `process_details`.`id` = `production_details`.`process_detail_id` LEFT OUTER JOIN `process_types` ON `process_types`.`id` = `process_details`.`process_type_id` WHERE `production_details`.`production_id` = 11539 AND `process_types`.`processor_flag` = 1 ORDER BY `production_details`.`id` ASC LIMIT 1
+  ↳ app/models/production.rb:198
+  SQL (1.3ms)  SELECT  `production_details`.`id` AS t0_r0, `production_details`.`production_id` AS t0_r1, `production_details`.`process_detail_id` AS t0_r2, `production_details`.`model_id` AS t0_r3, `production_details`.`plan_start_ymd` AS t0_r4, `production_details`.`plan_end_ymd` AS t0_r5, `production_details`.`result_start_ymd` AS t0_r6, `production_details`.`result_end_ymd` AS t0_r7, `production_details`.`result_amount_production` AS t0_r8, `production_details`.`result_amount_history` AS t0_r9, `production_details`.`defectiveness_amount` AS t0_r10, `production_details`.`lock_version` AS t0_r11, `production_details`.`created_at` AS t0_r12, `production_details`.`updated_at` AS t0_r13, `process_details`.`id` AS t1_r0, `process_details`.`item_id` AS t1_r1, `process_details`.`process_type_id` AS t1_r2, `process_details`.`name` AS t1_r3, `process_details`.`condition` AS t1_r4, `process_details`.`model` AS t1_r5, `process_details`.`hexavalent_flag` AS t1_r6, `process_details`.`tanaka_flag` AS t1_r7, `process_details`.`lock_version` AS t1_r8, `process_details`.`created_at` AS t1_r9, `process_details`.`updated_at` AS t1_r10, `process_details`.`trader_id` AS t1_r11, `process_types`.`id` AS t2_r0, `process_types`.`name` AS t2_r1, `process_types`.`protected_flag` AS t2_r2, `process_types`.`ratio_flag` AS t2_r3, `process_types`.`plan_process_flag` AS t2_r4, `process_types`.`processor_flag` AS t2_r5, `process_types`.`barrel_flag` AS t2_r6, `process_types`.`seq` AS t2_r7, `process_types`.`created_at` AS t2_r8, `process_types`.`updated_at` AS t2_r9, `process_types`.`process_category` AS t2_r10, `process_types`.`expense_sum_category` AS t2_r11, `process_types`.`search_flag` AS t2_r12 FROM `production_details` LEFT OUTER JOIN `process_details` ON `process_details`.`id` = `production_details`.`process_detail_id` LEFT OUTER JOIN `process_types` ON `process_types`.`id` = `process_details`.`process_type_id` WHERE `production_details`.`production_id` = 11539 AND `process_types`.`processor_flag` = 2 ORDER BY `production_details`.`id` ASC LIMIT 1
+  ↳ app/models/production.rb:198
+  Rendered productions/_disp_production.html.erb (68.9ms)
+  Model Load (1.4ms)  SELECT `models`.* FROM `models` WHERE (name in ('MN-10A','MN-05','0#')) ORDER BY name asc, code asc
+  ↳ app/models/production_detail.rb:288
+  Model Load (3.8ms)  SELECT `models`.* FROM `models` WHERE (name in ('綾瀬003','ﾕﾆｵﾝ','RS-H34')) ORDER BY name asc, code asc
+  ↳ app/models/production_detail.rb:288
+  Lot Load (7.6ms)  SELECT  `lots`.* FROM `lots` WHERE `lots`.`production_id` = 11539 LIMIT 1
+  ↳ app/views/productions/edit.html.erb:82
+  ProcessOrder Load (11.8ms)  SELECT  `process_orders`.* FROM `process_orders` WHERE `process_orders`.`production_detail_id` = 112401 LIMIT 1
+  ↳ app/views/productions/edit.html.erb:87
+"process_order "
+true
+  ProcessOrder Load (13.1ms)  SELECT  `process_orders`.* FROM `process_orders` WHERE `process_orders`.`production_detail_id` = 112402 LIMIT 1
+  ↳ app/views/productions/edit.html.erb:87
+"process_order "
+true
+  InternalProcessor Load (0.6ms)  SELECT  `traders`.* FROM `traders` WHERE `traders`.`type` IN ('InternalProcessor') AND `traders`.`id` = 46 LIMIT 1
+  ↳ app/models/production_detail.rb:224
+  Report Load (19.5ms)  SELECT  `reports`.* FROM `reports` INNER JOIN `productions_reports` ON `reports`.`id` = `productions_reports`.`report_id` WHERE `productions_reports`.`production_id` = 11539 ORDER BY id desc LIMIT 1
+  ↳ app/views/productions/edit.html.erb:133
+  AsynchroStatus Load (2.3ms)  SELECT  `asynchro_statuses`.* FROM `asynchro_statuses` WHERE `asynchro_statuses`.`id` = 1 LIMIT 1
+  ↳ app/views/productions/edit.html.erb:143
+  Role Load (0.5ms)  SELECT  `roles`.* FROM `roles` WHERE `roles`.`id` = 99 LIMIT 1
+  ↳ app/models/user.rb:71
+  Memo Exists (3.6ms)  SELECT  1 AS one FROM `memos` WHERE `memos`.`production_id` = 11539 LIMIT 1
+  ↳ app/helpers/application_helper.rb:786
+  Rendered productions/edit.html.erb within layouts/application (259.1ms)
+  Rendered layouts/_js_erb.html.erb (0.8ms)
+  Company Load (0.7ms)  SELECT  `companies`.* FROM `companies` ORDER BY `companies`.`id` ASC LIMIT 1
+  ↳ app/views/layouts/_header.html.erb:2
+  Rendered layouts/_header.html.erb (8.9ms)
+  Rendered layouts/_menu.html.erb (9.8ms)
+  Rendered layouts/_contents.html.erb (3.1ms)
+  Rendered layouts/_footer.html.erb (0.7ms)
+Completed 200 OK in 588ms (Views: 341.2ms | ActiveRecord: 108.2ms)
+
+
+------------------------------------------------------------------------------
+

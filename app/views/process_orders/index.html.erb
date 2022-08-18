@@ -1,0 +1,104 @@
+<% content_for :tabmenu do %>
+	<%= tab_menu_for_production %>
+<% end %> 
+
+<% content_for :control do %>
+	<%= submit_button_button_tag(t(:button_report_all), :print_all, :confirm => t(:confirm_report)) %>
+<% end %>
+
+<!-- default 800px; -->
+<div id="main" style="width: 1000px;">
+	<%= raw main_title(:action => :un_treated_index) %>
+
+	<%= raw flash_tag %>
+
+    <div class="subTabmenu">
+        <%= tab_submenu_for_process_order %>
+    </div>
+	
+	<div class="condition" style="width:250px;">
+	<%= form_tag({:action => :index}, {:method => :get, :name => :form_search, :id => :form_search }) do -%>
+		<h4><%= t(:search_condition) %></h4>
+		<table class="commonCondition">
+			<tr>
+				<th><%=hlabel :lot, :lot_no %></th>
+				<td><%= text_field_tag(:cond_lot_no, params[:cond_lot_no], :size => 10) %></td>
+				
+				<td class="button">
+				<%= submit_tag t(:search, :scope => :actions) %>
+				</td>
+			</tr>
+		</table>
+	<% end %>
+	</div><!--/ condition-->
+
+	<%= form_tag(print_all_process_orders_path, {:method => :put}) do %>
+
+	<%= error_messages_for 'process_order', :object => @process_orders %>
+	<%= error_messages_for 'print_all' %>
+
+	<div class="list">
+		<div class="paginationCnt"><%= t(:all_count, :scope => :paginate, :cnt => @process_orders.count) %></div>
+		<table class="commonList">
+			<thead>
+				<tr>
+					<th><%= raw hlabel :commons, :lot_no %></th>
+					<th><%= raw simple_format(t(:title_id, :scope => [:activerecord, :attributes, :process_order])) %></th>
+					<th><%= raw hlabel :process_order, :type %></th>
+					<th><%= raw hlabel :process_order, :trader_id %></th>
+					<th><%= raw hlabel :process_order, :process %></th>
+					<th><%= raw hlabel :process_order, :order_ymd %></th>
+					<th><%= raw hlabel :process_order, :delivery_ymd %></th>
+					<th><%= raw simple_format(t(:title_print, :scope => [:activerecord, :attributes, :process_order])) %></th>
+				</tr>
+			</thead>
+			<tbody>
+				<% @process_orders.each do |process_order| %>
+   			        <%= fields_for :process_order, process_order, :index => process_order.no_in_list do |field| %>
+<%
+production_detail = process_order.production_detail
+production_detail ||= ProductionDetail.new
+production = production_detail.production
+production ||= Production.new
+lot = production.lot
+lot ||= Lot.new
+trader = process_order.trader
+trader ||= Processor.new
+report = process_order.reports.last
+report ||= Report.new
+attr = prepare_print_all_attr(report)
+%>
+					<tr>
+						<td><%= lot.lot_no.to_s %></td>
+						<td>
+							<%= link_to(process_order.id, edit_polymorphic_url(process_order)) %>
+							<%= field.hidden_field :id %>
+						</td>
+						<td><%= t("activerecord.models.%s" % [process_order.type.to_s.underscore]) %></td>
+						<td><%= trader.name %></td>
+						<td><%= process_order.process %></td>
+						<td><%= hdate process_order.order_ymd %></td>
+						<td><%= hdate process_order.delivery_ymd %></td>
+						<td><%= field.check_box :select_print, :disabled => attr[:disabled] %><%= attr[:label] %></td>
+					</tr>
+					<% end %>
+				<% end %>
+			</tbody>
+		</table>
+		
+<% if action_name == 'index'%>
+		<%= will_paginate @process_orders %>
+<% else %>
+                <p><font color="red" style="margin-left:5px;">*</font><%= t(:notice_required) %></p>
+                <p style="text-align: center;"><%= t(:notice_paginate_edit) %></p>
+<% end %>
+<%= hidden_field_tag(:page, params[:page]) %>
+
+	</div><!--/ list-->
+	
+	<div class="control">
+		<%= yield :control %>
+	</div><!--/ control-->
+	
+	<% end %>
+</div><!--/ #main-->

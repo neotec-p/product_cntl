@@ -1,0 +1,4 @@
+<%
+diameter_options = @diameter_options.to_a.insert(0, [t(:notice_select_all), nil])
+%>
+<%= select_tag(:cond_diameter, options_for_select(diameter_options, params[:cond_diameter])) %>

@@ -1,0 +1,60 @@
+<% target_action = :pop_material_for_text if target_action.nil? %>
+
+<div id="header">
+<div class="spacer"></div>
+</div><!--/ #header-->
+
+<div id="contents">
+	<div class="areaHeader">
+	<h2><%= I18n.t(action_name, :scope => [:actions]) %></h2>
+	</div>
+
+	<div id="main">
+		<%= raw flash_tag %>
+
+		<%= render :partial => 'layouts/search_cond_material', :locals => {:target_action => target_action, :pop_flag => true} %>
+	
+		<div class="list">
+			<div class="paginationCnt"><%= t(:all_count, :scope => :paginate, :cnt => @materials.count) %></div>
+			<table class="commonList">
+				<thead>
+					<tr>
+						<th><%= hlabel :commons, :material_name %></th>
+						<th><%= hlabel :material, :excess_amount %></th>
+						<th><%= hlabel :material, :stock_amount %></th>
+						<th><%= hlabel :material, :planned_amount %></th>
+						<th><%= hlabel :material, :orderd_amount %></th>
+					</tr>
+				</thead>
+				<tbody>
+					<% @materials.each do |material| %>
+					<tr>
+						<td>
+<%=
+link_to(material.disp_text, 
+"javascript:set_parent('#{material.id}', '#{material.disp_text}', '#{stock_material_path(material)}', '#{material.excess_amount}');"
+)
+%>
+	          			</td>
+						<td class="number"><%= hnumber_with_sign material.excess_amount %></td>
+						<td class="number"><%= hnumber material.stock_amount %></td>
+						<td class="number"><%= hnumber material.planned_amount %></td>
+						<td class="number"><%= hnumber material.orderd_amount %></td>
+					</tr>
+					<% end %>
+				</tbody>
+			</table>
+
+			<%= will_paginate @materials %>
+
+		</div><!--/ list-->
+		
+		<div class="control">
+			<%= close_button_tag %>
+		</div><!--/ control-->
+		
+	</div><!--/ #main-->
+</div><!--/ #contents-->
+
+<div id ="footer">
+</div><!--/ #footer-->

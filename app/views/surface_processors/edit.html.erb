@@ -1,0 +1,11 @@
+<% content_for :tabmenu do %>
+	<%= tab_menu_for_processor %>
+<% end %> 
+
+<% content_for :control do %>
+    <%= submit_button_tag %>
+    <%= cancel_button_tag %>
+    <%= delete_image_button_tag @surface_processor %>
+<% end %>
+
+<%= render :partial => 'form' %>

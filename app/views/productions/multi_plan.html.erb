@@ -1,0 +1,303 @@
+<% content_for :add_js do %>
+function confirm_t040_print(){
+	if(!confirm('<%= t(:confirm_report) %>')){
+		return false;
+	}
+	return confirm_change_tab_core();
+}
+
+<% end %>
+
+<% content_for :tabmenu do %>
+	<%= tab_menu_for_production %>
+<% end %>
+
+<% content_for :control do %>
+    <%= submit_button_tag %>
+<% end %>
+
+<div id="main" style="width: 1050px;">
+	<%= raw main_title %>
+	
+	<%= raw flash_tag %>
+
+	<div class="table-layout">
+		<div class="left" style="width: 850px;">
+
+			<div class="condition" style="width: 650px;">
+				<%= form_tag({:action => :multi_plan}, {:method => :get, :name => :form_search, :id => :form_search }) do -%>
+				<h4><%= t(:search_condition) %></h4>
+				<table class="commonCondition">
+					<tr>
+						<th><%= hlabel :commons, :process_name %></th>
+						<td><%= select_tag(:cond_process_category, options_for_select(@process_category_options, params[:cond_process_category].to_i)) %></td>
+						<th><%= hlabel :commons, :model_id %></th>
+						<td><%= render :partial => 'model_list' %></td>
+						<td class="button"> <%= submit_tag t(:search, :scope => :actions) %> </td>
+					</tr>
+				</table>
+				<% end %>
+
+<script type="text/javascript">
+var category_tree_json = <%= raw @standard_material_json %>
+
+$("#cond_process_category").change(function(x) {
+    var category = $(this).val();
+    $("#cond_model_id option").remove();
+    $("#cond_model_id").append("<option value=\"\" selected>選択してください</option>");
+    if (category_tree_json[category] !== undefined) {
+        category_tree_json[category].forEach(function(x) {
+            $("#cond_model_id").append("<option value=\"" + x[1] + "\">" + x[0] + "</option>");
+        });
+    }
+});
+</script>
+		
+			</div><!--/ condition-->
+
+		</div><!-- / left -->
+
+		<div class="right" style="width: 230px; vertical-align: bottom;">
+			<div class="table-layout">
+				<div class="left">
+					<%= button_to(t(:button_production_plan_list_hd), {:action => :print_t040}, :method => :post, :class => "formInBtn", :name => :print_t040, :onClick => "return confirm_t040_print();") %>
+				</div><!-- / left -->
+				<div class="right">
+					<%= button_to(t(:button_production_plan_list_ro), {:action => :print_t040}, :method => :post, :class => "formInBtn", :name => :print_t041, :onClick => "return confirm_t040_print();") %>
+				</div><!--/ right -->
+			</div><!--/ table-layout -->
+		</div><!--/ right -->
+	</div><!--/ table-layout -->
+
+
+	<%= form_tag(multi_plan_update_productions_path, {:method => :put}) do %>
+
+	<%= error_messages_for 'production_plan', :object => @production_plans %>
+
+	<div class="list">
+<% if action_name == 'multi_plan'%>
+		<div class="paginationCnt"><%= t(:all_count, :scope => :paginate, :cnt => @productions.count) %></div>
+<% end %>
+		<table class="commonList">
+			<thead>
+				<tr>
+					<th>
+						<%= hlabel :commons, :process_name %>
+					</th>
+					<th style="width: 90px;">
+						<%= hlabel :order, :delivery_ymd %><br/>
+						<%= hlabel :order, :order_amount %>
+					</th>
+					<th style="width: 115px;">
+						<%= hlabel :commons, :vote_no %><br/>
+						<%= hlabel :commons, :item_code %><br/>
+						<%= hlabel :item, :name %>
+					</th>
+					<th style="width: 113px;">
+						<%= hlabel :production_plan, :hd_start_ymd %><br/>
+						<%= hlabel :production_plan, :hd_end_ymd %>
+					</th>
+					<th style="width: 113px;">
+						<%= hlabel :production_plan, :hd_addition_start_ymd %><br/>
+						<%= hlabel :production_plan, :hd_addition_end_ymd %>
+					</th>
+					<th style="width: 113px;">
+						<%= hlabel :production_plan, :ro1_start_ymd %><br/>
+						<%= hlabel :production_plan, :ro1_end_ymd %>
+					</th>
+					<th style="width: 113px;">
+						<%= hlabel :production_plan, :ro1_addition_start_ymd %><br/>
+						<%= hlabel :production_plan, :ro1_addition_end_ymd %>
+					</th>
+					<th style="width: 113px;">
+						<%= hlabel :production_plan, :ro2_start_ymd %><br/>
+						<%= hlabel :production_plan, :ro2_end_ymd %>
+					</th>
+					<th style="width: 113px;">
+						<%= hlabel :production_plan, :ro2_addition_start_ymd %><br/>
+						<%= hlabel :production_plan, :ro2_addition_end_ymd %>
+					</th>
+				</tr>
+			</thead>
+			<tbody>
+				<% @production_plans.each do |production_plan| %>
+   			        <%= fields_for production_plan, :index => production_plan.no_in_list do |field| %>
+<%
+production = Production.new
+production = production_plan.production unless production_plan.production.nil?
+item = Item.new
+item = production.item unless production.item.nil?
+order = Order.new
+order = production.order unless production.order.nil?
+%>
+   			        <tr>
+					<td>
+						<%= production.current_process_type.name %>
+						<%= field.hidden_field :production_id, :value => production.id %>
+						<%= field.hidden_field :production_lock_version, :value => production.lock_version %>
+					</td>
+					<td>
+						<%= hdate order.delivery_ymd %><br/>
+						<div style="text-align: right;"><%= hnumber order.order_amount %></div>
+					</td>
+					<td>
+						<%= link_to production.disp_text, edit_production_url(production) %><br/>
+						<span title="<%= production.item.name %>">
+						<%= production.item.disp_text %></span><br/>
+						<%= item.name %>
+					</td>
+                	<td>
+<% if production_plan.hd_start_ymd_edit_flag.nil? %>
+						<%= t(:notice_no_process) %>
+<% elsif production_plan.hd_start_ymd_edit_flag %>
+                		<%= field.date_select :hd_start_ymd, :class => "ymd_short" %><%= clear_cal_button_short_tag %>
+<% else %>
+                		<%= production_plan.disp_hd_start_ymd.blank? ? t(:notice_no_value) : (hdate(production_plan.disp_hd_start_ymd)) %>
+                		<%= field.hidden_field :disp_hd_start_ymd %>
+<% end %>
+                		<%= field.hidden_field :hd_start_ymd_edit_flag %>
+						<br/>
+<% if production_plan.hd_end_ymd_edit_flag.nil? %>
+						<%= t(:notice_no_process) %>
+<% elsif production_plan.hd_end_ymd_edit_flag %>
+                		<%= field.date_select :hd_end_ymd, :class => "ymd_short" %><%= clear_cal_button_short_tag %>
+<% else %>
+                		<%= production_plan.disp_hd_end_ymd.blank? ? t(:notice_no_value) : (hdate(production_plan.disp_hd_end_ymd)) %>
+                		<%= field.hidden_field :disp_hd_end_ymd %>
+<% end %>
+                		<%= field.hidden_field :hd_end_ymd_edit_flag %>
+                	</td>
+
+                	<td>
+<% if production_plan.hd_addition_start_ymd_edit_flag.nil? %>
+						<%= t(:notice_no_process) %>
+<% elsif production_plan.hd_addition_start_ymd_edit_flag %>
+                		<%= field.date_select :hd_addition_start_ymd, :class => "ymd_short" %><%= clear_cal_button_short_tag %>
+<% else %>
+                		<%= production_plan.disp_hd_addition_start_ymd.blank? ? t(:notice_no_value) : (hdate(production_plan.disp_hd_addition_start_ymd)) %>
+                		<%= field.hidden_field :disp_hd_addition_start_ymd %>
+<% end %>
+                		<%= field.hidden_field :hd_addition_start_ymd_edit_flag %>
+						<br/>
+<% if production_plan.hd_addition_end_ymd_edit_flag.nil? %>
+						<%= t(:notice_no_process) %>
+<% elsif production_plan.hd_addition_end_ymd_edit_flag %>
+                		<%= field.date_select :hd_addition_end_ymd, :class => "ymd_short" %><%= clear_cal_button_short_tag %>
+<% else %>
+                		<%= production_plan.disp_hd_addition_end_ymd.blank? ? t(:notice_no_value) : (hdate(production_plan.disp_hd_addition_end_ymd)) %>
+                		<%= field.hidden_field :disp_hd_addition_end_ymd %>
+<% end %>
+                		<%= field.hidden_field :hd_addition_end_ymd_edit_flag %>
+                	</td>
+
+                	<td>
+<% if production_plan.ro1_start_ymd_edit_flag.nil? %>
+						<%= t(:notice_no_process) %>
+<% elsif production_plan.ro1_start_ymd_edit_flag %>
+                		<%= field.date_select :ro1_start_ymd, :class => "ymd_short" %><%= clear_cal_button_short_tag %>
+<% else %>
+                		<%= production_plan.disp_ro1_start_ymd.blank? ? t(:notice_no_value) : (hdate(production_plan.disp_ro1_start_ymd)) %>
+                		<%= field.hidden_field :disp_ro1_start_ymd %>
+<% end %>
+                		<%= field.hidden_field :ro1_start_ymd_edit_flag %>
+                		<br/>
+<% if production_plan.ro1_end_ymd_edit_flag.nil? %>
+						<%= t(:notice_no_process) %>
+<% elsif production_plan.ro1_end_ymd_edit_flag %>
+                		<%= field.date_select :ro1_end_ymd, :class => "ymd_short" %><%= clear_cal_button_short_tag %>
+<% else %>
+                		<%= production_plan.disp_ro1_end_ymd.blank? ? t(:notice_no_value) : (hdate(production_plan.disp_ro1_end_ymd)) %>
+                		<%= field.hidden_field :disp_ro1_end_ymd %>
+<% end %>
+                		<%= field.hidden_field :ro1_end_ymd_edit_flag %>
+                	</td>
+
+                	<td>
+<% if production_plan.ro1_addition_start_ymd_edit_flag.nil? %>
+						<%= t(:notice_no_process) %>
+<% elsif production_plan.ro1_addition_start_ymd_edit_flag %>
+                		<%= field.date_select :ro1_addition_start_ymd, :class => "ymd_short" %><%= clear_cal_button_short_tag %>
+<% else %>
+                		<%= production_plan.disp_ro1_addition_start_ymd.blank? ? t(:notice_no_value) : (hdate(production_plan.disp_ro1_addition_start_ymd)) %>
+                		<%= field.hidden_field :disp_ro1_addition_start_ymd %>
+<% end %>
+                		<%= field.hidden_field :ro1_addition_start_ymd_edit_flag %>
+                		<br/>
+<% if production_plan.ro1_addition_end_ymd_edit_flag.nil? %>
+						<%= t(:notice_no_process) %>
+<% elsif production_plan.ro1_addition_end_ymd_edit_flag %>
+                		<%= field.date_select :ro1_addition_end_ymd, :class => "ymd_short" %><%= clear_cal_button_short_tag %>
+<% else %>
+                		<%= production_plan.disp_ro1_addition_end_ymd.blank? ? t(:notice_no_value) : (hdate(production_plan.disp_ro1_addition_end_ymd)) %>
+                		<%= field.hidden_field :disp_ro1_addition_end_ymd %>
+<% end %>
+                		<%= field.hidden_field :ro1_addition_end_ymd_edit_flag %>
+                	</td>
+
+                	<td>
+<% if production_plan.ro2_start_ymd_edit_flag.nil? %>
+						<%= t(:notice_no_process) %>
+<% elsif production_plan.ro2_start_ymd_edit_flag %>
+                		<%= field.date_select :ro2_start_ymd, :class => "ymd_short" %><%= clear_cal_button_short_tag %>
+<% else %>
+                		<%= production_plan.disp_ro2_start_ymd.blank? ? t(:notice_no_value) : (hdate(production_plan.disp_ro2_start_ymd)) %>
+                		<%= field.hidden_field :disp_ro2_start_ymd %>
+<% end %>
+                		<%= field.hidden_field :ro2_start_ymd_edit_flag %>
+                		<br/>
+<% if production_plan.ro2_end_ymd_edit_flag.nil? %>
+						<%= t(:notice_no_process) %>
+<% elsif production_plan.ro2_end_ymd_edit_flag %>
+                		<%= field.date_select :ro2_end_ymd, :class => "ymd_short" %><%= clear_cal_button_short_tag %>
+<% else %>
+                		<%= production_plan.disp_ro2_end_ymd.blank? ? t(:notice_no_value) : (hdate(production_plan.disp_ro2_end_ymd)) %>
+<% end %>
+                		<%= field.hidden_field :disp_ro2_end_ymd %>
+                		<%= field.hidden_field :ro2_end_ymd_edit_flag %>
+                	</td>
+
+                	<td>
+<% if production_plan.ro2_addition_start_ymd_edit_flag.nil? %>
+						<%= t(:notice_no_process) %>
+<% elsif production_plan.ro2_addition_start_ymd_edit_flag %>
+                		<%= field.date_select :ro2_addition_start_ymd, :class => "ymd_short" %><%= clear_cal_button_short_tag %>
+<% else %>
+                		<%= production_plan.disp_ro2_addition_start_ymd.blank? ? t(:notice_no_value) : (hdate(production_plan.disp_ro2_addition_start_ymd)) %>
+                		<%= field.hidden_field :disp_ro2_addition_start_ymd %>
+<% end %>
+                		<%= field.hidden_field :ro2_addition_start_ymd_edit_flag %>
+                		<br/>
+<% if production_plan.ro2_addition_end_ymd_edit_flag.nil? %>
+						<%= t(:notice_no_process) %>
+<% elsif production_plan.ro2_addition_end_ymd_edit_flag %>
+                		<%= field.date_select :ro2_addition_end_ymd, :class => "ymd_short" %><%= clear_cal_button_short_tag %>
+<% else %>
+                		<%= production_plan.disp_ro2_addition_end_ymd.blank? ? t(:notice_no_value) : (hdate(production_plan.disp_ro2_addition_end_ymd)) %>
+                		<%= field.hidden_field :disp_ro2_addition_end_ymd %>
+<% end %>
+                		<%= field.hidden_field :ro2_addition_end_ymd_edit_flag %>
+                	</td>
+				</tr>
+     				<% end %>
+				<% end %>
+			</tbody>
+		</table>
+
+<% if action_name == 'multi_plan'%>
+		<%= will_paginate @productions %>
+<% else %>
+                <p><font color="red" style="margin-left:5px;">*</font><%= t(:notice_required) %></p>
+                <p style="text-align: center;"><%= t(:notice_paginate_edit) %></p>
+<% end %>
+<%= hidden_field_tag(:page, params[:page]) %>
+		
+	</div><!--/ list-->
+
+	<div class="control">
+<% unless @production_plans.empty? %>
+		<%= yield :control %>
+<% end %>
+	</div><!--/ control-->
+
+	<% end %>
+</div><!--/ #main-->

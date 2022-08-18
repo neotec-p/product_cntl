@@ -1,0 +1,84 @@
+<div id="main" style="width: 1000px;">
+
+<%= raw main_title %>
+
+<%= raw flash_tag %>
+
+<div class="condition" style="width: 800px;">
+	<%= form_tag({:action => :index}, {:method => :get, :name => :form_search, :id => :form_search }) do %>
+	<h4><%= t(:search_condition) %></h4>
+	<table class="commonCondition">
+		<tr>
+			<%= render :partial => "layouts/search_cond_date_from_to", :locals => {:title => hlabel(:report, :title_date)} %>
+			<%= render :partial => "layouts/search_cond_user", :locals => {:title_last_name => hlabel(:report, :title_user_last_name), :title_first_name => hlabel(:report, :title_user_first_name)} %>
+			<td rowspan="2" class="button"> <%= submit_tag t(:search, :scope => :actions) %> </td>
+		</tr>
+		<tr>
+			<th><%= hlabel :report, :report_type_id %></th>
+<%
+report_types = @report_types.to_a
+emp = ProcessType.new
+emp.name = t(:notice_select_all)
+report_types.insert 0, emp
+%>
+			<td colspan="5"><%= select_tag(:cond_report_type_id, options_from_collection_for_select(report_types, :id, :name, params[:cond_report_type_id].to_i)) %></td>
+		</tr>
+	</table>
+	<% end %>
+</div><!--/ condition-->
+
+<div class="list">
+	<div class="paginationCnt"><%= t(:all_count, :scope => :paginate, :cnt => @reports.count) %></div>
+	<table class="commonList">
+		<thead>
+			<tr>
+				<th><%= raw simple_format(t(:title_id, :scope => [:activerecord, :attributes, :report])) %></th>
+				<th><%= raw hlabel :report, :asynchro_status_id %></th>
+				<th><%= raw hlabel :report, :title_date %></th>
+				<th><%= raw hlabel :report, :user_id %></th>
+				<th><%= raw hlabel :report, :report_type_id %></th>
+				<th><%= raw hlabel :report, :file_name %></th>
+				<th><%= raw simple_format(t(:title_size, :scope => [:activerecord, :attributes, :report])) %></th>
+			</tr>
+		</thead>
+		<tbody>
+		<% @reports.each do |report| %>
+<%
+asynchro_status = AsynchroStatus.new
+asynchro_status = report.asynchro_status unless report.asynchro_status.nil?
+# masa
+# if report.id == 17354
+# 	require 'byebug'; byebug
+# end
+%>
+			<tr>
+				<td>
+					<%= report.id %>
+				</td>
+				<td>
+					<%= asynchro_status.name %>
+				</td>
+				<td>
+					<%=hdate report.created_at %>
+				</td>
+				<td>
+					<%= report.user.disp_text %>
+				</td>
+				<td>
+					<%= report.report_type.name %>
+				</td>
+				<td>
+					<%= link_to report.disp_name, {:controller => :reports, :action => :download, :id => report.id} if asynchro_status.id == ASYNCHRO_STATUS_DONE %>
+				</td>
+				<td class="number">
+					<%= number_to_human_size(report.size) %>
+				</td>
+			</tr>
+		<% end %>
+		</tbody>
+	</table>
+
+	<%= will_paginate @reports %>
+<!--/ list--></div>
+
+<!--/ #main--></div>

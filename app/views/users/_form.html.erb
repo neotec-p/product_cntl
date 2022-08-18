@@ -1,0 +1,47 @@
+<div id="main" style="width:800px;">
+	<%= raw main_title %>
+	<%= raw flash_tag %>
+
+	<%= form_for(@user) do |f| %>
+
+	<%= @user.errors.full_messages.join("<br>") %>
+
+	<p><font color="red" style="margin-left:5px;">*</font><%= t(:notice_required) %></p>
+	<div class="sheet">
+		<h4><%= hlabel_model(get_model_by_controller({})) %></h4>
+		<table class="commonSheet">
+			<tr>
+				<th style="width: 200px;"><%= f.label :login_id %><font class="mark-required" style="margin-left:5px;">*</font></th>
+				<td style="width: 200px;"><%= f.text_field :login_id, :size => 5 %></td>
+				<th style="width: 200px;"><%= f.label :role_id %><font class="mark-required" style="margin-left:5px;">*</font></th>
+				<td style="width: 200px;"><%= f.collection_select :role_id, @roles, :id, :name, {:include_blank => t(:notice_select)} %></td>
+			</tr>
+			<tr>
+				<th><%= f.label :last_name %></th>
+				<td><%= f.text_field :last_name, :size => 10 %></td>
+				<th><%= f.label :first_name %></th>
+				<td><%= f.text_field :first_name, :size => 10 %></td>
+			</tr>
+			<tr>
+				<th><%= f.label :password_required %></th>
+				<td colspan="3"><%= f.check_box :password_required, :value => FLAG_ON %><%= t(:init_passward) %></td>
+			</tr>
+			<tr>
+				<th><%= f.label :password_new %></th>
+				<td colspan="3"><%= f.password_field :password, :value => "" %></td>
+			</tr>
+			<tr>
+				<th><%= f.label :password_confirmation %></th>
+				<td colspan="3"><%= f.password_field :password_confirmation, :value => "" %></td>
+			</tr>
+		</table>
+	</div><!--/ sheet-->
+
+	<%= f.hidden_field :lock_version %>
+
+	<div class="control">
+		<%= yield :control %>
+	</div><!--/ control-->
+
+	<% end %>
+</div><!--/ #main-->

@@ -1,0 +1,59 @@
+<% content_for :header_title do %>
+	<%= t(:material_stocks, :scope => :controllers) %>
+<% end %>
+
+<% content_for :tabmenu do %>
+	<%= render :partial => "layouts/tab_menu_for_material_stock" %>
+<% end %>
+
+<% content_for :control do %>
+	<%= cancel_button_tag :action => :stock_index %>
+<% end %>
+
+<div id="main" style="width:1000px;">
+	<%= raw main_title(:controller => :material_stocks, :action => :stock) %>
+
+	<%= raw flash_tag %>
+
+    <%= render :partial => "materials/disp_material", :locals => { :material => @material, :title => hlabel(:material, :t_material_info) } %>
+
+    <div class="subTabmenu">
+        <%= render :partial => "layouts/tab_submenu_for_material_stock" %>
+    </div>
+
+	<div class="control">
+		<%= yield :control %>
+	</div><!--/ control-->
+
+	<div class="sheet" style="width: 600px;">
+		<h4><%= hlabel(:material_stock,:t_accept_coil_info) %></h4>
+			<table class="commonSheet">
+				<tr>
+					<th style="width: 130px;"><%= hlabel :material, :excess_amount %></th>
+					<td class="number" style="width: 130px;"><%= hnumber_with_precision_and_sign(@material.excess_amount, :precision => 1) %></td>
+					<th style="width: 130px;"><%= hlabel :material, :stock_amount %></th>
+					<td class="number" style="width: 130px;"><%= hnumber_with_precision(@material.stock_amount, :precision => 1) %></td>
+				</tr>
+				<tr>
+					<th style="width: 130px;"><%= hlabel :material, :planned_amount %></th>
+					<td class="number" style="width: 130px;"><%= hnumber_with_precision(@material.planned_amount, :precision => 1) %></td>
+					<th style="width: 130px;"><%= hlabel :material, :orderd_amount %></th>
+					<td class="number" style="width: 130px;"><%= hnumber_with_precision(@material.orderd_amount, :precision => 1) %></td>
+				</tr>
+				<tr>
+					<th style="width: 130px;"><%= hlabel :material, :stock_price %></th>
+					<td class="number" style="width: 130px;"><%= hnumber_with_precision(@material.stock_price, :precision => 0) %></td>
+					<td colspan="2"></td>
+				</tr>
+			</table>
+	</div><!--/ sheet-->
+
+    <%= render :partial => "material_orders" %>
+    
+    <%= render :partial => "material_stocks" %>
+
+	<div class="control">
+		<%= yield :control %>
+	</div><!--/ control-->
+
+</div><!--/ #main-->

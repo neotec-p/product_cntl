@@ -1,0 +1,90 @@
+<!-- default 800px;` -->
+<div id="main">
+
+<%= raw main_title %>
+
+<%= raw flash_tag %>
+
+<div class="control">
+	<%= new_button_tag %>
+<!--/ control--></div>
+
+<div class="condition">
+
+<%= form_tag({:action => 'index'}, {:method => 'GET', :name => :form_search, :id => :form_search }) do -%>
+	<h4><%= t(:search_condition) %></h4>
+	<table class="commonCondition">
+		<tr>
+			<th><%=hlabel :process_prices, :trader_id %></th>
+<%
+empty_supplier = MaterialSupplier.new
+material_supplier_options = [empty_supplier] + @material_suppliers_options
+%>
+			<td><%= select_tag(:cond_trader_id, options_from_collection_for_select(material_supplier_options, :id, :name, params[:cond_trader_id].to_i)) %></td>
+			
+		</tr>
+		<tr>
+			<th><%=hlabel :process_prices, :name %></th>
+			<td><%= text_field_tag(:cond_name, params[:cond_name]) %></td>
+			
+			<th><%=hlabel :process_prices, :condition %></th>
+			<td><%= text_field_tag(:cond_conditions, params[:cond_conditions]) %></td>
+		</tr>
+	</table>
+
+<%= hidden_sort   = hidden_field_tag(:sort,  params[:sort]) %>
+<%= hidden_order  = hidden_field_tag(:order, params[:order]) %>
+
+<% end %>
+<!--/ condition--></div>
+
+
+
+<div class="list">
+	<div class="paginationCnt"><%= t(:all_count, :scope => :paginate, :cnt => @process_prices.count) %></div>
+	<table class="commonList">
+	<thead>
+	  <tr>
+		<th><%=hlabel :commons, :id %><%= sort_tag('id') %></th>
+		<th><%=hlabel :process_prices, :item_id %><%= sort_tag('item_id') %></th>
+		<th><%=hlabel :process_prices, :trader_id %><%= sort_tag('traders_id') %></th>
+		<th><%=hlabel :process_prices, :material_id %><%= sort_tag('materials_id') %></th>
+		<th><%=hlabel :process_prices, :name %><%= sort_tag('name') %></th>
+		<th><%=hlabel :process_prices, :conditions %><%= sort_tag('conditions') %></th>
+		<th><%=hlabel :process_prices, :price %><%= sort_tag('price') %></th>
+		<th><%=hlabel :process_prices, :unit %><%= sort_tag('unit') %></th>
+		<th><%=hlabel :process_prices, :set %><%= sort_tag('set') %></th>
+		<th><%=hlabel :process_prices, :addition_price %><%= sort_tag('addition_price') %></th>
+		<th><%=hlabel :process_prices, :addition_unit %><%= sort_tag('addition_unit') %></th>
+		<th><%=hlabel :process_prices, :condition_weight %><%= sort_tag('condition_weight') %></th>
+		<th><%=hlabel :process_prices, :condition_following %><%= sort_tag('condition_following') %></th>
+	  </tr>
+	</thead>
+	<tbody>
+<% @process_prices.each do |process_prices| %>
+  <tr>
+	<td><%= link_to process_prices.id, edit_process_price_path(process_prices) %></td>
+	<td><%= process_prices.item_id%></td>
+	<td><%= process_prices.trader_id%></td>
+	<td><%= process_prices.material_id%></td>
+	<td><%= process_prices.name%></td>
+	<td><%= process_prices.conditions%></td>
+	<td><%= process_prices.price%></td>
+	<td><%= process_prices.unit%></td>
+	<td><%= process_prices.set%></td>
+	<td><%= process_prices.addition_price%></td>
+	<td><%= process_prices.addition_unit%></td>
+	<td><%= process_prices.condition_weight%></td>
+	<td><%= process_prices.condition_following%></td>
+
+    <td><%= link_to 'Show', process_prices %></td>
+    <td><%= link_to 'Edit', edit_process_price_path(process_price) %></td>
+    <td><%= link_to 'Destroy', process_price, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</tbody>
+</table>
+
+<br />
+
+<%= link_to 'New process_price', new_process_price_path %>

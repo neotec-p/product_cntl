@@ -1,0 +1,19 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  washer_id: 1
+  washer_order_id: 1
+  inspection_no: 1
+  accept_quantity: 1
+  accept_ymd: 2012-02-21
+  adjust_weight: 9.99
+  lock_version: 1
+
+two:
+  washer_id: 1
+  washer_order_id: 1
+  inspection_no: 1
+  accept_quantity: 1
+  accept_ymd: 2012-02-21
+  adjust_weight: 9.99
+  lock_version: 1

@@ -1,0 +1,109 @@
+<div id="main" style="width: 900px;">
+
+<%= raw main_title %>
+
+<%= raw flash_tag %>
+
+<%= error_messages_for 'summation' %>
+
+<div class="table-layout">
+	<div class="left">
+		<div class="sheet" style="width: 250px;">
+		<h4><%= t("actions.summate_month") %></h4>
+		<table class="commonSheet">
+			<tr>
+				<th style="width: 100px;"><%= hlabel :summation, :t_target_month %></th>
+				<td style="width: 100px;">
+					<%= I18n.l @target_ymd_month, :format => "%Y/%m" if @target_ymd_month.present? %>
+				</td>
+				<td class="button" style="width: 50px;">
+					<%= button_to(t(:button_summate_month), {:action => :summate_month}, :method => :post, :confirm => t(:confirm_summate), :style => "display: inline;") %>
+				</td>
+			</tr>
+		</table>
+		</div><!--/ sheet-->
+	</div><!--/ left -->
+	<div class="right" style="vertical-align: bottom; color: red;">
+		<%= raw simple_format(t(:notice_summate_month)) %>
+	</div><!--/ right -->
+</div><!--/ table-layout -->
+
+<div class="condition" style="width:440px;">
+<%= form_tag({:action => :summate_month_report}, {:method => :post, :name => :form_search, :id => :form_search }) do -%>
+
+	<h4><%= t("actions.summate_month_report") %></h4>
+	<table class="commonSheet">
+		<tr>
+			<th style="width: 100px;"><%=hlabel :summation, :t_file_name %></th>
+			<td style="width: 200px;">
+				<%= text_field_tag(:file_name, params[:file_name], :size => 15) %>
+			</td>
+			<td class="button" style="width: 140px;">
+			<%= submit_tag(t(:button_summate_month_report), :confirm => t(:confirm_report)) %>
+			</td>
+		</tr>
+	</table>
+<% end %>
+</div><!--/ condition-->
+
+<div class="spacer"></div>
+
+<div class="list">
+	<div class="table-layout" style="width: 900px;">
+		<div class="right" style="width: 300px; padding-left: 0px;">
+			<h4><%= hlabel(:summation, :result_list) %></h4>
+		</div>
+		<div class="left" style="width: 600px;; padding-right: 0px; text-align: right;">
+			<div class="paginationCnt"><%= t(:all_count, :scope => :paginate, :cnt => @summations.count) %></div>
+		</div>
+	</div>
+	<table class="commonList">
+	<thead>
+	  <tr>
+	    <th><%= hlabel :summation, :t_print_date %></th>
+	    <th><%= hlabel :summation, :t_target_month %></th>
+	    <th><%= hlabel :summation_type, :name %></th>
+	    <th><%= hlabel :summation, :t_status %></th>
+	    <th><%= hlabel :summation, :t_user %></th>
+	    <th><%= hlabel :summation, :t_report_t120 %></th>
+	    <th><%= hlabel :summation, :t_report_t121 %></th>
+	  </tr>
+	</thead>
+	<tbody>
+	<% @summations.each do |summation| %>
+<%
+summation_type = SummationType.new
+summation_type = summation.summation_type unless summation.summation_type.nil?
+asynchro_status = AsynchroStatus.new
+asynchro_status = summation.asynchro_status unless summation.asynchro_status.nil?
+user = User.new
+user = summation.user unless summation.user.nil?
+report_t120 = summation.reports.includes(:report_type).where(["report_types.id = ?", ReportType.find_by_code(REPORT_TYPE_T120)]).references(:report_type).first
+report_t121 = summation.reports.includes(:report_type).where(["report_types.id = ?", ReportType.find_by_code(REPORT_TYPE_T121)]).references(:report_type).first
+%>
+	  <tr>
+	    <td><%= hdate summation.created_at %></td>
+	    <td><%= I18n.l summation.target_ymd, :format => :year_month if summation.target_ymd.present?  %></td>
+	    <td><%= summation_type.name %></td>
+	    <td><%= asynchro_status.name %></td>
+	    <td><%= user.disp_text %></td>
+	    <td>
+<% if (asynchro_status.id == ASYNCHRO_STATUS_DONE && !report_t120.nil?) %>
+	    	<%= link_to report_t120.disp_name, {:controller => :reports, :action => :download, :id => report_t120.id} %>
+<% end %>
+		</td>
+	    <td>
+<% if (asynchro_status.id == ASYNCHRO_STATUS_DONE && !report_t121.nil?) %>
+	    	<%= link_to report_t121.disp_name, {:controller => :reports, :action => :download, :id => report_t121.id} %>
+<% end %>
+		</td>
+	  </tr>
+	<% end %>
+	</tbody>
+	</table>
+
+	<%= will_paginate @summations %>
+
+<!--/ list--></div>
+
+<!--/ #main--></div>

@@ -1,0 +1,138 @@
+<% content_for :tabmenu do %>
+	<%= tab_menu_for_production %>
+<% end %>
+
+<% content_for :control do %>
+<% unless @production.summation_id.nil? %>
+    <%= submit_button_tag(:conf => confirm_force_submit)%>
+<% else %>
+    <%= submit_button_tag %>
+<% end %>
+	<%= cancel_button_tag(:action => :vote_no_index) %>
+<% end %>
+
+<% content_for :add_js do %>
+function set_blank(washer_no){
+	if(!confirm('<%= t(:confirm_set_blank_washer) %>')){
+		return false;
+	}
+	
+	$("#washer_edit_washer_id" + washer_no).val("");
+	$("#washer_name" + washer_no).text("<%= DISP_NONE %>");
+}
+
+function check_edit_washer_edit(){
+	$("[id^='washer_edit']").focus(function(){
+		check_edit_core();
+	});
+}
+
+$(function() {
+	check_edit_washer_edit();
+});
+<% end %>
+
+<div id="main" style="width: 1050px;">
+	<%= raw main_title %>
+	<%= raw flash_tag %>
+
+    <%= render :partial => "productions/disp_production" %>
+	
+    <div class="subTabmenu">
+        <%= tab_submenu_for_production(@production) %>
+    </div>
+
+	<%= form_tag(edit_washer_update_production_path, {:method => :put}) do %>
+	<%= fields_for :washer_edit, @washer_edit do |field| %>
+	
+	<%= error_messages_for 'washer_edit' %>
+
+<%
+item = @production.item
+%>
+
+	<div class="sheet" style="width: 900px;">
+		<h4><%= t("actions.edit_washer") %></h4>
+		<table class="commonSheet">
+			<tr>
+				<th style="width: 140px;">
+					<%= hlabel(:washer_edit, :title_washer1) %>
+				</th>
+				<td style="width: 300px;">
+<%
+washer1 = Washer.find(@washer_edit.washer_id1) unless @washer_edit.washer_id1.nil?
+if item.washer1.nil?
+%>
+					<%= disp_none %>
+<%
+else
+%>
+					<span id="washer_name1">
+						<%= washer1.disp_text unless washer1.nil? %>
+						<%= disp_none if washer1.nil? %>
+					</span>
+					<%= field.hidden_field :washer_id1 %><br/>
+<%= 
+popup_button_tag(t(:button_change), :controller => :washers, :action => :pop_washer_for_text, :params => {:washer_no => 1},
+ :height => 450, :button_class => :formInBtn) %>
+<%
+end
+%>
+				</td>
+				<th style="width: 140px;">
+					<%= hlabel(:washer_edit, :title_washer2) %>
+				</th>
+				<td style="width: 300px;">
+<%
+washer2 = Washer.find(@washer_edit.washer_id2) unless @washer_edit.washer_id2.nil?
+if item.washer2.nil?
+%>
+					<%= disp_none %>
+<%
+else
+%>
+					<span id="washer_name2">
+						<%= washer2.disp_text unless washer2.nil? %>
+						<%= disp_none if washer2.nil? %>
+					</span>
+					<%= field.hidden_field :washer_id2 %><br/>
+<%= 
+popup_button_tag(t(:button_change), :controller => :washers, :action => :pop_washer_for_text, :params => {:washer_no => 2},
+ :height => 450, :button_class => :formInBtn) %>
+<%
+end
+%>
+				</td>
+			</tr>
+			<tr>
+				<th>
+					<%= field.label :washer_stock_id1 %>
+				</th>
+				<td>
+<% unless item.washer1.nil? %>
+					<%= field.check_box :washer_stock_rel_flag1 %><%= t(:relate_auto) %><br/>
+					<%= field.text_field(:washer_stock_id1, :size => 5, :readonly => true) %>
+<% end %>
+				</td>
+				<th>
+					<%= field.label :washer_stock_id4 %>
+				</th>
+				<td>
+<% unless item.washer2.nil? %>
+					<%= field.check_box :washer_stock_rel_flag2 %><%= t(:relate_auto) %><br/>
+					<%= field.text_field(:washer_stock_id4, :size => 5, :readonly => true) %>
+<% end %>
+				</td>
+			</tr>
+		</table>
+	</div><!--/ list-->
+
+	<%= field.hidden_field :production_lock_version %>
+
+    <div class="control">
+        <%= yield :control %>
+    </div><!--/ control-->
+	
+	<% end %>
+	<% end %>
+</div><!--/ #main-->
