@@ -249,7 +249,7 @@ puts e.backtrace.join("\n")
          
       return redirect_to(:controller => :heat_process_orders, :action => action, :id => po_id, :production_detail_id => pd.id) if params[:heat_process_orders]
       return redirect_to(:controller => :surface_process_orders, :action => action, :id => po_id, :production_detail_id => pd.id) if params[:surface_process_orders]
-      return iedirect_to(:controller => :addition_process_orders, :action => action, :id => po_id, :production_detail_id => pd.id) if params[:addition_process_orders]
+      return redirect_to(:controller => :addition_process_orders, :action => action, :id => po_id, :production_detail_id => pd.id) if params[:addition_process_orders]
     end
 
     flash[:notice] = t(success_message, :id => success_id)
