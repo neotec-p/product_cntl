@@ -72,6 +72,6 @@ class ProcessExpensesController < ApplicationController
     end
 
     def process_expense_params
-      params.require(:process_expense).permit
+      params.require(:process_expense).permit(:hd_addition, :ro1_addition, :ro2_addition, :heat_addition, :surface_addition, :inspection_addition, :lock_version, :item_id)
     end
 end
