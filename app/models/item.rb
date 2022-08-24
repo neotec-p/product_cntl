@@ -8,6 +8,9 @@ class Item < ActiveRecord::Base
   has_one :rolling_left_check_sheet, :dependent => :destroy
 
   has_many :process_details, :dependent => :destroy
+  accepts_nested_attributes_for :process_details
+  has_many :process_types, through: :process_details, source: :process_type
+
   has_many :productions
   has_many :defectives
 
@@ -36,6 +39,7 @@ class Item < ActiveRecord::Base
   validates_numericality_of :weight, :allow_blank => true
 
   validate :customer_exist?
+  validate :limit_process_details_blank
   
   # public class method ========================================================
   def self.findByItemCode(customer_code, code)
@@ -184,5 +188,14 @@ class Item < ActiveRecord::Base
     end
 
     self.where([conds] + conds_param)
+  end
+
+  private
+  
+  def limit_process_details_blank
+    if process_types.where(protected_flag: nil).size > PROCESS_DETAIL_MAX_COUNT && 
+        process_details.where(name: nil).size > PROCESS_DETAIL_MAX_COUNT
+      self.errors[:base] << I18n.t(:error_process_detail_max_count, :max => PROCESS_DETAIL_MAX_COUNT)
+    end
   end
 end
