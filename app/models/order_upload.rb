@@ -1,4 +1,5 @@
 class OrderUpload
+  require 'kconv'
 
   attr_accessor :filename
   attr_accessor :content_type

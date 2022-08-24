@@ -74,7 +74,7 @@
 
 				<% cnt = 1 %>
 				<% @orders.each do |order| %>
-				<%= fields_for order, :index => order.id do |field| %>
+				<%= fields_for "order[]", order do |field| %>
 				<tr>
 					<td>
 						<%= cnt %>

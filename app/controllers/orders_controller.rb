@@ -103,15 +103,10 @@ puts e.backtrace.join("\n")
 
       @orders = []
       input_cnt = 0
-      inputs = order_params
-      inputs ||= []
-      
-      inputs.each {|id, input|
-        order = Order.new
-        order.id = id
-
-        order.attributes = input
-
+      inputs = orders_multi_create_params
+      inputs ||= {}
+      inputs.each {|key, values|
+        order = Order.new(values)
         order.valid?
         result = order.errors.empty?
         is_valid &&= result
@@ -408,6 +403,6 @@ puts e.backtrace.join("\n")
     end
 
     def orders_multi_create_params
-      params.permit(:order => [:delivery_ymd, :order_amount, :item_customer_code, :item_code])[:order].to_h
+      params.permit(:order => [:delivery_ymd, :order_amount, :item_customer_code, :item_code, :order_no, :order_ymd])[:order].to_h
     end
 end
