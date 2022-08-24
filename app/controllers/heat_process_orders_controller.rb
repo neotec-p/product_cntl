@@ -22,9 +22,8 @@ class HeatProcessOrdersController < ProcessOrdersController
   def create
     begin
       @heat_process_order = HeatProcessOrder.new(heat_process_order_params)
-      @heat_process_order.production_detail = @production_detail
-
       @production_detail = ProductionDetail.find(params[:production_detail_id])
+      @heat_process_order.production_detail = @production_detail
 
       if not @heat_process_order.valid?
         return render :action => :new
