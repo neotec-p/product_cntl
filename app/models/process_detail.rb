@@ -1,7 +1,7 @@
 class ProcessDetail < ActiveRecord::Base
   belongs_to :item
-  belongs_to :process_type
-  belongs_to :trader
+  belongs_to :process_type, optional: true
+  belongs_to :trader, optional: true
   
   has_many :production_details
 

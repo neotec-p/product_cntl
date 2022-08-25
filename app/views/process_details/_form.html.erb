@@ -6,7 +6,7 @@
 
 	<div class="spacer"></div>
 
-	<%= form_tag(url, {:method => method}) do %>
+	<%= form_for(@item, url: url, html: {:method => method}) do |f| %>
 	
 	<%= error_messages_for 'process_detail', :object => @process_details %>
 	
@@ -25,26 +25,28 @@
 				</tr>
 			</thead>
 			<tbody>
-				<% @process_details.each do |process_detail| %>
-				<%= fields_for process_detail, :index => process_detail.process_type_id do |field| %>
+				<%= f.fields_for :process_details do |field| %>
 <%
-disable_flag = true unless process_detail.process_type.protected_flag.blank?
+disable_flag = true unless field.object.process_type.protected_flag.blank?
 %>
 				<tr>
 					<td>
-						<%= process_detail.process_type_id %>
+						<%= field.object.process_type_id %>	
+						<%= field.hidden_field :process_type_id %>
 					</td>
 					<td>
-						<%= process_detail.process_type.name %>
+						<%= field.object.process_type.name %>
 						<%= field.hidden_field :lock_version %>
 					</td>
-					<td><%= field.text_field :name, :size =>"15", :disabled => disable_flag %></td>
+					<td>
+						<%= field.text_field :name, :size =>"15", :disabled => disable_flag %>
+					</td>
 					<td>
 						<%= field.text_field :condition, :size =>"15", :disabled => disable_flag %>
-<% if process_detail.process_type.processor_flag == PROCESSOR_FLAG_HEAT %>
+<% if field.object.process_type.processor_flag == PROCESSOR_FLAG_HEAT %>
 						<%= field.select :tanaka_flag, @tanaka_options, {:include_blank => true}, :disabled => disable_flag %>
 <% end %>
-<% if process_detail.process_type.processor_flag == PROCESSOR_FLAG_SURFACE %>					
+<% if field.object.process_type.processor_flag == PROCESSOR_FLAG_SURFACE %>					
 						<%= field.select :hexavalent_flag, @hexavalent_options, {:include_blank => true}, :disabled => disable_flag %>
 <% end %>
 					</td>
@@ -52,7 +54,6 @@ disable_flag = true unless process_detail.process_type.protected_flag.blank?
 						<%= field.collection_select :trader_id, @processor_options, :id, :name, {:include_blank => true}, :disabled => disable_flag %>
 					</td>
 				</tr>
-				<% end %>
 				<% end %>
 			</tbody>
 		</table>
