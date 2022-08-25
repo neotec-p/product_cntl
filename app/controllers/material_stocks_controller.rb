@@ -95,11 +95,10 @@ class MaterialStocksController < ApplicationController
       flash[:error] = t(:failed_to_delete)
       return redirect_to :action => :edit
     end
-        
+    @material_order = @material_stock.material_order
     ActiveRecord::Base::transaction do
       @material_stock.destroy
     end
-
     flash[:notice] = t(:success_deleted, :id => @material_stock.id)
     redirect_to(:controller => :material_orders, :action => :edit, :id => @material_order.id)
   end
