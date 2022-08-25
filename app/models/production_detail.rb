@@ -209,7 +209,7 @@ class ProductionDetail < ActiveRecord::Base
       expense = (process_expense.ro2_addition || 0) if InternalProcessor.calc_process_expense?(process_detail.trader_id)
     end
     
-    return expense
+    return expense || 0
   end
   
   # 他社工程か？
