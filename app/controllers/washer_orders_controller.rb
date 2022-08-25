@@ -180,7 +180,7 @@ class WasherOrdersController < ApplicationController
         end
 
         if params['accept']
-          redirect_to(:controller => :washer_stocks, :action => :new, :washer_order_id => @washer_order.id)
+          return redirect_to(:controller => :washer_stocks, :action => :new, :washer_order_id => @washer_order.id)
         end
         
         flash[:notice] = t(:success_updated, :id => notice_success)
