@@ -350,7 +350,7 @@ class Production < ActiveRecord::Base
   end
 
   def div_branch(production_div)
-    new_production = Production.new(attributes)
+    new_production = self.dup
     new_production.branch1_no = production_div.new_branch1_no
     new_production.branch2_no = production_div.new_branch2_no
 
@@ -372,8 +372,7 @@ class Production < ActiveRecord::Base
     }
 
     material_production_seqs.each{ |material_production_seq|
-      new_material_production_seq = MaterialProductionSeq.new()
-      new_material_production_seq = MaterialProductionSeq.new(material_production_seq.attributes)
+      new_material_production_seq = material_production_seq.dup
       new_material_production_seq.created_at = nil
       new_material_production_seq.updated_at = nil
       new_material_production_seq.lock_version = 0
