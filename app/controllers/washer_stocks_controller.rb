@@ -94,7 +94,7 @@ class WasherStocksController < ApplicationController
       flash[:error] = t(:failed_to_delete)
       return redirect_to :action => :edit
     end
-        
+    @washer_order = @washer_stock.washer_order
     @washer_stock.destroy
 
     flash[:notice] = t(:success_deleted, :id => @washer_stock.id)
