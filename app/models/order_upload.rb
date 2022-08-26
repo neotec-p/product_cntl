@@ -49,15 +49,13 @@ class OrderUpload
             codes = data.split("-")
             order.item_customer_code = codes[0]
             order.item_code = codes[1]
-          when 2
-            order.order_no = data
-            # order.delivery_ymd = conv_date(data)
           when 3
             order.order_amount = data.to_i unless data.blank?
           when 9
             order.delivery_ymd = conv_date(data)
           when 10
             order.order_ymd = conv_date(data)
+            order.order_no = conv_date(data).to_s.gsub!('-', '').to_i if conv_date(data).present?
           else
             #do nothing
           end

@@ -1,5 +1,5 @@
 class Item < ActiveRecord::Base
-  belongs_to :customer
+  belongs_to :customer, optional: true
 
   has_one :process_expense, :dependent => :destroy
   has_one :header_right_check_sheet, :dependent => :destroy

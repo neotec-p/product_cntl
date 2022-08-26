@@ -5,7 +5,7 @@ class ProcessExpensesController < ApplicationController
   def new
     @process_expense = ProcessExpense.new
     @item = Item.find(params[:item_id])
-    @process_expense.item = @item
+    @item.process_expense = @process_expense
   end
   
   # GET /process_expenses/1/edit
