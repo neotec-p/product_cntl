@@ -103,8 +103,7 @@ puts e.backtrace.join("\n")
 
       @orders = []
       input_cnt = 0
-      inputs = orders_multi_create_params
-      inputs ||= {}
+      inputs = orders_multi_create_params || {}
       inputs.each {|key, values|
         order = Order.new(values)
         order.valid?

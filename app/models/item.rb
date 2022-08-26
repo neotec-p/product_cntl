@@ -105,7 +105,7 @@ class Item < ActiveRecord::Base
       item_material_seqs << item_material_seq
     end
 
-    item_washer_seq1 = item_washer_seqs.where(seq: 1).first
+    item_washer_seq1 = item_washer_seqs.find_by(seq: 1)
     item_washer_seq1 ||= ItemWasherSeq.new
     if parts.washer_id1.blank?
       item_washer_seqs.delete(item_washer_seq1)
@@ -115,8 +115,7 @@ class Item < ActiveRecord::Base
       item_washer_seq1.seq = 1
       item_washer_seqs << item_washer_seq1
     end
-
-    item_washer_seq2 = item_washer_seqs.find(seq: 2).first if item_washer_seqs.present?
+    item_washer_seq2 = item_washer_seqs.find_by(seq: 2)
     item_washer_seq2 ||= ItemWasherSeq.new
     if parts.washer_id2.blank?
       item_washer_seqs.delete(item_washer_seq2)

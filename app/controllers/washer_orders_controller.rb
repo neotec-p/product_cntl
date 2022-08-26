@@ -179,9 +179,7 @@ class WasherOrdersController < ApplicationController
           @washer_order.save!
         end
 
-        if params['accept']
-          return redirect_to(:controller => :washer_stocks, :action => :new, :washer_order_id => @washer_order.id)
-        end
+        return redirect_to new_washer_stock_path(washer_order_id: @washer_order.id) if params['accept']
         
         flash[:notice] = t(:success_updated, :id => notice_success)
       
