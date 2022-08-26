@@ -46,17 +46,18 @@ class OrderUpload
           data = Kconv.toutf8(data.to_s)
           case j
           when 0
-            order.order_no = data
-          when 1
-            order.order_ymd = conv_date(data)
+            codes = data.split("-")
+            order.item_customer_code = codes[0]
+            order.item_code = codes[1]
           when 2
-            order.delivery_ymd = conv_date(data)
+            order.order_no = data
+            # order.delivery_ymd = conv_date(data)
           when 3
             order.order_amount = data.to_i unless data.blank?
-          when 4
-            order.item_customer_code = data
-          when 5
-            order.item_code = data
+          when 9
+            order.delivery_ymd = conv_date(data)
+          when 10
+            order.order_ymd = conv_date(data)
           else
             #do nothing
           end

@@ -373,8 +373,6 @@ class Production < ActiveRecord::Base
 
     material_production_seqs.each{ |material_production_seq|
       new_material_production_seq = material_production_seq.dup
-      new_material_production_seq.created_at = nil
-      new_material_production_seq.updated_at = nil
       new_material_production_seq.lock_version = 0
 
       new_production.material_production_seqs << new_material_production_seq

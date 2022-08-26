@@ -10,7 +10,9 @@ class ProcessDetailsController < ApplicationController
   end
 
   def multi_edit
-    @process_details = @item.process_details unless @item.process_details.empty?
+    return redirect_to items_path if @item.blank?
+
+    @process_details = @item.process_details if @item.process_details.present?
   end
 
   def multi_create
@@ -30,6 +32,11 @@ class ProcessDetailsController < ApplicationController
 
   def multi_update
     begin
+      if params['delete.x']
+        @item.process_details.destroy_all
+        flash[:notice] = t(:success_deleted, :id => create_notice_success(:item_text => @item.disp_text))
+        return redirect_to edit_item_path(@item.id)
+      end
       save_process_details!
       flash[:notice] = t(:success_updated, :id => notice_success)
       redirect_to :action => :multi_edit, :item_id => @item.id
