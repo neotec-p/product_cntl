@@ -287,7 +287,9 @@ class MaterialOrdersController < ApplicationController
       @purchase_list.set_attributes(params)
 
       #@purchase_list.targets = MaterialOrder.where(["delivery_flag = ? and full_delivery_ymd IS NOT NULL and ? <= full_delivery_ymd and full_delivery_ymd <= ?", FLAG_ON, @purchase_list.cond_date_from, @purchase_list.cond_date_to])
-      @purchase_list.targets = MaterialStock.includes(:material_order).where("accept_ymd >= ? AND accept_ymd <= ?", @purchase_list.cond_date_from, @purchase_list.cond_date_to).order("material_orders.trader_id desc").order(:accept_ymd)
+      @purchase_list.targets = MaterialStock.includes(:material_order)
+                                            .date_range_of_accept_ymd(@purchase_list.cond_date_from, @purchase_list.cond_date_to)
+                                            .order("material_orders.trader_id desc").order(:accept_ymd)
 
       if not @purchase_list.valid?
         return render :action => :cond_print_t140

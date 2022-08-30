@@ -39,7 +39,7 @@ class Item < ActiveRecord::Base
   validates_numericality_of :weight, :allow_blank => true
 
   validate :customer_exist?
-  validate :limit_process_details_blank
+  validate :limit_process_details_blank, on: :update
   
   # public class method ========================================================
   def self.findByItemCode(customer_code, code)
@@ -192,8 +192,8 @@ class Item < ActiveRecord::Base
   private
   
   def limit_process_details_blank
-    if process_types.where(protected_flag: nil).size > PROCESS_DETAIL_MAX_COUNT && 
-        process_details.where(name: nil).size > PROCESS_DETAIL_MAX_COUNT
+    if process_types.where(protected_flag: [nil, false]).size > PROCESS_DETAIL_MAX_COUNT && 
+        process_details.where(name: [nil, '']).size > PROCESS_DETAIL_MAX_COUNT
       self.errors[:base] << I18n.t(:error_process_detail_max_count, :max => PROCESS_DETAIL_MAX_COUNT)
     end
   end

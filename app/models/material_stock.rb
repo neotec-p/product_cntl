@@ -18,6 +18,9 @@ class MaterialStock < ActiveRecord::Base
   validates_numericality_of :adjust_weight, :allow_blank => true
 
   before_create :set_default
+
+  scope :date_range_of_accept_ymd, ->(first_date, last_date) { where("accept_ymd >= ? AND accept_ymd <= ?", first_date, last_date) }
+  # Ex:- scope :active, -> {where(:active => true)}
   
   # public class method ========================================================
 

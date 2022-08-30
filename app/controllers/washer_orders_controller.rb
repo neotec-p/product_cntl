@@ -208,9 +208,7 @@ class WasherOrdersController < ApplicationController
 
       inputs.each {|no, input|
         washer_stock = WasherStock.find(input[:id])
-        washer_stock.attributes = input
-        washer_stock.no_in_list = no.to_i
-        washer_stock.select_print = input[:select_print].to_i
+        set_attributes_washer_stock(washer_stock, input, no)
 
         @washer_stocks << washer_stock
 
@@ -336,5 +334,12 @@ class WasherOrdersController < ApplicationController
 
     def washer_order_params
       params.require(:washer_order).permit(:order_ymd, :trader_id, :delivery_ymd, :order_quantity, :reply_delivery_ymd, :delivery_flag, :full_delivery_ymd, :lock_version, :washer_id)
+    end
+  
+    def set_attributes_washer_stock(washer_stock, params_stock, no_in_list)
+      washer_stock.id = params_stock[:id]
+      washer_stock.select_print = params_stock[:select_print].to_i
+      washer_stock.id = params_stock[:lock_version]
+      washer_stock.no_in_list = no_in_list.to_i
     end
 end
